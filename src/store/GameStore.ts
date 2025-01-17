@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 interface GameStore  {
+    firstStart:boolean;
+    setFirstStart: (toSet:boolean)=>void;
     numberOfRound: number;
     setNumberOfRound: (toSet:number)=>void;
 
@@ -22,6 +24,8 @@ interface GameStore  {
 }
 
 export const useGameStore = create<GameStore>()((set) => ({
+    firstStart:true,
+    setFirstStart:(setTo:boolean) => set(()=>({ firstStart:setTo })),
 numberOfRound:0,
 setNumberOfRound: (toSet:number) => set(()=>({ numberOfRound: toSet })),
 

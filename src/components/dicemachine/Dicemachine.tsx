@@ -5,6 +5,7 @@ import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
 
+
 export default function DiceMachine() {
   const lang: language = useLanguageStore().lang;
   const {
@@ -30,7 +31,10 @@ export default function DiceMachine() {
     setDice5,
   } = useDiceStore();
 
-  const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
+
+
+ 
+  const { playerOnTurn, numberOfRound, setNumberOfRound,firstStart } = useGameStore();
 
   const rollDices = () => {
     if (numberOfRound===3) return
@@ -78,6 +82,10 @@ export default function DiceMachine() {
     }
   };
 
+  if (firstStart){
+  
+return <img className="w-full h-fit m-auto p-2 rounded-xl" src="banner.jpg" alt="" />
+  }else{
   return (
     <>
       <div className="m-2 grid grid-cols-5 rounded bg-slate-300 pt-2">
@@ -162,4 +170,4 @@ export default function DiceMachine() {
       </div>
     </>
   );
-}
+}}

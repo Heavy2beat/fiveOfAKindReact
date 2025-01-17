@@ -33,6 +33,6 @@ export const ger :language = {
     smStraight: "",
     lgStraight: "",
     yahtzee: "",
-    numberOfPlayers: "Anzahl der Spieler",
+    numberOfPlayers: "Wähle die Anzahl der Spieler",
     Try: "Wurf"
 }

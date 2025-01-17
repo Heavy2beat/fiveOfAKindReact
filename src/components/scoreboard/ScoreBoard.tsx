@@ -1,4 +1,4 @@
-import {  useState } from "react";
+
 import { useGameStore } from "../../store/GameStore";
 import PlayerScoreBoard from "./PlayerScoreBoard";
 import { useLanguageStore } from "../../store/LanguageStore";
@@ -10,6 +10,8 @@ export default function ScoreBoard() {
   const { setLang,lang } = useLanguageStore();
 
   const {
+    firstStart,
+    setFirstStart,
     numberOfPlayers,
     setNumberOfPlayers,
     playerOnTurn,
@@ -23,7 +25,6 @@ export default function ScoreBoard() {
     setScoreBoardPlayer4,
   } = useGameStore();
 
-  const [firstStart, setFirstStart] = useState(true);
  
 
 
@@ -92,7 +93,7 @@ export default function ScoreBoard() {
 
   function handleNumberOfPlayer(numberToSet: number) {
     setNumberOfPlayers(numberToSet);
-    setFirstStart(() => false);
+    setFirstStart(false);
   }
 
   
