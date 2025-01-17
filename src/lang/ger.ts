@@ -34,5 +34,8 @@ export const ger :language = {
     lgStraight: "",
     yahtzee: "",
     numberOfPlayers: "Wähle die Anzahl der Spieler",
-    Try: "Wurf"
+    Try: "Wurf",
+    niceTry: "Netter Versuch! Mindestens einmal würfeln!",
+    nextPlayer: "Nächster Spieler",
+    nextRound: "Nächste Runde"
 }

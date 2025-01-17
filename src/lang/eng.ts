@@ -34,5 +34,8 @@ export const eng : language = {
   12: "5 of a kind(50P)",
   13: "Chance",
   numberOfPlayers: "Choose the number of Players",
-  Try: "Try"
+  Try: "Try",
+  niceTry: "Nice try! Roll the dices first!",
+  nextPlayer: "Next Player",
+  nextRound: "Next Round"
 }
