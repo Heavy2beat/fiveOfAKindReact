@@ -33,6 +33,6 @@ export const eng : language = {
   11: "Lg Street(40P)",
   12: "5 of a kind(50P)",
   13: "Chance",
-  numberOfPlayers: "Number of Players",
+  numberOfPlayers: "Choose the number of Players",
   Try: "Try"
 }

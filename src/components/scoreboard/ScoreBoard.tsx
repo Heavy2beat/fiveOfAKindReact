@@ -6,6 +6,7 @@ import { ger } from "../../lang/ger";
 import { eng } from "../../lang/eng";
 
 
+
 export default function ScoreBoard() {
   const { setLang,lang } = useLanguageStore();
 
@@ -87,8 +88,11 @@ export default function ScoreBoard() {
           />,
         );
     }
-
-    return <div>{playerBoards}</div>;
+if (numberOfPlayers>1){
+    return <div className=" md:grid md:grid-cols-2 xl:flex xl:justify-center">{playerBoards}</div>;
+}else{
+  return <div className="flex justify-center">{playerBoards}</div>;
+}
   };
 
   function handleNumberOfPlayer(numberToSet: number) {
@@ -102,7 +106,7 @@ export default function ScoreBoard() {
     return (
       <>
         <div>
-          <h2 className="text-center">{lang.numberOfPlayers}</h2>
+          <h2 className="text-center p-10">{lang.numberOfPlayers}</h2>
           <div className="flex justify-center">
             <button
               onClick={() => handleNumberOfPlayer(1)}
@@ -143,13 +147,18 @@ export default function ScoreBoard() {
               alt=""
             />
           </div>
+          <div className="flex justify-center items-center text-xs"><p>designed by Fabian Fischer</p></div>
         </div>
       </>
     );
   } else {
     return (
       <>
-        <PlayerBoards />
+      <div id="test" className="md:flex justify-center flex-row md:w-full">
+         <PlayerBoards />
+      </div>
+     
+       
       </>
     );
   }

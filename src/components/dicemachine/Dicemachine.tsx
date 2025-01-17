@@ -84,11 +84,16 @@ export default function DiceMachine() {
 
   if (firstStart){
   
-return <img className="w-full h-fit m-auto p-2 rounded-xl" src="banner.jpg" alt="" />
+return <img className="w-full m-auto p-2 rounded-xl md:h-1/4 md:w-1/2 md:mt-4" src="banner.jpg" alt="" />
   }else{
   return (
-    <>
-      <div className="m-2 grid grid-cols-5 rounded bg-slate-300 pt-2">
+    <><div className="flex justify-center items-center bg-slate-400 h-10 md:hidden">
+    <h1>5 OF A KIND</h1>
+
+    </div>
+    <img className="w-full m-auto p-2 rounded-xl hidden  md:flex md:max-h-80 md:w-1/2 md:object-cover" src="banner.jpg" alt="" />
+    <div className="flex justify-center">
+      <div className="m-2 grid grid-cols-5 rounded bg-slate-300 pt-2 md:w-1/2">
         <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
           <Dice diceNumber={dice1}></Dice>
           <button
@@ -168,6 +173,7 @@ return <img className="w-full h-fit m-auto p-2 rounded-xl" src="banner.jpg" alt=
           <h5 className="text-center">{numberOfRound}/3</h5>
           </div>
       </div>
+    </div>
     </>
   );
 }}
