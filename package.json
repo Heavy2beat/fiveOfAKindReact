@@ -1,8 +1,20 @@
 {
   "name": "5ofakind-react",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "homepage": "https://github.com/Heavy2beat/fiveOfAKindReact#readme",
+  "bugs": {
+    "url": "https://github.com/Heavy2beat/fiveOfAKindReact/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heavy2beat/fiveOfAKindReact.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -29,7 +41,7 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9",
+    "prettier-plugin-tailwindcss": "^0.6.10",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",

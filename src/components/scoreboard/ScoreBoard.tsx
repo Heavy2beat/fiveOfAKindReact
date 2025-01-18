@@ -1,14 +1,11 @@
-
 import { useGameStore } from "../../store/GameStore";
 import PlayerScoreBoard from "./PlayerScoreBoard";
 import { useLanguageStore } from "../../store/LanguageStore";
 import { ger } from "../../lang/ger";
 import { eng } from "../../lang/eng";
 
-
-
 export default function ScoreBoard() {
-  const { setLang,lang } = useLanguageStore();
+  const { setLang, lang } = useLanguageStore();
 
   const {
     firstStart,
@@ -25,10 +22,6 @@ export default function ScoreBoard() {
     setScoreBoardPlayer3,
     setScoreBoardPlayer4,
   } = useGameStore();
-
- 
-
-
 
   const handOverCorrectBoard = (
     numberOfPlayer: number,
@@ -88,11 +81,15 @@ export default function ScoreBoard() {
           />,
         );
     }
-if (numberOfPlayers>1){
-    return <div className=" md:grid md:grid-cols-2 xl:flex xl:justify-center">{playerBoards}</div>;
-}else{
-  return <div className="flex justify-center">{playerBoards}</div>;
-}
+    if (numberOfPlayers > 1) {
+      return (
+        <div className="md:grid md:grid-cols-2 xl:flex xl:justify-center">
+          {playerBoards}
+        </div>
+      );
+    } else {
+      return <div className="flex justify-center">{playerBoards}</div>;
+    }
   };
 
   function handleNumberOfPlayer(numberToSet: number) {
@@ -100,13 +97,11 @@ if (numberOfPlayers>1){
     setFirstStart(false);
   }
 
-  
-
   if (firstStart) {
     return (
       <>
         <div>
-          <h2 className="text-center p-10">{lang.numberOfPlayers}</h2>
+          <h2 className="p-10 text-center">{lang.numberOfPlayers}</h2>
           <div className="flex justify-center">
             <button
               onClick={() => handleNumberOfPlayer(1)}
@@ -147,18 +142,18 @@ if (numberOfPlayers>1){
               alt=""
             />
           </div>
-          <div className="flex justify-center items-center text-xs"><p>designed by Fabian Fischer</p></div>
+          <div className="flex items-center justify-center text-xs">
+            <p>designed by Fabian Fischer</p>
+          </div>
         </div>
       </>
     );
   } else {
     return (
       <>
-      <div id="test" className="md:flex justify-center flex-row md:w-full">
-         <PlayerBoards />
-      </div>
-     
-       
+        <div id="test" className="flex-row justify-center md:flex md:w-full">
+          <PlayerBoards />
+        </div>
       </>
     );
   }
