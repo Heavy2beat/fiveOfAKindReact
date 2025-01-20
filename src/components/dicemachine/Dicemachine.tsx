@@ -101,27 +101,24 @@ export default function DiceMachine() {
   if (firstStart) {
     return (
       <img
-        className="m-auto w-full rounded-xl p-2 md:mt-4 md:h-1/4 md:w-1/2"
-        src="banner.jpg"
+        className="md:h-76 m-auto rounded-2xl object-cover p-10 md:flex md:w-1/2 md:rounded-2xl"
+        src="longbanner.png"
         alt=""
       />
     );
   } else {
     return (
       <>
-     <Header></Header>
+        <Header></Header>
         <div className="flex justify-center">
-          <div className="m-2 p-4 grid grid-cols-5 rounded bg-slate-300 md:w-1/2 md:max-w-fit">
+          <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 md:w-1/2 md:max-w-fit">
             <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
               <Dice
                 key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
                 iskept={dice1keep}
                 diceNumber={dice1}
               ></Dice>
-              <button
-                className={manageDiceClass(dice1keep)
-                }
-              >
+              <button className={manageDiceClass(dice1keep)}>
                 {lang.keep}
               </button>
             </div>
@@ -131,10 +128,7 @@ export default function DiceMachine() {
                 iskept={dice2keep}
                 diceNumber={dice2}
               ></Dice>
-              <button
-                className={manageDiceClass(dice2keep)
-                }
-              >
+              <button className={manageDiceClass(dice2keep)}>
                 {lang.keep}
               </button>
             </div>
@@ -144,10 +138,7 @@ export default function DiceMachine() {
                 iskept={dice3keep}
                 diceNumber={dice3}
               ></Dice>
-              <button
-                className={manageDiceClass(dice3keep)
-                }
-              >
+              <button className={manageDiceClass(dice3keep)}>
                 {lang.keep}
               </button>
             </div>
@@ -157,10 +148,7 @@ export default function DiceMachine() {
                 iskept={dice4keep}
                 diceNumber={dice4}
               ></Dice>
-              <button
-                className={manageDiceClass(dice4keep)
-                }
-              >
+              <button className={manageDiceClass(dice4keep)}>
                 {lang.keep}
               </button>
             </div>
@@ -170,10 +158,7 @@ export default function DiceMachine() {
                 iskept={dice5keep}
                 diceNumber={dice5}
               ></Dice>
-              <button
-                className={manageDiceClass(dice5keep)
-                }
-              >
+              <button className={manageDiceClass(dice5keep)}>
                 {lang.keep}
               </button>
             </div>
