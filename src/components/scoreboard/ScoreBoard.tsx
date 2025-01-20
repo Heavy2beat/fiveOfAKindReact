@@ -4,7 +4,8 @@ import PlayerScoreBoard from "./PlayerScoreBoard";
 import { useLanguageStore } from "../../store/LanguageStore";
 import { ger } from "../../lang/ger";
 import { eng } from "../../lang/eng";
-
+import { motion} from "framer-motion";
+import { useEffect, useState } from "react";
 
 
 export default function ScoreBoard() {
@@ -25,8 +26,6 @@ export default function ScoreBoard() {
     setScoreBoardPlayer3,
     setScoreBoardPlayer4,
   } = useGameStore();
-
- 
 
 
 
@@ -62,46 +61,75 @@ export default function ScoreBoard() {
     }
   };
 
+  
+
   const PlayerBoards = () => {
     const playerBoards = [];
+    
 
     for (let i = 1; i <= numberOfPlayers; i++) {
       if (playerOnTurn === i)
         playerBoards.push(
-          <PlayerScoreBoard
-            setCurrentBoard={handOverCorrectBoardSetter(i)}
-            currentBoard={handOverCorrectBoard(i)}
+          <motion.div
             key={i}
-            player={i}
-          />,
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <PlayerScoreBoard
+              setCurrentBoard={handOverCorrectBoardSetter(i)}
+              currentBoard={handOverCorrectBoard(i)}
+              player={i}
+            />
+          </motion.div>
         );
     }
 
     for (let i = 1; i <= numberOfPlayers; i++) {
       if (playerOnTurn !== i)
         playerBoards.push(
-          <PlayerScoreBoard
-            setCurrentBoard={handOverCorrectBoardSetter(i)}
-            currentBoard={handOverCorrectBoard(i)}
+          <motion.div
             key={i}
-            player={i}
-          />,
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <PlayerScoreBoard
+              setCurrentBoard={handOverCorrectBoardSetter(i)}
+              currentBoard={handOverCorrectBoard(i)}
+              player={i}
+            />
+          </motion.div>
         );
     }
-if (numberOfPlayers>1){
-    return <div className=" md:grid md:grid-cols-2 xl:flex xl:justify-center">{playerBoards}</div>;
-}else{
-  return <div className="flex justify-center">{playerBoards}</div>;
-}
+
+    if (numberOfPlayers > 1) {
+      return <div className="md:grid md:grid-cols-2 xl:flex xl:justify-center">{playerBoards}</div>;
+    } else {
+      return <div className="flex justify-center">{playerBoards}</div>;
+    }
   };
+
 
   function handleNumberOfPlayer(numberToSet: number) {
     setNumberOfPlayers(numberToSet);
     setFirstStart(false);
   }
 
-  
+  const getPlayerBoards = () =>{
+    return <PlayerBoards></PlayerBoards>
+  }
+  const [playerBoards,setPlayerBoards] =useState(getPlayerBoards());
 
+useEffect(()=>{
+  setPlayerBoards(()=>getPlayerBoards());
+},[playerOnTurn])
+
+
+
+ 
   if (firstStart) {
     return (
       <>
@@ -155,7 +183,7 @@ if (numberOfPlayers>1){
     return (
       <>
       <div id="test" className="md:flex justify-center flex-row md:w-full">
-         <PlayerBoards />
+        {playerBoards}
       </div>
      
        
