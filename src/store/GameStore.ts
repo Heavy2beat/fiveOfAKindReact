@@ -21,6 +21,8 @@ interface GameStore  {
     scoreBoardPlayer4: Map<string,number>;
     setScoreBoardPlayer4: (newBoard : Map<string,number>)=>void;
 
+    playernames :string[];
+    setplayerNames: (newNames :string[])=>void;
 }
 
 export const useGameStore = create<GameStore>()((set) => ({
@@ -29,7 +31,7 @@ export const useGameStore = create<GameStore>()((set) => ({
 numberOfRound:0,
 setNumberOfRound: (toSet:number) => set(()=>({ numberOfRound: toSet })),
 
-numberOfPlayers: 1,
+numberOfPlayers: 0,
 setNumberOfPlayers:  (toSet:number) =>{ set(()=>({ numberOfPlayers: toSet }))},
 
 
@@ -46,7 +48,7 @@ scoreBoardPlayer4: new Map<string,number>(),
 setScoreBoardPlayer4: (newBoard: Map<string,number>) => set(()=>({scoreBoardPlayer4: newBoard})),
 scoreBoardPlayer5: new Map<string,number>(),
 setScoreBoardPlayer5: (newBoard: Map<string,number>) => set(()=>({scoreBoardPlayer4: newBoard})),
-
-
+playernames: [],
+setplayerNames:  (newNames:string[]) => set(()=>({playernames: newNames})),
 
 }));

@@ -1,3 +1,4 @@
+import { language } from "../lang/lang";
 import { sendToast } from "../utils/utils";
 
 export const checkIfFinished = (
@@ -5,7 +6,9 @@ export const checkIfFinished = (
   scoreBoardPlayer2: Map<string, number>,
   scoreBoardPlayer3: Map<string, number>,
   scoreBoardPlayer4: Map<string, number>,
-  numberOfPlayers: number
+  numberOfPlayers: number,
+  playerNames: string[],
+  lang :language,
 ) => {
   const points = [0, 0, 0, 0];
   const isFinished = [false, false, false, false];
@@ -25,19 +28,25 @@ export const checkIfFinished = (
   }
 
   const pointMap = new Map<string, number>();
-  const playerNames = ["Spieler 1", "Spieler 2", "Spieler 3", "Spieler 4"];
+  // const playerNamesToSort =[];
+
+  // for (let i=0;i<playerNames.length;i++){
+  //   const temp = playerNames[0] !=="" ? playerNames[0] : `${lang.player} +${i+1}`;
+  //   playerNamesToSort.push(temp);
+  // }
+
 
   if (isFinished.slice(0, numberOfPlayers).every(finished => finished)) {
     for (let player = 0; player < numberOfPlayers; player++) {
       pointMap.set(playerNames[player], points[player]);
     }
-    gameIsFinished(pointMap);
+    gameIsFinished(pointMap,lang);
     return true;
   }
 };
 
-const gameIsFinished = (pointMap: Map<string, number>) => {
+const gameIsFinished = (pointMap: Map<string, number>, lang :language) => {
   const sortedPoints = Array.from(pointMap.entries()).sort((a, b) => b[1] - a[1]);
   const winner = sortedPoints[0][0];
-  sendToast(`${winner} is the winner!`, 100000);
+  sendToast(`${winner} ${lang.isTheWinner}`, 100000);
 };
