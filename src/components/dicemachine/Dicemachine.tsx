@@ -4,6 +4,7 @@ import { useDiceStore } from "../../store/Dicestore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
+import Header from "../Header";
 
 export default function DiceMachine() {
   const lang: language = useLanguageStore().lang;
@@ -85,7 +86,7 @@ export default function DiceMachine() {
     const diceIsNotVisible =
       "m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl text-center  opacity-30";
     const diceIsNotKeptAndVisible =
-      "m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl text-center";
+      "m-2 cursor-pointer rounded bg-blue-400 p-2 shadow-xl text-center";
     if (numberOfRound !== 0) {
       if (iskept) {
         return diceIsKeptAndVisible;
@@ -100,7 +101,7 @@ export default function DiceMachine() {
   if (firstStart) {
     return (
       <img
-        className="m-auto w-full rounded-xl p-2 md:mt-4 md:h-1/4md:w-1/2"
+        className="m-auto w-full rounded-xl p-2 md:mt-4 md:h-1/4 md:w-1/2"
         src="banner.jpg"
         alt=""
       />
@@ -108,16 +109,9 @@ export default function DiceMachine() {
   } else {
     return (
       <>
-        <div className="flex h-10 items-center justify-center bg-slate-400 md:hidden">
-          <h1>5 OF A KIND</h1>
-        </div>
-        <img
-          className="m-auto hidden w-full rounded-xl p-2 md:flex md:max-h-80 md:w-1/2 md:object-cover"
-          src="banner.jpg"
-          alt=""
-        />
+     <Header></Header>
         <div className="flex justify-center">
-          <div className="m-2 grid grid-cols-5 rounded bg-slate-300 pt-2 md:w-1/2">
+          <div className="m-2 p-4 grid grid-cols-5 rounded bg-slate-300 md:w-1/2 md:max-w-fit">
             <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
               <Dice
                 key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
@@ -191,7 +185,7 @@ export default function DiceMachine() {
             <div className="col-span-3 col-start-2 flex justify-center">
               <button
                 onClick={() => rollDices()}
-                className="m-2 w-5/6 cursor-pointer rounded bg-slate-400 p-2 text-center shadow-xl"
+                className="m-2 w-5/6 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl"
               >
                 {numberOfRound !== 3 ? lang.roll : lang.setPoints}
               </button>

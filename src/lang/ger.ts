@@ -19,10 +19,10 @@ export const ger :language = {
     keep: "Halten",
     onTurn: ", du bist am Zug.",
     setPoints: "↓↓↓↓↓↓",
-    player1: "Ein Spieler",
-    player2: "Zwei Spieler",
-    player3: "Drei Spieler",
-    player4: "Vier Spieler",
+    player1: "Spieler 1",
+    player2: "Spieler 2",
+    player3: "Spieler 3",
+    player4: "Spieler 4",
     player: "Spieler",
     wins: "hat gewonnen",
     secret: "Gibt hier keine geheimen Knöpfe! ;-)",
@@ -37,5 +37,10 @@ export const ger :language = {
     Try: "Wurf",
     niceTry: "Netter Versuch! Mindestens einmal würfeln!",
     nextPlayer: "Nächster Spieler",
-    nextRound: "Nächste Runde"
+    nextRound: "Nächste Runde",
+    isTheWinner: "ist der Gewinner!",
+    chooseNumberOfPlayers: "Bitte die Anzahl der Spieler wählen",
+    fillInNames: "Namen eingeben",
+    beginnGame: "Spiel beginnen",
+    choose: "Anzahl wählen"
 }

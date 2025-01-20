@@ -1,21 +1,21 @@
 
 import { useGameStore } from "../../store/GameStore";
 import PlayerScoreBoard from "./PlayerScoreBoard";
-import { useLanguageStore } from "../../store/LanguageStore";
-import { ger } from "../../lang/ger";
-import { eng } from "../../lang/eng";
+
+
 import { motion} from "framer-motion";
 import { useEffect, useState } from "react";
+import Start from "../../pages/Start";
 
 
 export default function ScoreBoard() {
-  const { setLang,lang } = useLanguageStore();
+
 
   const {
     firstStart,
-    setFirstStart,
+ 
     numberOfPlayers,
-    setNumberOfPlayers,
+ 
     playerOnTurn,
     scoreBoardPlayer1,
     scoreBoardPlayer2,
@@ -75,7 +75,7 @@ export default function ScoreBoard() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
           >
             <PlayerScoreBoard
               setCurrentBoard={handOverCorrectBoardSetter(i)}
@@ -113,10 +113,7 @@ export default function ScoreBoard() {
   };
 
 
-  function handleNumberOfPlayer(numberToSet: number) {
-    setNumberOfPlayers(numberToSet);
-    setFirstStart(false);
-  }
+
 
   const getPlayerBoards = () =>{
     return <PlayerBoards></PlayerBoards>
@@ -125,59 +122,14 @@ export default function ScoreBoard() {
 
 useEffect(()=>{
   setPlayerBoards(()=>getPlayerBoards());
-},[playerOnTurn])
+},[playerOnTurn,numberOfPlayers])
 
 
 
  
   if (firstStart) {
     return (
-      <>
-        <div>
-          <h2 className="text-center p-10">{lang.numberOfPlayers}</h2>
-          <div className="flex justify-center">
-            <button
-              onClick={() => handleNumberOfPlayer(1)}
-              className="m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl"
-            >
-              1
-            </button>
-            <button
-              onClick={() => handleNumberOfPlayer(2)}
-              className="m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl"
-            >
-              2
-            </button>
-            <button
-              onClick={() => handleNumberOfPlayer(3)}
-              className="m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl"
-            >
-              3
-            </button>
-            <button
-              onClick={() => handleNumberOfPlayer(4)}
-              className="m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl"
-            >
-              4
-            </button>
-          </div>
-          <div className="flex h-6 items-center justify-center gap-4 p-10">
-            <img
-              onClick={() => setLang(ger)}
-              className="h-6"
-              src="german.png"
-              alt=""
-            />
-            <img
-              onClick={() => setLang(eng)}
-              className="h-6"
-              src="english.png"
-              alt=""
-            />
-          </div>
-          <div className="flex justify-center items-center text-xs"><p>designed by Fabian Fischer</p></div>
-        </div>
-      </>
+     <Start></Start>
     );
   } else {
     return (

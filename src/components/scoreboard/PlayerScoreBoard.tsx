@@ -13,7 +13,7 @@ interface playerScoreBoardProps {
 }
 
 export default function PlayerScoreBoard(props: playerScoreBoardProps) {
-  const lang = useLanguageStore().lang;
+  const {lang} = useLanguageStore();
   const { dice1, dice2, dice3, dice4, dice5, unkeepAllDices } = useDiceStore();
   const {
     numberOfPlayers,
@@ -25,11 +25,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     scoreBoardPlayer4,
     playerOnTurn,
     setPlayerOnTurn,
+    playernames,
   } = useGameStore();
 
   const onClickHandler = (choice: number) => {
     if (numberOfRound === 0) {
-      sendToast("Netter Versuch! Mindestens einmal würfeln.", 2000);
+      sendToast(lang.niceTry, 2000);
       return;
     }
     setDicesToPoints(
@@ -49,6 +50,8 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
         scoreBoardPlayer3,
         scoreBoardPlayer4,
         numberOfPlayers,
+        playernames,
+        lang,
       )
     ) {
       if (playerOnTurn < numberOfPlayers) {
@@ -57,9 +60,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
         setPlayerOnTurn(1);
       }
       if (numberOfPlayers > 1) {
-        sendToast(`Nächster Spieler`, 1000);
+        sendToast(lang.nextPlayer, 1000);
       } else {
-        sendToast("Nächste Runde", 1000);
+        sendToast(lang.nextRound, 1000);
       }
       setNumberOfRound(0);
       unkeepAllDices();
@@ -119,7 +122,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             : "col-span-2 mb-2 bg-slate-400 text-center"
         }
       >
-        {lang.player} {props.player}
+        {playernames[props.player -1]}
       </h5>
 
       <div className="col-start-1">

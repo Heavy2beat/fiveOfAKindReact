@@ -17,10 +17,10 @@ export const eng : language = {
   keep: "Keep",
   onTurn: ", it's your turn.",
   setPoints: "Set Points",
-  player1: "One Player",
-  player2: "Two Player",
-  player3: "Three Player",
-  player4: "Four Player",
+  player1: "Player 1",
+  player2: "Player 2",
+  player3: "Player 3",
+  player4: "Player 4",
   player: "Player",
   wins: "wins",
   secret: "No secret buttons here! ;-)",
@@ -37,5 +37,10 @@ export const eng : language = {
   Try: "Try",
   niceTry: "Nice try! Roll the dices first!",
   nextPlayer: "Next Player",
-  nextRound: "Next Round"
+  nextRound: "Next Round",
+  isTheWinner: "is the winner!",
+  chooseNumberOfPlayers: "Choose the number of players",
+  fillInNames: "Fill in names",
+  beginnGame: "Begin Game",
+  choose: "Choose Players"
 }

@@ -36,5 +36,10 @@ export type language = {
     niceTry:string,
     nextPlayer:string,
     nextRound:string,
+    isTheWinner: string,
+    chooseNumberOfPlayers:string,
+    fillInNames:string,
+    beginnGame:string,
+    choose:string,
 
 }
