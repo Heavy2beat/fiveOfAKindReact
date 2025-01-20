@@ -3,6 +3,7 @@ import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { sendToast } from "../utils/utils";
 
+
 export default function Start() {
   const { lang } = useLanguageStore();
 
@@ -53,6 +54,7 @@ export default function Start() {
             value={playernames[index]}
             className="rounded bg-gray-200 text-center"
             placeholder={`${lang.player} ${index + 1}`}
+            onFocus={(e) => e.target.select()}
           />
         ))}
       </div>
