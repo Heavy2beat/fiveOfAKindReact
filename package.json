@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "homepage": "https://Heavy2beat.github.io/fiveOfAKindReact",
+  "homepage": "https://github.com/Heavy2beat/fiveOfAKindReact#readme",
   "bugs": {
     "url": "https://github.com/Heavy2beat/fiveOfAKindReact/issues"
   },
@@ -19,11 +19,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-   "predeploy": "npm run build",
-   "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "gh-pages": "^6.3.0",
     "motion": "^11.18.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
