@@ -53,6 +53,6 @@ export const gameIsFinished = (
     (a, b) => b[1] - a[1],
   );
   const winner = sortedPoints[0][0];
-  sendToast(`${winner} ${lang.isTheWinner}`, 1000);
+ // sendToast(`${winner} ${lang.isTheWinner}`, 1000);
   return sortedPoints;
 };
