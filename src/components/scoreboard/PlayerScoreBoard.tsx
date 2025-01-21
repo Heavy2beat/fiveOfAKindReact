@@ -4,6 +4,7 @@ import { setDicesToPoints } from "../../game/calculatePoints";
 import { useDiceStore } from "../../store/Dicestore";
 import { sendToast } from "../../utils/utils";
 import { checkIfFinished } from "../../game/game";
+import { useNavigate } from "react-router-dom";
 
 interface playerScoreBoardProps {
   player: number;
@@ -13,7 +14,7 @@ interface playerScoreBoardProps {
 }
 
 export default function PlayerScoreBoard(props: playerScoreBoardProps) {
-  const {lang} = useLanguageStore();
+  const { lang } = useLanguageStore();
   const { dice1, dice2, dice3, dice4, dice5, unkeepAllDices } = useDiceStore();
   const {
     numberOfPlayers,
@@ -26,7 +27,10 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     playerOnTurn,
     setPlayerOnTurn,
     playernames,
+    setEndScores,
   } = useGameStore();
+
+  const navigate = useNavigate();
 
   const onClickHandler = (choice: number) => {
     if (numberOfRound === 0) {
@@ -51,7 +55,8 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
         scoreBoardPlayer4,
         numberOfPlayers,
         playernames,
-        lang,
+
+        setEndScores,
       )
     ) {
       if (playerOnTurn < numberOfPlayers) {
@@ -66,6 +71,8 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
       }
       setNumberOfRound(0);
       unkeepAllDices();
+    } else {
+      navigate("/end");
     }
   };
 
@@ -122,7 +129,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             : "col-span-2 mb-2 bg-slate-400 text-center"
         }
       >
-        {playernames[props.player -1]}
+        {playernames[props.player - 1]}
       </h5>
 
       <div className="col-start-1">

@@ -41,5 +41,8 @@ export type language = {
     fillInNames:string,
     beginnGame:string,
     choose:string,
+    revenge:string,
+    mainMenu:string,
+    oops:string,
 
 }

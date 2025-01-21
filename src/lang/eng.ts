@@ -42,5 +42,8 @@ export const eng : language = {
   chooseNumberOfPlayers: "Choose the number of players",
   fillInNames: "Fill in names",
   beginnGame: "Begin Game",
-  choose: "Choose Players"
+  choose: "Choose Players",
+  revenge: "Revenge",
+  mainMenu: "Main menu",
+  oops: "Oops, something went wrong!"
 }

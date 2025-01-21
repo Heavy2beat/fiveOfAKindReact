@@ -2,18 +2,14 @@ import { useState } from "react";
 import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { sendToast } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function Start() {
   const { lang } = useLanguageStore();
 
-  const {
-    setNumberOfPlayers,
-    setFirstStart,
-    numberOfPlayers,
-    playernames,
-    setplayerNames,
-  } = useGameStore();
-
+  const { setNumberOfPlayers, numberOfPlayers, playernames, setplayerNames } =
+    useGameStore();
+  const navigate = useNavigate();
   const [isNumberOfPlayerChosen, setIsNumberOfPlayerChosen] = useState(false);
 
   const handleNumberOfPlayer = (numberToSet: number) => {
@@ -30,7 +26,7 @@ export default function Start() {
       setIsNumberOfPlayerChosen(true);
       return;
     }
-    setFirstStart(false);
+    navigate("/game");
   };
 
   const showNumberOfPlayersOnButton = (buttonNumber: number) => {

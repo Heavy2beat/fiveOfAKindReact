@@ -42,5 +42,8 @@ export const ger :language = {
     chooseNumberOfPlayers: "Bitte die Anzahl der Spieler wählen",
     fillInNames: "Namen eingeben",
     beginnGame: "Spiel beginnen",
-    choose: "Anzahl wählen"
+    choose: "Anzahl wählen",
+    revenge: "Revanche",
+    mainMenu: "Hauptmenü",
+    oops: "Oops, hier ist etwas schief gelaufen!"
 }

@@ -7,31 +7,29 @@ interface DiceProps {
   iskept: boolean;
 }
 export default function Dice(props: DiceProps) {
-    const {numberOfRound} = useGameStore();
+  const { numberOfRound } = useGameStore();
   const [rotation, setRotation] = useState(0);
 
-
   useEffect(() => {
-
     if (!props.iskept) {
       rotateDice();
     }
   }, [props.iskept]);
 
   const rotateDice = () => {
-   if (numberOfRound!==0) setRotation(rotation === 0 ? 360 : 0);
+    if (numberOfRound !== 0) setRotation(rotation === 0 ? 360 : 0);
   };
 
   const dicePath = `dice-${props.diceNumber}.png`;
 
-const diceClassVisible ="m-auto h-12";
-const diceClassInvisible = "m-auto h-12 opacity-30";
-  
+  const diceClassVisible = "m-auto h-12";
+  const diceClassInvisible = "m-auto h-12 opacity-30";
+
   return (
     <motion.img
       animate={{ rotate: rotation }}
       transition={{ duration: 0.5 }}
-      className={numberOfRound!==0 ? diceClassVisible : diceClassInvisible }
+      className={numberOfRound !== 0 ? diceClassVisible : diceClassInvisible}
       src={dicePath}
       alt={`${props.diceNumber}`}
     />

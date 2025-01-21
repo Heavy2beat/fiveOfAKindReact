@@ -3,12 +3,9 @@ import PlayerScoreBoard from "./PlayerScoreBoard";
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Start from "../../pages/Start";
 
 export default function ScoreBoard() {
   const {
-    firstStart,
-
     numberOfPlayers,
 
     playerOnTurn,
@@ -115,15 +112,11 @@ export default function ScoreBoard() {
     setPlayerBoards(() => getPlayerBoards());
   }, [playerOnTurn, numberOfPlayers]);
 
-  if (firstStart) {
-    return <Start></Start>;
-  } else {
-    return (
-      <>
-        <div id="test" className="flex-row justify-center md:flex md:w-full">
-          {playerBoards}
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div id="test" className="flex-row justify-center md:flex md:w-full">
+        {playerBoards}
+      </div>
+    </>
+  );
 }

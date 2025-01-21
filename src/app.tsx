@@ -1,21 +1,16 @@
-import { ToastContainer } from "react-toastify";
-import DiceMachine from "./components/dicemachine/Dicemachine";
-import ScoreBoard from "./components/scoreboard/ScoreBoard";
 import Footer from "./components/Footer";
+import { Outlet } from "react-router-dom";
+
+import Header from "./components/Header";
+import { ToastContainer } from "react-toastify";
 
 export function App() {
-
-
-   
-
-
   return (
     <>
-  <DiceMachine></DiceMachine>
-  <ScoreBoard></ScoreBoard>
-  <ToastContainer></ToastContainer>
-  <Footer></Footer>
+      <Header></Header>
+      <ToastContainer></ToastContainer>
+      <Outlet></Outlet>
+      <Footer></Footer>
     </>
   );
 }
-

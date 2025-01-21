@@ -4,7 +4,6 @@ import { useDiceStore } from "../../store/Dicestore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
-import Header from "../Header";
 
 export default function DiceMachine() {
   const lang: language = useLanguageStore().lang;
@@ -31,8 +30,7 @@ export default function DiceMachine() {
     setDice5,
   } = useDiceStore();
 
-  const { playerOnTurn, numberOfRound, setNumberOfRound, firstStart } =
-    useGameStore();
+  const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
 
   const rollDices = () => {
     if (numberOfRound === 3) return;
@@ -98,90 +96,69 @@ export default function DiceMachine() {
     }
   };
 
-  if (firstStart) {
-    return (
-      <img
-        className="md:h-76 m-auto rounded-2xl object-cover p-10 md:flex md:w-1/2 md:rounded-2xl"
-        src="longbanner.png"
-        alt=""
-      />
-    );
-  } else {
-    return (
-      <>
-        <Header></Header>
-        <div className="flex justify-center">
-          <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 md:w-1/2 md:max-w-fit">
-            <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
-              <Dice
-                key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
-                iskept={dice1keep}
-                diceNumber={dice1}
-              ></Dice>
-              <button className={manageDiceClass(dice1keep)}>
-                {lang.keep}
-              </button>
-            </div>
-            <div onClick={() => toggleDice(2)} className="grid grid-cols-1">
-              <Dice
-                key={`dice2-${dice2}-${dice2keep}-${numberOfRound}`}
-                iskept={dice2keep}
-                diceNumber={dice2}
-              ></Dice>
-              <button className={manageDiceClass(dice2keep)}>
-                {lang.keep}
-              </button>
-            </div>
-            <div onClick={() => toggleDice(3)} className="grid grid-cols-1">
-              <Dice
-                key={`dice3-${dice3}-${dice3keep}-${numberOfRound}`}
-                iskept={dice3keep}
-                diceNumber={dice3}
-              ></Dice>
-              <button className={manageDiceClass(dice3keep)}>
-                {lang.keep}
-              </button>
-            </div>
-            <div onClick={() => toggleDice(4)} className="grid grid-cols-1">
-              <Dice
-                key={`dice4-${dice4}-${dice4keep}-${numberOfRound}`}
-                iskept={dice4keep}
-                diceNumber={dice4}
-              ></Dice>
-              <button className={manageDiceClass(dice4keep)}>
-                {lang.keep}
-              </button>
-            </div>
-            <div onClick={() => toggleDice(5)} className="grid grid-cols-1">
-              <Dice
-                key={`dice5-${dice5}-${dice5keep}-${numberOfRound}`}
-                iskept={dice5keep}
-                diceNumber={dice5}
-              ></Dice>
-              <button className={manageDiceClass(dice5keep)}>
-                {lang.keep}
-              </button>
-            </div>
-            <div className="col-span-1 col-start-1 flex items-center justify-center">
-              <h5 className="text-center">
-                {lang.player} {playerOnTurn}
-              </h5>
-            </div>
-            <div className="col-span-3 col-start-2 flex justify-center">
-              <button
-                onClick={() => rollDices()}
-                className="m-2 w-5/6 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl"
-              >
-                {numberOfRound !== 3 ? lang.roll : lang.setPoints}
-              </button>
-            </div>
-            <div className="col-span-1 col-start-5">
-              <h5 className="text-center">{lang.Try}</h5>
-              <h5 className="text-center">{numberOfRound}/3</h5>
-            </div>
+  return (
+    <>
+      <div className="flex justify-center">
+        <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 md:w-1/2 md:max-w-fit">
+          <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
+            <Dice
+              key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
+              iskept={dice1keep}
+              diceNumber={dice1}
+            ></Dice>
+            <button className={manageDiceClass(dice1keep)}>{lang.keep}</button>
+          </div>
+          <div onClick={() => toggleDice(2)} className="grid grid-cols-1">
+            <Dice
+              key={`dice2-${dice2}-${dice2keep}-${numberOfRound}`}
+              iskept={dice2keep}
+              diceNumber={dice2}
+            ></Dice>
+            <button className={manageDiceClass(dice2keep)}>{lang.keep}</button>
+          </div>
+          <div onClick={() => toggleDice(3)} className="grid grid-cols-1">
+            <Dice
+              key={`dice3-${dice3}-${dice3keep}-${numberOfRound}`}
+              iskept={dice3keep}
+              diceNumber={dice3}
+            ></Dice>
+            <button className={manageDiceClass(dice3keep)}>{lang.keep}</button>
+          </div>
+          <div onClick={() => toggleDice(4)} className="grid grid-cols-1">
+            <Dice
+              key={`dice4-${dice4}-${dice4keep}-${numberOfRound}`}
+              iskept={dice4keep}
+              diceNumber={dice4}
+            ></Dice>
+            <button className={manageDiceClass(dice4keep)}>{lang.keep}</button>
+          </div>
+          <div onClick={() => toggleDice(5)} className="grid grid-cols-1">
+            <Dice
+              key={`dice5-${dice5}-${dice5keep}-${numberOfRound}`}
+              iskept={dice5keep}
+              diceNumber={dice5}
+            ></Dice>
+            <button className={manageDiceClass(dice5keep)}>{lang.keep}</button>
+          </div>
+          <div className="col-span-1 col-start-1 flex items-center justify-center">
+            <h5 className="text-center">
+              {lang.player} {playerOnTurn}
+            </h5>
+          </div>
+          <div className="col-span-3 col-start-2 flex justify-center">
+            <button
+              onClick={() => rollDices()}
+              className="m-2 w-5/6 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl"
+            >
+              {numberOfRound !== 3 ? lang.roll : lang.setPoints}
+            </button>
+          </div>
+          <div className="col-span-1 col-start-5">
+            <h5 className="text-center">{lang.Try}</h5>
+            <h5 className="text-center">{numberOfRound}/3</h5>
           </div>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
