@@ -13,13 +13,13 @@ export default function Footer() {
         <img
           onClick={() => setLang(ger)}
           className="h-6 cursor-pointer"
-          src="german.png"
+          src="/fiveOfAKindReact/german.png"
           alt=""
         />
         <img
           onClick={() => setLang(eng)}
           className="h-6 cursor-pointer"
-          src="english.png"
+          src="/fiveOfAKindReact/english.png"
           alt=""
         />
       </div>
