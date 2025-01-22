@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "homepage": "https://Heavy2beat.github.io/fiveOfAKindReact/",
+
+  "homepage": "https://Heavy2beat.github.io/fiveOfAKindReact",
+
   "bugs": {
     "url": "https://github.com/Heavy2beat/fiveOfAKindReact/issues"
   },
