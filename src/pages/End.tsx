@@ -18,7 +18,7 @@ export default function End() {
   const navigate = useNavigate();
 
   const prepareEndscores = () => {
-    const endscoresSorted = gameIsFinished(endScores, lang);
+    const endscoresSorted = gameIsFinished(endScores);
     return endscoresSorted.map(([player, score], index) => (
       <li key={index}>{`${player}: ${score} ${lang.points}`}</li>
     ));
