@@ -80,11 +80,11 @@ export default function DiceMachine() {
 
   const manageDiceClass = (iskept: boolean) => {
     const diceIsKeptAndVisible =
-      "m-2 cursor-pointer rounded bg-green-400 p-2 shadow-xl text-center";
+      "m-2 cursor-pointer rounded  min-w-fit bg-green-400 p-2 shadow-xl text-center";
     const diceIsNotVisible =
-      "m-2 cursor-pointer rounded bg-slate-400 p-2 shadow-xl text-center  opacity-30";
+      "m-2 cursor-pointer rounded  min-w-fit bg-slate-400 p-2 shadow-xl text-center  opacity-30";
     const diceIsNotKeptAndVisible =
-      "m-2 cursor-pointer rounded bg-blue-400 p-2 shadow-xl text-center";
+      "m-2 cursor-pointer rounded  min-w-fit bg-blue-400 p-2 shadow-xl text-center";
     if (numberOfRound !== 0) {
       if (iskept) {
         return diceIsKeptAndVisible;
@@ -99,7 +99,7 @@ export default function DiceMachine() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 text-sm md:w-1/2 md:max-w-fit md:text-base">
+        <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 text-xs md:w-1/2 md:max-w-fit md:text-base">
           <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
             <Dice
               key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
