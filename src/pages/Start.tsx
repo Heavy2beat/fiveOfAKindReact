@@ -60,9 +60,9 @@ export default function Start() {
   };
 
   return (
-    <>
+    <div>
       <div className="text-xl">
-        <h2 className="p-4 text-center">{lang.numberOfPlayers}</h2>
+        <h2 className="p-4 text-center text-2xl">{lang.numberOfPlayers}</h2>
         <div className="flex justify-center">
           {[1, 2, 3, 4].map((num) => (
             <button
@@ -84,6 +84,6 @@ export default function Start() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
