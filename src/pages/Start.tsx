@@ -3,6 +3,7 @@ import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { sendToast } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Start() {
   const { lang } = useLanguageStore();
@@ -84,6 +85,7 @@ export default function Start() {
           </button>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

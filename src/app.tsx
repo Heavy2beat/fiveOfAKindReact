@@ -1,4 +1,3 @@
-import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -10,7 +9,6 @@ export function App() {
       <Header></Header>
       <ToastContainer></ToastContainer>
       <Outlet></Outlet>
-      <Footer></Footer>
     </>
   );
 }

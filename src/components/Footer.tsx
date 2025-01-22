@@ -24,24 +24,24 @@ export default function Footer() {
 
   return (
     <div
-      className={`fixed bottom-0 mt-auto h-10 w-full bg-blue-200 p-2 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+      className={`fixed bottom-0 mt-auto h-12 w-full bg-blue-200 p-2 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
     >
       <div className="flex h-4 items-center justify-center gap-4">
         <img
           onClick={() => setLang(ger)}
-          className="h-4 cursor-pointer md:h-6"
+          className="h-4 cursor-pointer"
           src="/fiveOfAKindReact/german.png"
           alt="German"
         />
         <img
           onClick={() => setLang(eng)}
-          className="h-4 cursor-pointer md:h-6"
+          className="h-4 cursor-pointer"
           src="/fiveOfAKindReact/english.png"
           alt="English"
         />
       </div>
       <div className="flex items-center justify-center text-xs">
-        <p>designed by Fabian Fischer</p>
+        <p className="p-1">designed by Fabian Fischer</p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { gameIsFinished } from "../game/game";
+import Footer from "../components/Footer";
 
 export default function End() {
   const { lang } = useLanguageStore();
@@ -60,6 +61,7 @@ export default function End() {
           {lang.mainMenu}
         </button>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
