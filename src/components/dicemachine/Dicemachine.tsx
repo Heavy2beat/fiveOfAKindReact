@@ -99,7 +99,7 @@ export default function DiceMachine() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 md:w-1/2 md:max-w-fit">
+        <div className="m-2 grid grid-cols-5 rounded bg-slate-300 p-4 text-sm md:w-1/2 md:max-w-fit md:text-base">
           <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
             <Dice
               key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
