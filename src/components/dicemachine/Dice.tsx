@@ -20,7 +20,7 @@ export default function Dice(props: DiceProps) {
     if (numberOfRound !== 0) setRotation(rotation === 0 ? 360 : 0);
   };
 
-  const dicePath = `dice-${props.diceNumber}.png`;
+  const dicePath = `/fiveOfAKindReact/dice-${props.diceNumber}.png`;
 
   const diceClassVisible = "m-auto h-10 md:h-12";
   const diceClassInvisible = "m-auto h-10 md:h-12 opacity-30";

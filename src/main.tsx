@@ -10,6 +10,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createHashRouter([
   {
+    
     path: "/",
     element: <App></App>,
     errorElement: <NotFoundPage />,

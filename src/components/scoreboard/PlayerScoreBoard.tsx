@@ -140,7 +140,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("1")}>
-                <img className="h-6" src="dice-1.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-1.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("1")}
@@ -151,7 +151,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("2")}>
-                <img className="h-6" src="dice-2.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-2.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("2")}
@@ -162,7 +162,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("3")}>
-                <img className="h-6" src="dice-3.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-3.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("3")}
@@ -173,7 +173,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("4")}>
-                <img className="h-6" src="dice-4.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-4.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("4")}
@@ -184,7 +184,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("5")}>
-                <img className="h-6" src="dice-5.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-5.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("5")}
@@ -195,7 +195,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("6")}>
-                <img className="h-6" src="dice-6.png" alt="" />
+                <img className="h-6" src="/fiveOfAKindReact/dice-6.png" alt="" />
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("6")}

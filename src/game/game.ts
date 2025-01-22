@@ -46,7 +46,7 @@ export const checkIfFinished = (
 
 export const gameIsFinished = (
   pointMap: Map<string, number>,
-
+  
 ) => {
   const sortedPoints = Array.from(pointMap.entries()).sort(
     (a, b) => b[1] - a[1],
