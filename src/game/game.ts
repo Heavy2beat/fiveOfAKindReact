@@ -51,7 +51,6 @@ export const gameIsFinished = (
   const sortedPoints = Array.from(pointMap.entries()).sort(
     (a, b) => b[1] - a[1],
   );
- // const winner = sortedPoints[0][0];
- // sendToast(`${winner} ${lang.isTheWinner}`, 1000);
+
   return sortedPoints;
 };
