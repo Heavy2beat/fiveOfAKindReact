@@ -1,6 +1,9 @@
 import { create } from "zustand";
+import { Score } from "../api/highscoreAPI";
 
 interface GameStore {
+  highscoreList: Score[];
+  sethighScoreList: (toSet: Score[]) => void;
   firstStart: boolean;
   setFirstStart: (toSet: boolean) => void;
   numberOfRound: number;
@@ -29,6 +32,9 @@ interface GameStore {
 }
 
 export const useGameStore = create<GameStore>()((set) => ({
+  highscoreList: new Array<Score>(),
+  sethighScoreList: (newScoreList: Score[]) =>
+    set(() => ({ highscoreList: newScoreList })),
   firstStart: true,
   setFirstStart: (setTo: boolean) => set(() => ({ firstStart: setTo })),
   numberOfRound: 0,

@@ -10,7 +10,7 @@ export const ger :language = {
     lowerSection: "Unten",
     7: "Drilling",
     8: "Vierling",
-    9: "Full House",
+    9: "Full House(25P)",
     10: "Kl Straße(30P)",
     11: "Gr Straße(40P)",
     12: "Fünfling(50P)",
@@ -45,5 +45,6 @@ export const ger :language = {
     choose: "Anzahl wählen",
     revenge: "Revanche",
     mainMenu: "Hauptmenü",
-    oops: "Oops, hier ist etwas schief gelaufen!"
+    oops: "Oops, hier ist etwas schief gelaufen!",
+    fullHouse: "Full House(25P)"
 }

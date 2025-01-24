@@ -7,6 +7,7 @@ import End from "./pages/End";
 import Game from "./pages/Game";
 import Start from "./pages/Start";
 import NotFoundPage from "./pages/NotFoundPage";
+import Highscores from "./pages/Highscores";
 
 const router = createHashRouter([
   {
@@ -26,6 +27,11 @@ const router = createHashRouter([
       {
         path: "/end",
         element: <End></End>,
+      },
+      {
+        path: "/highscores",
+        element: <Highscores></Highscores>
+
       },
     ],
   },

@@ -44,5 +44,6 @@ export type language = {
     revenge:string,
     mainMenu:string,
     oops:string,
+    fullHouse:string,
 
 }

@@ -8,10 +8,11 @@ import Footer from "../components/Footer";
 export default function Start() {
   const { lang } = useLanguageStore();
 
-  const { setNumberOfPlayers, numberOfPlayers, playernames, setplayerNames } =
+  const { setNumberOfPlayers, numberOfPlayers, playernames, setplayerNames} =
     useGameStore();
   const navigate = useNavigate();
   const [isNumberOfPlayerChosen, setIsNumberOfPlayerChosen] = useState(false);
+
 
   const handleNumberOfPlayer = (numberToSet: number) => {
     setNumberOfPlayers(numberToSet);
@@ -61,7 +62,7 @@ export default function Start() {
   };
 
   return (
-    <div>
+    <div >
       <div className="text-xl">
         <h2 className="p-4 text-center text-2xl">{lang.numberOfPlayers}</h2>
         <div className="flex justify-center">
@@ -84,6 +85,8 @@ export default function Start() {
             {isNumberOfPlayerChosen ? lang.beginnGame : lang.choose}
           </button>
         </div>
+        <div className="flex justify-center ">
+          <button onClick={()=>navigate("/highscores")} className="w-44 m-2 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl">Highscores</button></div>
       </div>
       <Footer></Footer>
     </div>

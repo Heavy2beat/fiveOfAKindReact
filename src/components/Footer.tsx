@@ -3,6 +3,7 @@ import { eng } from "../lang/eng";
 import { ger } from "../lang/ger";
 import { useLanguageStore } from "../store/LanguageStore";
 
+
 export default function Footer() {
   const { setLang } = useLanguageStore();
   const [isVisible, setIsVisible] = useState(true);
