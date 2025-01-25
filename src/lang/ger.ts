@@ -49,4 +49,12 @@ export const ger :language = {
     fullHouse: "Full House(25P)",
     alreadyFilled: "Bereits eingetragen",
     chooseOnYourBoard: "Wähle auf deinem Board",
+    endscore: "Endstand",
+    saved: "Gespeichert",
+    endgameText:  "Der Gewinner darf seine Punktzahl in die Highscore Liste speichern!Drücke dazu auf ",
+    save: "speichern",
+    highscoreText1:  "Du glaubst deine Bestleistung ist gut genug für die Welt? Drücke ",
+    highscoreText2: " um deine Punkte in die Online Bestenliste zu schicken!",
+    locale: "Lokal",
+    oneTime: "(klappt nur 1x)"
 }

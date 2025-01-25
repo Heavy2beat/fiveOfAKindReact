@@ -3,7 +3,7 @@ import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { gameIsFinished } from "../game/game";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Score } from "../api/highscoreAPI";
 import { sendToast } from "../utils/utils";
 
@@ -25,19 +25,24 @@ export default function End() {
 
   const [isSend, setIsSend] = useState(false);
 
+  useEffect(() => {
+    const storedHighScores = localStorage.getItem("highscoreList");
+    if (storedHighScores) {
+      sethighScoreList(JSON.parse(storedHighScores));
+    }
+  }, [sethighScoreList]);
+
   const saveHighScore = (player: string, score: number) => {
     if (!isSend) {
       const tempScore: Score = {
         name: player,
         points: score,
       };
-      const tempScoreList = highscoreList;
-      tempScoreList.push(tempScore);
-      sethighScoreList(tempScoreList.sort((a, b) => b.points - a.points));
-      sendToast(
-        "Highscore gespeichert, leite weiter zur Highscore Übersicht",
-        3000,
-      );
+      const tempScoreList = [...highscoreList, tempScore];
+      const sortedScoreList = tempScoreList.sort((a, b) => b.points - a.points);
+      sethighScoreList(sortedScoreList);
+      localStorage.setItem("highscoreList", JSON.stringify(sortedScoreList));
+      sendToast(lang.saved, 3000);
       setTimeout(() => {
         navigate("/highscores");
       }, 3000);
@@ -64,10 +69,10 @@ export default function End() {
               className="bg-green-400 p-2 text-xs"
               onClick={() => saveHighScore(player, score)}
             >
-              speichern
+              {lang.save}
             </button>
           ) : (
-            <p className="p-2 text-xs">gespeichert</p>
+            <p className="p-2 text-xs">{lang.saved}</p>
           )
         ) : null}
       </li>
@@ -96,15 +101,13 @@ export default function End() {
   return (
     <div>
       <div className="m-auto mb-4 mt-8 w-full rounded bg-blue-200 p-4 md:w-1/2">
-        <h2 className="text-center">Endstand:</h2>
+        <h2 className="text-center">{lang.endscore}</h2>
         <ol className="list-decimal p-2">{prepareEndscores()}</ol>
       </div>
       <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-2/3">
         <p>
-          {" "}
-          Der Gewinner darf seine Punktzahl in die Highscore Liste speichern!
-          Drücke dazu auf
-          <span className="bg-green-400"> Speichern</span>
+          {lang.endgameText}
+          <span className="bg-green-400"> {lang.save}</span>
         </p>
       </div>
       <div className="flex flex-col justify-center gap-8">

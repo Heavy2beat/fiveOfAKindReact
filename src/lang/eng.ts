@@ -49,4 +49,12 @@ export const eng : language = {
   fullHouse: "Full House(25P)",
   alreadyFilled: "Already filled",
   chooseOnYourBoard: "Choose on your board",
+  endscore: "Endscore",
+  saved: "Saved",
+  endgameText: "The winner may save his score to the highscore list! Press ",
+  save: "save ",
+  highscoreText1:  "You believe your highscore is good enough for the world? Press ",
+  highscoreText2: " to send your score to the online highscore list!",
+  locale: "Local",
+  oneTime: "(only works once)"
 }

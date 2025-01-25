@@ -47,5 +47,13 @@ export type language = {
     fullHouse:string,
     alreadyFilled:string,
     chooseOnYourBoard:string,
+    endscore:string,
+    saved:string,
+    endgameText:string,
+    save:string,
+    highscoreText1:string,
+    highscoreText2:string,
+    locale: string,
+    oneTime: string,
 
 }

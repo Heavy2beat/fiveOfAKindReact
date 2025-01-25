@@ -11,11 +11,11 @@ export default function Highscores() {
   const queryClient = useQueryClient();
   const { lang } = useLanguageStore();
   const navigate = useNavigate();
+  const { highscoreList, sethighScoreList } = useGameStore();
   const query = useQuery({
     queryKey: ["highscores"],
     queryFn: getAllHighscores,
   });
-  const { highscoreList } = useGameStore();
 
   const mutation = useMutation({
     mutationFn: sendScore,
@@ -36,6 +36,11 @@ export default function Highscores() {
     }
   };
 
+  const resetLocalHighscore = () => {
+    localStorage.removeItem("highscoreList");
+    sethighScoreList([]);
+  };
+
   return (
     <>
       <div>
@@ -50,18 +55,27 @@ export default function Highscores() {
           </button>
         </div>
         <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-2/3">
-          <p>
-            {" "}
-            Du glaubst deine Bestleistung ist gut genug für die Welt? Drücke{" "}
-            <span className="bg-green-400">Speichere online</span> um deine
-            Punkte in die Online Bestenliste zu schicken!{" "}
-            <span className="font-thin">(klappt nur 1x)</span>
-          </p>
+          {highscoreList.length !== 0 ? (
+            <p>
+              {lang.highscoreText1}
+              <span className="bg-green-400">{lang.save} online</span>{" "}
+              {lang.highscoreText2}
+              <span className="font-thin">{lang.oneTime}</span>
+            </p>
+          ) : null}
         </div>
       </div>
       <div className="m-2 grid gap-2 md:m-auto md:w-2/3 md:grid-cols-2">
         <div className="flex flex-col justify-center text-center">
-          <h2 className="bg-green-300 text-xl">Lokal</h2>
+          <div className="grid grid-cols-3 bg-green-300 text-xl">
+            <h2 className="col-start-2">{lang.locale}</h2>
+            <button
+              onClick={() => resetLocalHighscore()}
+              className="col-start-3 w-fit place-self-end rounded bg-red-500 px-4 text-start"
+            >
+              X
+            </button>
+          </div>{" "}
           <ol className="list-decimal bg-slate-300 p-2">
             {highscoreList.map((score, index) => (
               <li
@@ -88,10 +102,10 @@ export default function Highscores() {
                           sendToOnlineHighScore(score.name, score.points)
                         }
                       >
-                        Speichere online
+                        {lang.save} online
                       </button>
                     ) : (
-                      <p className="p-2 text-xs">gespeichert</p>
+                      <p className="p-2 text-xs">{lang.saved}</p>
                     )
                   ) : null}
                 </p>
