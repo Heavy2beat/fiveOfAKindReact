@@ -45,5 +45,7 @@ export type language = {
     mainMenu:string,
     oops:string,
     fullHouse:string,
+    alreadyFilled:string,
+    chooseOnYourBoard:string,
 
 }

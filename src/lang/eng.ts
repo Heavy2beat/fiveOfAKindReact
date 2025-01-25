@@ -46,5 +46,7 @@ export const eng : language = {
   revenge: "Revenge",
   mainMenu: "Main menu",
   oops: "Oops, something went wrong!",
-  fullHouse: "Full House(25P)"
+  fullHouse: "Full House(25P)",
+  alreadyFilled: "Already filled",
+  chooseOnYourBoard: "Choose on your board",
 }

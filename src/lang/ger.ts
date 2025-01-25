@@ -46,5 +46,7 @@ export const ger :language = {
     revenge: "Revanche",
     mainMenu: "Hauptmenü",
     oops: "Oops, hier ist etwas schief gelaufen!",
-    fullHouse: "Full House(25P)"
+    fullHouse: "Full House(25P)",
+    alreadyFilled: "Bereits eingetragen",
+    chooseOnYourBoard: "Wähle auf deinem Board",
 }
