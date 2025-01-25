@@ -3,7 +3,7 @@ import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { gameIsFinished } from "../game/game";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Score } from "../api/highscoreAPI";
 import { sendToast } from "../utils/utils";
 
@@ -24,13 +24,6 @@ export default function End() {
   const navigate = useNavigate();
 
   const [isSend, setIsSend] = useState(false);
-
-  useEffect(() => {
-    const storedHighScores = localStorage.getItem("highscoreList");
-    if (storedHighScores) {
-      sethighScoreList(JSON.parse(storedHighScores));
-    }
-  }, [sethighScoreList]);
 
   const saveHighScore = (player: string, score: number) => {
     if (!isSend) {

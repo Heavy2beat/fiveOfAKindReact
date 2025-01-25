@@ -112,6 +112,9 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
+          <h2>
+            Kommt noch wenn ich einen günstigen Webserver gefunden habe...
+          </h2>
         </div>
 
         <div className="md:w- flex flex-col justify-center text-center">
