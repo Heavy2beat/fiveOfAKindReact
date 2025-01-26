@@ -101,7 +101,7 @@ export default function Start() {
             onClick={() => navigate("/highscores")}
             className="m-2 w-44 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl"
           >
-            Highscores
+            {lang.highscores}
           </button>
         </div>
       </div>

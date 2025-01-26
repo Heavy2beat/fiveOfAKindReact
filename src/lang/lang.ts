@@ -56,5 +56,7 @@ export type language = {
     locale: string,
     oneTime: string,
     weeklyHighscore: string
+    noScores: string,
+    highscores: string,
 
 }

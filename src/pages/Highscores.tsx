@@ -45,7 +45,7 @@ export default function Highscores() {
     <>
       <div>
         <div className="m-2 grid grid-cols-3 bg-blue-200 p-2 text-center text-3xl lg:m-auto lg:w-2/3">
-          <h3 className="col-start-2">Highscores</h3>
+          <h3 className="col-start-2">{lang.highscores}</h3>
 
           <button
             onClick={() => navigate("/")}
@@ -54,6 +54,7 @@ export default function Highscores() {
             <img src="/fiveOfAKindReact/arrow-back.svg" alt="" />
           </button>
         </div>
+
         <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-2/3">
           {highscoreList.length !== 0 ? (
             <p>
@@ -112,13 +113,13 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-          {highscoreList.length === 0
-            ? "Noch keine Highscores vorhanden"
-            : null}
+          {highscoreList.length === 0 ? lang.noScores : null}
         </div>
 
         <div className="md:w- flex flex-col justify-center text-center">
-          <h2 className="bg-green-300 text-xl">Online</h2>
+          <h2 className="bg-green-300 text-xl">
+            {lang.weeklyHighscore} online
+          </h2>
           <ol className="list-decimal bg-slate-300 p-2">
             {query.data?.map((score, index) => (
               <li
@@ -138,6 +139,7 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
+          {highscoreList.length === 0 ? lang.noScores : null}
         </div>
       </div>
       <Footer></Footer>

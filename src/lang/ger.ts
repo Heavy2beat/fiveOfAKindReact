@@ -58,4 +58,6 @@ export const ger :language = {
     locale: "Lokal",
     oneTime: "(klappt nur 1x)",
     weeklyHighscore: "Kings of the Week - Bestenliste",
+    noScores: "Noch keine Highscores vorhanden",
+    highscores: "Bestenliste"
 }

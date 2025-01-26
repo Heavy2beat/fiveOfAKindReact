@@ -58,4 +58,6 @@ export const eng : language = {
   locale: "Local",
   oneTime: "(only works once)",
   weeklyHighscore: "King of the Week - Highscore",
+  noScores: "No scores yet",
+  highscores: "Highscores",
 }
