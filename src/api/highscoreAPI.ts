@@ -3,7 +3,7 @@ export type Score = {
   points: number;
 };
 
-const highscoreURL = "http://localhost:3000/highscores";
+const highscoreURL = import.meta.env.VITE_API_URL ||   'http://localhost:3001/highscores';
 
 export async function getAllHighscores(): Promise<Score[]> {
     try {

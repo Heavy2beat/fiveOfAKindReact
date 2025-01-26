@@ -55,5 +55,6 @@ export type language = {
     highscoreText2:string,
     locale: string,
     oneTime: string,
+    weeklyHighscore: string
 
 }

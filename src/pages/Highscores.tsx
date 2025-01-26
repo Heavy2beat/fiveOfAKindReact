@@ -138,9 +138,6 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-          <h2>
-            Kommt noch wenn ich einen günstigen Webserver gefunden habe...
-          </h2>
         </div>
       </div>
       <Footer></Footer>
