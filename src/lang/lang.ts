@@ -1,4 +1,4 @@
-export type language = {
+export type Language = {
     greeting: string,
     roll: string,
     playerPlus: string,

@@ -1,6 +1,6 @@
-import { language } from "./lang";
+import { Language } from "./lang";
 
-export const eng : language = {
+export const eng : Language = {
   greeting: "Welcome to Yahtzee",
   roll: "Roll",
   playerPlus: "Player+",

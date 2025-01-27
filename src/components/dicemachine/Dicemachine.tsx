@@ -1,12 +1,12 @@
 import { getRandomNumber } from "../../utils/utils";
-import { language } from "../../lang/lang";
+import { Language } from "../../lang/lang";
 import { useDiceStore } from "../../store/Dicestore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
 
 export default function DiceMachine() {
-  const lang: language = useLanguageStore().lang;
+  const lang: Language = useLanguageStore().lang;
   const {
     dice1,
     dice2,
