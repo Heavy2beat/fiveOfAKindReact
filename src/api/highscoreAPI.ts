@@ -3,7 +3,7 @@ export type Score = {
   points: number;
 };
 
-const highscoreURL = "http://fischishome.duckdns.org:3000/highscores/";
+const highscoreURL = "https://fischishome.duckdns.org:3000/highscores/";
 
 export async function getAllHighscores(): Promise<Score[]> {
     try {
