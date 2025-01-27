@@ -15,12 +15,14 @@ export default function Highscores() {
   const query = useQuery({
     queryKey: ["highscores"],
     queryFn: getAllHighscores,
+
   });
 
   const mutation = useMutation({
     mutationFn: sendScore,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["highscores"] });
+    
     },
   });
 
@@ -113,7 +115,7 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-          {highscoreList.length === 0 ? lang.noScores : null}
+         
         </div>
 
         <div className="md:w- flex flex-col justify-center text-center">
@@ -139,7 +141,7 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-          {highscoreList.length === 0 ? lang.noScores : null}
+          
         </div>
       </div>
       <Footer></Footer>
