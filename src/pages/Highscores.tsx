@@ -15,20 +15,22 @@ export default function Highscores() {
   const query = useQuery({
     queryKey: ["highscores"],
     queryFn: getAllHighscores,
-
   });
 
   const mutation = useMutation({
     mutationFn: sendScore,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["highscores"] });
-    
     },
   });
 
   const [isSend, setIsSend] = useState(false);
 
-  const sendToOnlineHighScore = (player: string, score: number) => {
+  const sendToOnlineHighScore = (player: string, score: number, index: number) => {
+  if (highscoreList[index].isSend===true){
+    setIsSend(true);
+  }
+
     if (isSend === false) {
       mutation.mutate({
         name: player,
@@ -36,6 +38,7 @@ export default function Highscores() {
       });
       setIsSend(true);
     }
+    highscoreList[index].isSend =true;
   };
 
   const resetLocalHighscore = () => {
@@ -97,12 +100,14 @@ export default function Highscores() {
                 </p>
                 <p>
                   {" "}
-                  {index === 0 ? (
-                    !isSend ? (
+                  {index === 0  ? (
+                    !isSend && highscoreList[index].isSend===!true ? (
                       <button
                         className="bg-green-400 p-2 text-xs"
-                        onClick={() =>
-                          sendToOnlineHighScore(score.name, score.points)
+                        onClick={() =>{ 
+                            sendToOnlineHighScore(score.name, score.points, index);
+                          
+                        }
                         }
                       >
                         {lang.save} online
@@ -115,7 +120,6 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-         
         </div>
 
         <div className="md:w- flex flex-col justify-center text-center">
@@ -141,7 +145,6 @@ export default function Highscores() {
               </li>
             ))}
           </ol>
-          
         </div>
       </div>
       <Footer></Footer>

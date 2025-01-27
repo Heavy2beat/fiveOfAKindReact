@@ -36,6 +36,7 @@ export default function End() {
       sethighScoreList(sortedScoreList);
       localStorage.setItem("highscoreList", JSON.stringify(sortedScoreList));
       sendToast(lang.saved, 3000);
+      resetRound();
       setTimeout(() => {
         navigate("/highscores");
       }, 3000);

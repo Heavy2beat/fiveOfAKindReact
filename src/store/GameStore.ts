@@ -69,4 +69,5 @@ export const useGameStore = create<GameStore>()((set) => ({
   endScores: new Map<string, number>(),
   setEndScores: (newEndScores: Map<string, number>) =>
     set(() => ({ endScores: newEndScores })),
+  
 }));
