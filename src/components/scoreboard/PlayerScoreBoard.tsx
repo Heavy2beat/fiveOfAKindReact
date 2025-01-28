@@ -77,9 +77,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
         setPlayerOnTurn(1);
       }
       if (numberOfPlayers > 1) {
-        sendToast(lang.nextPlayer, 1000);
+        sendToast(lang.nextPlayer, 800);
       } else {
-        sendToast(lang.nextRound, 1000);
+        sendToast(lang.nextRound, 800);
       }
       setNumberOfRound(0);
       unkeepAllDices();

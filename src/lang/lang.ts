@@ -58,5 +58,6 @@ export type Language = {
     weeklyHighscore: string
     noScores: string,
     highscores: string,
+    redirectToHighscores: string,
 
 }

@@ -56,8 +56,9 @@ export const ger :Language = {
     highscoreText1: "Du glaubst deine Bestleistung ist gut genug für die Welt? Drücke ",
     highscoreText2: " um deine Punkte in die Online Bestenliste zu schicken!",
     locale: "Lokal",
-    oneTime: "(klappt nur 1x)",
-    weeklyHighscore: "Kings of the Week - Bestenliste",
+    oneTime: "(wird nur einmal gespeichert)",
+    weeklyHighscore: "Bestenliste online",
     noScores: "Noch keine Highscores vorhanden",
-    highscores: "Bestenliste"
+    highscores: "Bestenliste",
+    redirectToHighscores: "Gespeichert! Leite weiter zu der Bestenliste..."
 }

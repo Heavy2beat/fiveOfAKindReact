@@ -26,19 +26,36 @@ export default function Highscores() {
 
   const [isSend, setIsSend] = useState(false);
 
-  const sendToOnlineHighScore = (player: string, score: number, index: number) => {
-  if (highscoreList[index].isSend===true){
-    setIsSend(true);
-  }
+  const sendToOnlineHighScore = (
+    player: string,
+    score: number,
+    index: number,
+  ) => {
+    if (highscoreList[index].isSend === true) {
+      setIsSend(true);
 
-    if (isSend === false) {
+      return;
+    }
+
+    if (!isSend) {
       mutation.mutate({
         name: player,
         points: score,
+        isSend: true,
       });
+
+      const updatedHighScoreList = highscoreList.map((score, idx) =>
+        idx === index ? { ...score, isSend: true } : score,
+      );
+
+      sethighScoreList(updatedHighScoreList);
+      localStorage.setItem(
+        "highscoreList",
+        JSON.stringify(updatedHighScoreList),
+      );
+
       setIsSend(true);
     }
-    highscoreList[index].isSend =true;
   };
 
   const resetLocalHighscore = () => {
@@ -72,7 +89,7 @@ export default function Highscores() {
         </div>
       </div>
       <div className="m-2 grid gap-2 md:m-auto md:w-2/3 md:grid-cols-2">
-        <div className="flex flex-col justify-center text-center">
+        <div className="flex flex-col justify-start text-center">
           <div className="grid grid-cols-3 bg-green-300 text-xl">
             <h2 className="col-start-2">{lang.locale}</h2>
             <button
@@ -100,20 +117,22 @@ export default function Highscores() {
                 </p>
                 <p>
                   {" "}
-                  {index === 0  ? (
-                    !isSend && highscoreList[index].isSend===!true ? (
+                  {index === 0 ? (
+                    !isSend && highscoreList[index].isSend !== true ? (
                       <button
-                        className="bg-green-400 p-2 text-xs"
-                        onClick={() =>{ 
-                            sendToOnlineHighScore(score.name, score.points, index);
-                          
-                        }
-                        }
+                        className="w-fit bg-green-400 p-2 text-xs"
+                        onClick={() => {
+                          sendToOnlineHighScore(
+                            score.name,
+                            score.points,
+                            index,
+                          );
+                        }}
                       >
                         {lang.save} online
                       </button>
                     ) : (
-                      <p className="p-2 text-xs">{lang.saved}</p>
+                      <span className="p-2 text-xs">{lang.saved}</span>
                     )
                   ) : null}
                 </p>
@@ -122,10 +141,8 @@ export default function Highscores() {
           </ol>
         </div>
 
-        <div className="md:w- flex flex-col justify-center text-center">
-          <h2 className="bg-green-300 text-xl">
-            {lang.weeklyHighscore} online
-          </h2>
+        <div className="md:w- flex flex-col justify-start text-center">
+          <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
             {query.data?.map((score, index) => (
               <li

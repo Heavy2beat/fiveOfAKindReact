@@ -26,16 +26,18 @@ export default function End() {
   const [isSend, setIsSend] = useState(false);
 
   const saveHighScore = (player: string, score: number) => {
+    
     if (!isSend) {
       const tempScore: Score = {
         name: player,
         points: score,
+        isSend:false
       };
       const tempScoreList = [...highscoreList, tempScore];
       const sortedScoreList = tempScoreList.sort((a, b) => b.points - a.points);
       sethighScoreList(sortedScoreList);
       localStorage.setItem("highscoreList", JSON.stringify(sortedScoreList));
-      sendToast(lang.saved, 3000);
+      sendToast(lang.redirectToHighscores, 3000);
       resetRound();
       setTimeout(() => {
         navigate("/highscores");

@@ -57,7 +57,8 @@ export const eng : Language = {
   highscoreText2: " to send your score to the online highscore list!",
   locale: "Local",
   oneTime: "(only works once)",
-  weeklyHighscore: "King of the Week - Highscore",
+  weeklyHighscore: "Highscore only",
   noScores: "No scores yet",
   highscores: "Highscores",
+  redirectToHighscores: "Saved! Redirecting to highscores..."
 }

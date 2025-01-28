@@ -1,7 +1,7 @@
 export type Score = {
   name: string;
   points: number;
-  isSend?: boolean;
+  isSend: boolean;
 };
 
 const highscoreURL = "https://fiveofhighscores.duckdns.org/highscores/";
