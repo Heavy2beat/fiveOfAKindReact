@@ -4,7 +4,7 @@ export type Score = {
   isSend: boolean;
 };
 
-const highscoreURL = "https://fiveofhighscores.duckdns.org/highscores/";
+const highscoreURL = "https://highscore.fabdev.de/highscores/";
 
 export async function getAllHighscores(): Promise<Score[]> {
     try {
