@@ -56,7 +56,7 @@ export default function Start() {
 
   const createInputs = () => {
     return (
-      <div className="m-auto flex w-80 flex-col justify-center gap-2 rounded bg-blue-400 p-2">
+      <div className="m-auto flex w-80 flex-col justify-center gap-2 rounded bg-blue-400 p-2 mt-4 shadow-xl">
         <h3>{lang.fillInNames}:</h3>
         {Array.from({ length: numberOfPlayers }, (_, index) => (
           <input
@@ -74,7 +74,7 @@ export default function Start() {
 
   return (
     <div>
-      <div className="text-xl">
+      <div className="text-xl bg-slate-300 m-auto mt-8 pb-4 rounded w-5/6">
         <h2 className="p-4 text-center text-2xl">{lang.numberOfPlayers}</h2>
         <div className="flex justify-center">
           {[1, 2, 3, 4].map((num) => (
@@ -96,7 +96,7 @@ export default function Start() {
             {isNumberOfPlayerChosen ? lang.beginnGame : lang.choose}
           </button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex h-full justify-center ">
           <button
             onClick={() => navigate("/highscores")}
             className="m-2 w-44 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl"

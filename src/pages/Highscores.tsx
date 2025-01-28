@@ -83,7 +83,7 @@ export default function Highscores() {
               {lang.highscoreText1}
               <span className="bg-green-400">{lang.save} online</span>{" "}
               {lang.highscoreText2}
-              <span className="font-thin">{lang.oneTime}</span>
+              <span className="font-light">{lang.oneTime}</span>
             </p>
           ) : null}
         </div>
