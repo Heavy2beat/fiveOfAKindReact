@@ -60,5 +60,15 @@ export const ger :Language = {
     weeklyHighscore: "Bestenliste online",
     noScores: "Noch keine Highscores vorhanden",
     highscores: "Bestenliste",
-    redirectToHighscores: "Gespeichert! Leite weiter zu der Bestenliste..."
+    redirectToHighscores: "Gespeichert! Leite weiter zu der Bestenliste...",
+    tooltipRuleSameDices: "Alle Würfel mit dieser Punktzahl zählen",
+    tooltipRuleThreeOf: "Mindestens drei gleiche Würfel, alle 5 Würfel zählen",
+    tooltipRuleFourOf: "Mindestens vier gleiche Würfel, alle 5 Würfel zählen",
+    tooltipRuleFullHouse: "Drei gleiche Würfel und zwei gleiche andere Würfel ",
+    tooltipRuleSmallStreet: "Vier aufeinander folgende Zahlen",
+    tooltipRuleLargeStreet: "Fünf aufeinander folgende Zahlen",
+    tooltipRuleFiveOf: "Fünf gleiche Würfel",
+    tooletipRuleChance: "Alle Würfel zählen, egal welche",
+    helpmodeOn: "Hilfsmodus an",
+    helpmodeOff: "Hilfsmodus aus"
 }

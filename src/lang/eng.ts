@@ -60,5 +60,15 @@ export const eng : Language = {
   weeklyHighscore: "Highscore only",
   noScores: "No scores yet",
   highscores: "Highscores",
-  redirectToHighscores: "Saved! Redirecting to highscores..."
+  redirectToHighscores: "Saved! Redirecting to highscores...",
+  tooltipRuleSameDices: "All dice with this score count",
+  tooltipRuleThreeOf: "At least three of the same dice, all 5 dice count",
+  tooltipRuleFourOf: "At least four of the same dice, all 5 dice count",
+  tooltipRuleSmallStreet: "Four consecutive numbers",
+  tooltipRuleLargeStreet: "Five consecutive numbers",
+  tooltipRuleFiveOf: "Five of the same dice",
+  tooletipRuleChance: "All dice count, no matter which",
+  tooltipRuleFullHouse: "",
+  helpmodeOn: "Helpmode on",
+  helpmodeOff: "Helpmode off"
 }

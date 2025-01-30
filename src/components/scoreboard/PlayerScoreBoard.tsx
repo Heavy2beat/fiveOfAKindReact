@@ -5,6 +5,7 @@ import { useDiceStore } from "../../store/Dicestore";
 import { sendToast } from "../../utils/utils";
 import { checkIfFinished } from "../../game/game";
 import { useNavigate } from "react-router-dom";
+import Tooltip from "../Tooltip";
 
 interface playerScoreBoardProps {
   player: number;
@@ -28,6 +29,8 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     setPlayerOnTurn,
     playernames,
     setEndScores,
+    isHelpModeOn,
+    setHelpMode,
   } = useGameStore();
 
   const navigate = useNavigate();
@@ -132,17 +135,37 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     }
   };
 
+  const toggleHelpMode = () => {
+    setHelpMode(!isHelpModeOn);
+    const message = !isHelpModeOn ? lang.helpmodeOn : lang.helpmodeOff;
+    sendToast(message, 500);
+  };
+
   return (
-    <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-2 text-center text-sm">
-      <h5
+    <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-1 text-center text-sm">
+      <div
         className={
           playerOnTurn === props.player
-            ? "col-span-2 mb-2 bg-green-400 text-center text-xl"
-            : "col-span-2 mb-2 bg-slate-400 text-center"
+            ? "col-span-2 grid grid-cols-5 bg-green-400"
+            : "col-span-2 grid grid-cols-5 bg-slate-400"
         }
       >
-        {playernames[props.player - 1]}
-      </h5>
+        <h5 className="mb-2text-center col-span-4 m-auto text-xl">
+          {playernames[props.player - 1]}
+        </h5>
+        <div className="m-auto p-1 text-sm">
+          {playerOnTurn === props.player ? (
+            <img
+              onClick={() => toggleHelpMode()}
+              className={isHelpModeOn ? "h-7" : "h-7 opacity-20"}
+              src="/fiveOfAKindReact/help.svg"
+              alt=""
+            />
+          ) : (
+            <div></div>
+          )}
+        </div>
+      </div>
 
       <div className="col-start-1">
         <table className="border-gray h-full w-full border-collapse rounded">
@@ -152,11 +175,14 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("1")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-1.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  {" "}
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-1.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("1")}
@@ -167,11 +193,13 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("2")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-2.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-2.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("2")}
@@ -182,11 +210,13 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("3")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-3.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-3.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("3")}
@@ -197,11 +227,13 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("4")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-4.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-4.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("4")}
@@ -212,11 +244,13 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("5")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-5.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-5.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("5")}
@@ -227,11 +261,13 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
               <td className={checkPossibleChoices("6")}>
-                <img
-                  className="h-6"
-                  src="/fiveOfAKindReact/dice-6.png"
-                  alt=""
-                />
+                <Tooltip message={lang.tooltipRuleSameDices}>
+                  <img
+                    className="h-6"
+                    src="/fiveOfAKindReact/dice-6.png"
+                    alt=""
+                  />
+                </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("6")}
@@ -266,7 +302,10 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(7)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("7")}>{lang[7]}</td>
+              <td className={checkPossibleChoices("7")}>
+                {" "}
+                <Tooltip message={lang.tooltipRuleThreeOf}>{lang[7]} </Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("7")}
               </td>
@@ -275,7 +314,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(8)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("8")}>{lang[8]}</td>
+              <td className={checkPossibleChoices("8")}>
+                <Tooltip message={lang.tooltipRuleFourOf}>{lang[8]}</Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("8")}
               </td>
@@ -284,7 +325,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(9)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("9")}>{lang[9]}</td>
+              <td className={checkPossibleChoices("9")}>
+                <Tooltip message={lang.tooltipRuleFullHouse}>{lang[9]}</Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("9")}
               </td>
@@ -293,7 +336,11 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(10)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("10")}>{lang[10]}</td>
+              <td className={checkPossibleChoices("10")}>
+                <Tooltip message={lang.tooltipRuleSmallStreet}>
+                  {lang[10]}
+                </Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("10")}
               </td>
@@ -302,7 +349,11 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(11)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("11")}>{lang[11]}</td>
+              <td className={checkPossibleChoices("11")}>
+                <Tooltip message={lang.tooltipRuleLargeStreet}>
+                  {lang[11]}
+                </Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("11")}
               </td>
@@ -311,7 +362,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(12)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("12")}>{lang[12]}</td>
+              <td className={checkPossibleChoices("12")}>
+                <Tooltip message={lang.tooltipRuleFiveOf}>{lang[12]}</Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("12")}
               </td>
@@ -320,7 +373,9 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               onClick={() => onClickHandler(13)}
               className="border-gray col-span-2 grid h-14 grid-cols-3 border"
             >
-              <td className={checkPossibleChoices("13")}>{lang[13]}</td>
+              <td className={checkPossibleChoices("13")}>
+                <Tooltip message={lang.tooletipRuleChance}>{lang[13]}</Tooltip>
+              </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
                 {fillInPoints("13")}
               </td>

@@ -8,7 +8,7 @@ export function sendToast  (message:string, timeInMs:number) {
     toast(message, {
         position: "top-center",
         autoClose: timeInMs,
-        hideProgressBar: false,
+        hideProgressBar: timeInMs>1000 ? false :true,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,

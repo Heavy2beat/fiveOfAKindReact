@@ -59,5 +59,15 @@ export type Language = {
     noScores: string,
     highscores: string,
     redirectToHighscores: string,
+    tooltipRuleSameDices: string,
+    tooltipRuleThreeOf: string,
+    tooltipRuleFourOf: string,
+    tooltipRuleFullHouse:string,
+    tooltipRuleSmallStreet: string,
+    tooltipRuleLargeStreet: string,
+    tooltipRuleFiveOf: string,
+    tooletipRuleChance:string,
+    helpmodeOn:string,
+    helpmodeOff:string,
 
 }
