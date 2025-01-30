@@ -32,6 +32,8 @@ export default function DiceMachine() {
 
   const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
 
+
+  
   const rollDices = () => {
     if (numberOfRound === 3) return;
     if (!dice1keep) {
