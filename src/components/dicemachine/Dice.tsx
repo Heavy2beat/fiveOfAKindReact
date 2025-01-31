@@ -5,6 +5,8 @@ import { useGameStore } from "../../store/GameStore";
 interface DiceProps {
   diceNumber: number;
   iskept: boolean;
+
+
 }
 export default function Dice(props: DiceProps) {
   const { numberOfRound } = useGameStore();

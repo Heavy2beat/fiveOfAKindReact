@@ -9,6 +9,8 @@ import Start from "./pages/Start";
 import NotFoundPage from "./pages/NotFoundPage";
 import Highscores from "./pages/Highscores";
 
+import Multiplayer from "./pages/Multiplayer";
+
 const router = createHashRouter([
   {
     
@@ -32,6 +34,10 @@ const router = createHashRouter([
         path: "/highscores",
         element: <Highscores></Highscores>
 
+      },
+      {
+        path: "/multiplayer",
+        element: <Multiplayer></Multiplayer>
       },
     ],
   },
