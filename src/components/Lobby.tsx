@@ -1,33 +1,21 @@
 import { useState } from "react";
 import Footer from "./Footer";
+import { LobbyType, useMultiplayerStore } from "../store/MultiplayerStore";
 
-export default function Lobby() {
-  const [playersInLobby, setPlayersInLobby] = useState(["Peter", "Marianne"]);
+
+
+interface LobbyProps{
+   currentLobby:LobbyType,
+   onLeaveClick: ()=>void,
+   onJoinClick: (lobbyToJoin:LobbyType)=>void,
+}
+
+export default function Lobby(props:LobbyProps) {
+
   const [inputName, setInputName] = useState("");
+  const {currentPLayer, currentLobby} =useMultiplayerStore();
  
-const[currentPLayerName, setCurrentPlayerName] = useState("")
 
-
-const joinLobby =()=>{
-    if (inputName !=="" && playersInLobby.length <=3){
-const temp = playersInLobby;
-temp.push(inputName);
-setCurrentPlayerName(inputName);
-    }
-}
-
-const leaveLobby =()=>{
-const temp = playersInLobby;
-for (let player in temp){
-    if(player==currentPLayerName){
-        player ="";
-    }
-}
-const newPlayerList = [];
-temp.forEach((player)=>{if (player!=="") newPlayerList.push(player)})
-setCurrentPlayerName("");
-setPlayersInLobby(temp)
-    }
 
 
   
@@ -39,14 +27,14 @@ setPlayersInLobby(temp)
                 
             </div>
             <input type="text" className="w-2/3 rounded" value={inputName} onChange={(e)=>setInputName(e.target.value)}/>
-         {currentPLayerName ==="" ? 
-         <button onClick={joinLobby} className="w-18 bg-green-500 p-2 cursor-pointer rounded">Join</button>
-          : <button onClick={leaveLobby} className="w-18 bg-red-400 p-2 cursor-pointer  rounded">Leave</button> }
+         {currentLobby === props.currentLobby ? <button onClick={()=>props.onLeaveClick()} className="w-18 bg-red-400 p-2 cursor-pointer  rounded">Leave</button>
+         
+          : <button onClick={()=>props.onJoinClick(props.currentLobby)}  className="w-18 bg-green-500 p-2 cursor-pointer rounded">Join</button> }
         </div>
 
         <div >
-          {playersInLobby.map((player,index) => (
-            <h5 className={index %2 ==0? "bg-blue-300 text-center": "bg-blue-400 text-center"}>{player}</h5>
+          {props.currentLobby.playerList.map((player) => (
+            <h5 className={player===currentPLayer? "bg-green-400  text-center" :"bg-blue-400 text-center" } >{player.name}</h5>
           ))}
         </div>
       </div>
