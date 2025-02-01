@@ -16,3 +16,8 @@ export function sendToast  (message:string, timeInMs:number) {
         theme: "light",
         });
   } 
+
+
+  export function createIDString(){
+    return Math.random().toString();
+  }

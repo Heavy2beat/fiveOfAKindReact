@@ -5,7 +5,11 @@ import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
 
-export default function DiceMachine() {
+interface DiceMachineProps {
+  playerOnTurn: boolean;
+}
+
+export default function DiceMachine(props: DiceMachineProps) {
   const lang: Language = useLanguageStore().lang;
   const {
     dice1,
@@ -32,10 +36,8 @@ export default function DiceMachine() {
 
   const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
 
-
-  
   const rollDices = () => {
-    if (numberOfRound === 3) return;
+    if (numberOfRound === 3 || !props.playerOnTurn) return;
     if (!dice1keep) {
       setDice1(getRandomNumber());
     }
@@ -59,6 +61,7 @@ export default function DiceMachine() {
   };
 
   const toggleDice = (numberOfDice: number) => {
+    if (!props.playerOnTurn) return;
     if (numberOfRound != 0) {
       switch (numberOfDice) {
         case 1:
@@ -100,7 +103,13 @@ export default function DiceMachine() {
 
   return (
     <>
-      <div className="flex justify-center">
+      <div
+        className={
+          props.playerOnTurn
+            ? "flex justify-center"
+            : "flex justify-center grayscale"
+        }
+      >
         <div className="m-2 grid grid-cols-5 gap-1 rounded bg-slate-300 p-4 text-xs md:w-1/2 md:max-w-fit md:text-base">
           <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
             <Dice

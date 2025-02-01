@@ -9,11 +9,11 @@ import Start from "./pages/Start";
 import NotFoundPage from "./pages/NotFoundPage";
 import Highscores from "./pages/Highscores";
 
-import Multiplayer from "./pages/Multiplayer";
+import MultiplayerStart from "./pages/MultiplayerStart";
+import MultiplayerGame from "./pages/MultiplayerGame";
 
 const router = createHashRouter([
   {
-    
     path: "/",
     element: <App></App>,
     errorElement: <NotFoundPage />,
@@ -32,16 +32,18 @@ const router = createHashRouter([
       },
       {
         path: "/highscores",
-        element: <Highscores></Highscores>
-
+        element: <Highscores></Highscores>,
       },
       {
         path: "/multiplayer",
-        element: <Multiplayer></Multiplayer>
+        element: <MultiplayerStart></MultiplayerStart>,
+      },
+      {
+        path: "/multiplayerGame",
+        element: <MultiplayerGame></MultiplayerGame>,
       },
     ],
   },
-  
 ]);
 
 createRoot(document.getElementById("root")!).render(
