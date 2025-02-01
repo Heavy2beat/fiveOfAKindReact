@@ -164,7 +164,7 @@ export default function Highscores() {
           </ol>
         </div>
       </div>
-      <Footer></Footer>
+   
     </>
   );
 }
