@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { Score } from "../api/highscoreAPI";
 import { sendToast } from "../utils/utils";
+import { useDiceStore } from "../store/Dicestore";
 
 export default function End() {
   const { lang } = useLanguageStore();
@@ -21,20 +22,29 @@ export default function End() {
     sethighScoreList,
   } = useGameStore();
 
-  const {dice1keep,dice2keep,dice3keep,dice4keep,dice5keep,toggleDice1Keep,toggleDice2Keep,toggleDice3Keep,toggleDice4Keep,toggleDice5Keep} = useDiceStore();
-
+  const {
+    dice1keep,
+    dice2keep,
+    dice3keep,
+    dice4keep,
+    dice5keep,
+    toggleDice1Keep,
+    toggleDice2Keep,
+    toggleDice3Keep,
+    toggleDice4Keep,
+    toggleDice5Keep,
+  } = useDiceStore();
 
   const navigate = useNavigate();
 
   const [isSend, setIsSend] = useState(false);
 
   const saveHighScore = (player: string, score: number) => {
-    
     if (!isSend) {
       const tempScore: Score = {
         name: player,
         points: score,
-        isSend:false
+        isSend: false,
       };
       const tempScoreList = [...highscoreList, tempScore];
       const sortedScoreList = tempScoreList.sort((a, b) => b.points - a.points);
@@ -95,19 +105,19 @@ export default function End() {
     setScoreBoardPlayer4(new Map<string, number>());
     setNumberOfRound(0);
     setPlayerOnTurn(1);
-        if(dice1keep){
-      toggleDice1Keep()
+    if (dice1keep) {
+      toggleDice1Keep();
     }
-    if (dice2keep){
+    if (dice2keep) {
       toggleDice2Keep();
     }
-    if(dice3keep){
-      toggleDice3Keep()
+    if (dice3keep) {
+      toggleDice3Keep();
     }
-    if (dice4keep){
+    if (dice4keep) {
       toggleDice4Keep();
     }
-    if (dice5keep){
+    if (dice5keep) {
       toggleDice5Keep();
     }
   };

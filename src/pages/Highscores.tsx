@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Footer from "../components/Footer";
 import { getAllHighscores, sendScore } from "../api/highscoreAPI";
 
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
 import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
+import Footer from "../components/Footer";
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -89,7 +89,7 @@ export default function Highscores() {
         </div>
       </div>
       <div className="m-2 grid gap-2 md:m-auto md:w-2/3 md:grid-cols-2">
-        <div className="min-w-fit  flex flex-col justify-start text-center max-h-full overflow-y-scroll">
+        <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <div className="grid grid-cols-3 bg-green-300 text-xl">
             <h2 className="col-start-2">{lang.locale}</h2>
             <button
@@ -141,7 +141,7 @@ export default function Highscores() {
           </ol>
         </div>
 
-        <div className=" min-w-fit flex flex-col justify-start max-h-full overflow-y-scroll text-center">
+        <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
             {query.data?.map((score, index) => (
@@ -164,7 +164,9 @@ export default function Highscores() {
           </ol>
         </div>
       </div>
-   
+      <div className="hidden md:block">
+        <Footer></Footer>
+      </div>
     </>
   );
 }
