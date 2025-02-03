@@ -1,9 +1,11 @@
 import { useMultiplayerStore } from "../store/MultiplayerStore";
-import { LobbyType } from "../api/multiplayerAPI";
+import { LobbyType, Player } from "../api/multiplayerAPI";
+import { span } from "motion/react-client";
 
 interface LobbyProps {
   lobby: LobbyType;
-  onStartClick: (lobbyToStart: LobbyType) => void;
+  currentPlayer: Player;
+  onReadyClick: (toSet: boolean) => void;
   onLeaveClick: (lobbyToLeave: LobbyType) => void;
   onJoinClick: (lobbyToJoin: LobbyType) => void;
 }
@@ -18,10 +20,10 @@ export default function Lobby(props: LobbyProps) {
     ) {
       return (
         <button
-          onClick={() => props.onStartClick(props.lobby)}
+          onClick={() => props.onReadyClick(!currentPLayer?.isReady)}
           className="w-18 cursor-pointer rounded bg-green-500 p-2"
         >
-          Start
+          Ready
         </button>
       );
     } else if (
@@ -62,16 +64,23 @@ export default function Lobby(props: LobbyProps) {
 
         <div>
           {props.lobby.playerList.map((player) => (
-            <h5
-              key={player.id}
-              className={
-                player === currentPLayer
-                  ? "bg-green-400 text-center"
-                  : "bg-blue-400 text-center"
-              }
-            >
-              {player.name}
-            </h5>
+            <div className="grid grid-cols-2">
+              <h5
+                key={player.id}
+                className={
+                  currentPLayer?.id === player.id
+                    ? "bg-blue-400 text-center font-bold"
+                    : "bg-blue-400 text-center"
+                }
+              >
+                {player.name}{" "}
+              </h5>{" "}
+              {player.isReady ? (
+                <span className="bg-blue-400 text-end">✅ </span>
+              ) : (
+                <span className="bg-blue-400 text-end">❌</span>
+              )}
+            </div>
           ))}
         </div>
       </div>

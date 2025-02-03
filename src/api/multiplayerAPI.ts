@@ -103,6 +103,7 @@ export interface Player {
   id: string;
   name: string;
   scoreBoard: Map<string, number>;
+  isReady: boolean;
 }
 
 export interface LobbyType {

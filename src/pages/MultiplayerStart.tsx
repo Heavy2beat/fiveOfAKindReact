@@ -10,13 +10,11 @@ import {
   createLobby,
   Player,
   joinLobby,
-  playRound,
   leaveLobby,
   fetchLobbies,
   startGame,
 } from "../api/multiplayerAPI";
 import { createIDString, sendToast } from "../utils/utils";
-import { div } from "motion/react-client";
 
 const Multiplayer: React.FC = () => {
   const {
@@ -83,6 +81,13 @@ const Multiplayer: React.FC = () => {
     }
   };
 
+  const handleIsReady = (toSet: boolean) => {
+    if (currentPLayer) {
+      currentPLayer.isReady = toSet;
+      console.log("currentPLayer", currentPLayer.isReady);
+    }
+  };
+
   const handleLeaveLobby = (lobbyToLeave: LobbyType) => {
     if (currentLobby) {
       leaveLobby(currentPLayer!.id, lobbyToLeave); // Beispiel: Spieler 1 verlässt die Lobby
@@ -95,6 +100,7 @@ const Multiplayer: React.FC = () => {
       id: createIDString(),
       name: nameInput,
       scoreBoard: new Map<string, number>(),
+      isReady: false,
     };
     setCurrentPlayer(player);
   };
@@ -179,8 +185,9 @@ const Multiplayer: React.FC = () => {
             <>
               <p key={lobby.id}>{lobby.id}</p>
               <Lobby
+                currentPlayer={currentPLayer!}
                 key={lobby.id}
-                onStartClick={handleStartGame}
+                onReadyClick={handleIsReady}
                 onJoinClick={handleJoinLobby}
                 onLeaveClick={handleLeaveLobby}
                 lobby={lobby}
