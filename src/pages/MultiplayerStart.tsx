@@ -8,11 +8,12 @@ import {
   connectToBackend,
   disconnectFromBackend,
   createLobby,
-  Player,
   joinLobby,
   leaveLobby,
-  fetchLobbies,
   startGame,
+  sendLobbyUpdate,
+  fetchLobbies,
+  Player,
 } from "../api/multiplayerAPI";
 import { createIDString, sendToast } from "../utils/utils";
 
@@ -28,10 +29,12 @@ const Multiplayer: React.FC = () => {
 
   const [createPlayerVisible, setCreatePlayerVisible] = useState(false);
   const [nameInput, setNameInput] = useState("");
+  const [forceUpdate, setForceUpdate] = useState(0); // Force update state
   const navigate = useNavigate();
   const { lang } = useLanguageStore();
 
   useEffect(() => {
+    // Fetch lobbies when the component mounts
     const loadLobbies = async () => {
       try {
         const lobbies = await fetchLobbies();
@@ -44,19 +47,21 @@ const Multiplayer: React.FC = () => {
     loadLobbies();
 
     connectToBackend((message) => {
+      console.log("Message received:", message);
       if (Array.isArray(message)) {
-        setNewLobbyList(message);
+        setNewLobbyList([...message]); // Immutable update
       } else if (message.type === "startGame") {
         navigate("/multiplayerGame");
       } else {
-        setCurrentLobby(message);
+        setCurrentLobby({ ...message }); // Immutable update
       }
+      setForceUpdate((prev) => prev + 1); // Force update
     });
 
     return () => {
       disconnectFromBackend();
     };
-  }, [setNewLobbyList, currentLobby, setCurrentLobby]);
+  }, [setNewLobbyList, currentLobby, setCurrentLobby, navigate]);
 
   const handleCreateLobby = () => {
     const newLobby: LobbyType = {
@@ -67,14 +72,17 @@ const Multiplayer: React.FC = () => {
     createLobby(newLobby);
   };
 
-  const handleJoinLobby = (lobbyToJoin: LobbyType) => {
+  const handleJoinLobby = (lobbyIdToJoin: string) => {
     if (currentPLayer) {
-      joinLobby(currentPLayer, lobbyToJoin);
-      setCurrentLobby(lobbyToJoin);
+      const index = lobbyList.findIndex((lobby) => lobby.id === lobbyIdToJoin);
+      joinLobby(currentPLayer, lobbyList[index]);
+      setCurrentLobby({ ...lobbyList[index] }); // Immutable update
+      setForceUpdate((prev) => prev + 1); // Force update
     } else {
       sendToast("Please create a player first", 1000);
     }
   };
+
   const handleStartGame = () => {
     if (currentLobby) {
       startGame(currentLobby.id);
@@ -83,15 +91,25 @@ const Multiplayer: React.FC = () => {
 
   const handleIsReady = (toSet: boolean) => {
     if (currentPLayer) {
-      currentPLayer.isReady = toSet;
-      console.log("currentPLayer", currentPLayer.isReady);
+      const tempPlayer = {...currentPLayer};
+      tempPlayer.isReady = toSet
+      setCurrentPlayer(tempPlayer);
+      const updatedLobby = { ...currentLobby! };
+      updatedLobby.playerList = updatedLobby.playerList.map((player) =>
+        player.id === currentPLayer.id ? { ...currentPLayer } : player
+      );
+      sendLobbyUpdate(updatedLobby);
+      setCurrentLobby(updatedLobby); // Immutable update
+      setForceUpdate((prev) => prev + 1); // Force update
     }
   };
 
   const handleLeaveLobby = (lobbyToLeave: LobbyType) => {
     if (currentLobby) {
-      leaveLobby(currentPLayer!.id, lobbyToLeave); // Beispiel: Spieler 1 verlässt die Lobby
+      leaveLobby(currentPLayer!.id, lobbyToLeave);
+      sendLobbyUpdate(lobbyToLeave);
       setCurrentLobby(undefined);
+      setForceUpdate((prev) => prev + 1); // Force update
     }
   };
 
@@ -182,17 +200,14 @@ const Multiplayer: React.FC = () => {
         )}
         <div className="col-span-3 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
           {lobbyList.map((lobby) => (
-            <>
-              <p key={lobby.id}>{lobby.id}</p>
-              <Lobby
-                currentPlayer={currentPLayer!}
-                key={lobby.id}
-                onReadyClick={handleIsReady}
-                onJoinClick={handleJoinLobby}
-                onLeaveClick={handleLeaveLobby}
-                lobby={lobby}
-              />
-            </>
+            <Lobby
+              currentPlayer={currentPLayer!}
+              key={lobby.id}
+              onReadyClick={handleIsReady}
+              onJoinClick={handleJoinLobby}
+              onLeaveClick={handleLeaveLobby}
+              lobby={lobby}
+            />
           ))}
         </div>
       </div>

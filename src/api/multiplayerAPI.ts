@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
@@ -73,6 +74,7 @@ export function changePlayer(lobbyId :string, playerId:string) {
         body: JSON.stringify({ 'lobbyId': lobbyId, 'playerId': playerId })
     });
 }
+
 
 export function playRound(player: Player, lobby: LobbyType) {
   // Spiellogik für die Runde des Spielers

@@ -1,13 +1,12 @@
 import { useMultiplayerStore } from "../store/MultiplayerStore";
 import { LobbyType, Player } from "../api/multiplayerAPI";
-import { span } from "motion/react-client";
 
 interface LobbyProps {
   lobby: LobbyType;
   currentPlayer: Player;
   onReadyClick: (toSet: boolean) => void;
   onLeaveClick: (lobbyToLeave: LobbyType) => void;
-  onJoinClick: (lobbyToJoin: LobbyType) => void;
+  onJoinClick: (lobbyIdToJoin: string) => void;
 }
 
 export default function Lobby(props: LobbyProps) {
@@ -54,7 +53,7 @@ export default function Lobby(props: LobbyProps) {
             </button>
           ) : (
             <button
-              onClick={() => props.onJoinClick(props.lobby)}
+              onClick={() => props.onJoinClick(props.lobby.id)}
               className="w-18 cursor-pointer rounded bg-green-500 p-2"
             >
               Join
@@ -63,22 +62,25 @@ export default function Lobby(props: LobbyProps) {
         </div>
 
         <div>
+          <div className="grid grid-cols-2 bg-blue-400 text-sm">
+            <span className="text-center">Name</span>
+            <span className="text-end px-1">Ready</span>
+          </div>
           {props.lobby.playerList.map((player) => (
-            <div className="grid grid-cols-2">
+            <div key={player.id} className="grid grid-cols-2">
               <h5
-                key={player.id}
                 className={
                   currentPLayer?.id === player.id
                     ? "bg-blue-400 text-center font-bold"
                     : "bg-blue-400 text-center"
                 }
               >
-                {player.name}{" "}
-              </h5>{" "}
+                {player.name}
+              </h5>
               {player.isReady ? (
-                <span className="bg-blue-400 text-end">✅ </span>
+                <span className="bg-blue-400 text-end px-1">✅</span>
               ) : (
-                <span className="bg-blue-400 text-end">❌</span>
+                <span className="bg-blue-400 text-end px-1">❌</span>
               )}
             </div>
           ))}
