@@ -1,33 +1,65 @@
 import { useMultiplayerStore } from "../store/MultiplayerStore";
 import { LobbyType, Player } from "../api/multiplayerAPI";
+import { useEffect, useState } from "react";
 
 interface LobbyProps {
-  lobby: LobbyType;
-  currentPlayer: Player;
-  onReadyClick: (toSet: boolean) => void;
+  lobbyId: string;
+  onReadyClick: (lobbyId: string, toSet: boolean) => void;
   onLeaveClick: (lobbyToLeave: LobbyType) => void;
   onJoinClick: (lobbyIdToJoin: string) => void;
+  handleStartGame: (lobbyId: string) => void;
 }
 
 export default function Lobby(props: LobbyProps) {
-  const { currentPLayer, currentLobby } = useMultiplayerStore();
+  const { currentPLayer, currentLobby, lobbyList } = useMultiplayerStore();
+
+  const [thisLobby, setThisLobby] = useState<LobbyType | undefined>(
+    lobbyList.find((lobby) => lobby.id === props.lobbyId),
+  );
+
+  useEffect(() => {
+    const tempLobby = lobbyList.find((lobby) => lobby.id === props.lobbyId);
+    setThisLobby(tempLobby);
+  });
 
   const createLobbyHead = () => {
-    if (
-      props.lobby.id === currentLobby?.id &&
-      props.lobby.playerList.length > 1
-    ) {
+    let areAllReady = false;
+    let readyPlayers = 0;
+    for (let player of thisLobby!.playerList) {
+      if (player.isReady) {
+        readyPlayers += 1;
+        readyPlayers === thisLobby?.playerList.length
+          ? (areAllReady = true)
+          : areAllReady;
+      }
+    }
+
+    if (thisLobby!.playerList.length > 1 && areAllReady) {
       return (
         <button
-          onClick={() => props.onReadyClick(!currentPLayer?.isReady)}
+          onClick={() => props.handleStartGame(props.lobbyId)}
           className="w-18 cursor-pointer rounded bg-green-500 p-2"
         >
-          Ready
+          Start
         </button>
       );
     } else if (
-      props.lobby.id === currentLobby?.id &&
-      props.lobby.playerList.length === 1
+      props.lobbyId === currentLobby?.id &&
+      thisLobby!.playerList.length > 1
+    ) {
+      return (
+        <button
+          onClick={() =>
+            props.onReadyClick(props.lobbyId, !currentPLayer!.isReady)
+          }
+          className="w-18 cursor-pointer rounded bg-green-500 p-2"
+        >
+          {currentPLayer?.isReady ? "Unready" : "Ready"}
+        </button>
+      );
+    } else if (
+      props.lobbyId === currentLobby?.id &&
+      thisLobby!.playerList.length === 1
     ) {
       return (
         <button className="w-18 cursor-pointer rounded bg-green-500 p-2">
@@ -44,16 +76,16 @@ export default function Lobby(props: LobbyProps) {
       <div className="h-44 w-56 rounded-xl bg-blue-300">
         <div className="flex justify-between rounded-t bg-blue-500 p-2">
           <div>{createLobbyHead()}</div>
-          {currentLobby?.id === props.lobby.id ? (
+          {currentLobby?.id === props.lobbyId ? (
             <button
-              onClick={() => props.onLeaveClick(props.lobby)}
+              onClick={() => props.onLeaveClick(thisLobby!)}
               className="w-18 cursor-pointer rounded bg-red-400 p-2"
             >
               Leave
             </button>
           ) : (
             <button
-              onClick={() => props.onJoinClick(props.lobby.id)}
+              onClick={() => props.onJoinClick(props.lobbyId)}
               className="w-18 cursor-pointer rounded bg-green-500 p-2"
             >
               Join
@@ -64,23 +96,23 @@ export default function Lobby(props: LobbyProps) {
         <div>
           <div className="grid grid-cols-2 bg-blue-400 text-sm">
             <span className="text-center">Name</span>
-            <span className="text-end px-1">Ready</span>
+            <span className="px-1 text-end">Ready</span>
           </div>
-          {props.lobby.playerList.map((player) => (
-            <div key={player.id} className="grid grid-cols-2">
+          {thisLobby!.playerList.map((playerInLobby: Player) => (
+            <div key={playerInLobby.id} className="grid grid-cols-2">
               <h5
                 className={
-                  currentPLayer?.id === player.id
+                  currentPLayer?.id === playerInLobby.id
                     ? "bg-blue-400 text-center font-bold"
                     : "bg-blue-400 text-center"
                 }
               >
-                {player.name}
+                {playerInLobby.name} {playerInLobby.isReady ? "true" : "false"}
               </h5>
-              {player.isReady ? (
-                <span className="bg-blue-400 text-end px-1">✅</span>
+              {playerInLobby.isReady ? (
+                <span className="bg-blue-400 px-1 text-end">✅</span>
               ) : (
-                <span className="bg-blue-400 text-end px-1">❌</span>
+                <span className="bg-blue-400 px-1 text-end">❌</span>
               )}
             </div>
           ))}

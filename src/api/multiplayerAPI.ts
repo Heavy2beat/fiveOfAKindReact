@@ -32,12 +32,38 @@ export function disconnectFromBackend() {
 
 export function sendLobbyUpdate(lobby: LobbyType) {
   if (stompClient) {
+    console.log("Sending lobby update:", lobby);
     stompClient.publish({
       destination: "/app/updateLobby",
-      body: JSON.stringify(lobby)
+      body: JSON.stringify(lobby),
     });
   }
 }
+
+export function sendPlayerReadyUpdate(lobbyId: string, playerId: string, isReady: boolean) {
+  if (stompClient) {
+    const update = {
+      lobbyId,
+      playerId,
+      isReady,
+    };
+    stompClient.publish({
+      destination: "/app/updatePlayerReady",
+      body: JSON.stringify(update),
+    });
+  }
+ 
+}
+
+
+export async function fetchLobbyById(lobbyId: string): Promise<LobbyType> {
+  const response = await fetch(`/api/lobbies/${lobbyId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch lobby");
+  }
+  return response.json();
+}
+
 
 export function createLobby(lobby: LobbyType) {
   if (stompClient) {
