@@ -27,7 +27,7 @@ export default function Lobby(props: LobbyProps) {
 
     let areAllReady = false;
     let readyPlayers = 0;
-    for (let player of thisLobby.playerList) {
+    for (const player of thisLobby.playerList) {
       if (player.isReady) {
         readyPlayers += 1;
         if (readyPlayers === thisLobby.playerList.length) {
@@ -108,7 +108,7 @@ export default function Lobby(props: LobbyProps) {
                   : "bg-blue-400 text-center"
               }
             >
-              {playerInLobby.name} {playerInLobby.isReady ? "true" : "false"}
+              {playerInLobby.name} 
             </h5>
             {playerInLobby.isReady ? (
               <span className="bg-blue-400 px-1 text-end">✅</span>

@@ -2,28 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useMultiplayerStore } from "../../store/MultiplayerStore";
 import PlayerScoreBoardMP from "./PlayerScoreBoardMP";
 import { motion } from "framer-motion";
-import { LobbyType } from "../../api/multiplayerAPI";
 
 const MultiPlayerScoreBoard: React.FC = () => {
-  const { currentLobby, lobbyList } = useMultiplayerStore();
-  const [lobbyForGame, setLobbyForGame] = useState<LobbyType | undefined>(
-    currentLobby!,
-  );
+  const { currentLobby,lobbyList,setCurrentLobby } = useMultiplayerStore();
+
   const [playerBoards, setPlayerBoards] = useState<JSX.Element[]>([]);
 
-  useEffect(() => {
-    if (lobbyList !== undefined) {
-      setLobbyForGame(
-        lobbyList.find((lobby: LobbyType) => lobby.id === currentLobby!.id),
-      );
-    }
-  }, [lobbyList, currentLobby]);
 
   useEffect(() => {
-    if (lobbyForGame) {
+    if (currentLobby) {
+      const tempLobby = lobbyList.find((lobby)=>lobby.id===currentLobby.id);
+      setCurrentLobby(tempLobby);
       const orderedPlayerList = [
-        ...lobbyForGame.playerList.slice(lobbyForGame.playerOnTurn),
-        ...lobbyForGame.playerList.slice(0, lobbyForGame.playerOnTurn),
+        ...currentLobby.playerList.slice(currentLobby.playerOnTurn),
+        ...currentLobby.playerList.slice(0, currentLobby.playerOnTurn),
       ];
 
       const boards = orderedPlayerList.map((player, index) => (
@@ -39,7 +31,7 @@ const MultiPlayerScoreBoard: React.FC = () => {
       ));
       setPlayerBoards(boards);
     }
-  }, [lobbyForGame]);
+  }, [currentLobby, lobbyList, setCurrentLobby]);
 
   return (
     <div id="test" className="flex-row justify-center md:flex md:w-full">

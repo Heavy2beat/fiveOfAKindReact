@@ -4,11 +4,14 @@ import { setDicesToPoints } from "../../game/calculatePoints";
 import { useDiceStore } from "../../store/Dicestore";
 import { sendToast } from "../../utils/utils";
 import Tooltip from "../Tooltip";
-import { Player, sendLobbyUpdate } from "../../api/multiplayerAPI";
+import { changePlayer, Player, sendLobbyUpdate } from "../../api/multiplayerAPI";
 import { useMultiplayerStore } from "../../store/MultiplayerStore";
+import { useEffect, useState } from "react";
 
 interface PlayerScoreBoardProps {
   player: Player;
+ 
+
 }
 
 export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
@@ -17,7 +20,17 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
   const { numberOfRound, setNumberOfRound, isHelpModeOn, setHelpMode } =
     useGameStore();
 
-  const { currentLobby, currentPLayer } = useMultiplayerStore();
+  const { currentLobby, currentPLayer,setCurrentLobby,lobbyList} = useMultiplayerStore();
+
+
+  const [thisLobby, setThisLobby]  = useState(currentLobby);
+
+  useEffect(()=>{
+    const tempLobby = lobbyList.find((lobby)=>lobby.id===currentLobby!.id);
+    setThisLobby(tempLobby);
+    setCurrentLobby(tempLobby);
+    return;
+  },[currentLobby, lobbyList, setCurrentLobby])
 
   const onClickHandler = (choice: number) => {
     if (numberOfRound === 0) {
@@ -50,29 +63,46 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
   };
 
   const setScoreBoard = (newBoard: Map<string, number>) => {
-    currentLobby!.playerList[currentLobby!.playerOnTurn].scoreBoard = newBoard;
-    sendLobbyUpdate(currentLobby!);
+    const tempLobby = currentLobby!;
+    for (const player of tempLobby!.playerList) {
+      if (player.id === tempLobby!.playerList[tempLobby!.playerOnTurn].id) {
+        player.scoreBoard = newBoard;
+        console.log('Updated player scoreBoard:', player.scoreBoard);
+      }
+    }
+
+    tempLobby.playerList.forEach((player) => {console.log(" player "+player.name+" scoreboard values "+player.scoreBoard.size)
+      
+    });
+    sendLobbyUpdate(tempLobby);
+    nextPlayer();
   };
 
   const nextPlayer = () => {
-    currentLobby!.playerOnTurn =
-      (currentLobby!.playerOnTurn + 1) % currentLobby!.playerList.length;
+    changePlayer(currentLobby!.id)
+
     setNumberOfRound(0);
     unkeepAllDices();
-    sendLobbyUpdate(currentLobby!);
+ 
   };
 
   const checkPossibleChoices = (scoreKey: string) => {
     if (
       currentLobby!.playerList[currentLobby!.playerOnTurn].id ===
-      props.player.id
+      currentPLayer!.id
     ) {
-      for (const [key] of props.player.scoreBoard.entries()) {
-        if (key === scoreKey) {
-          return " h-14 col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center";
+      if (
+        currentLobby!.playerList[currentLobby!.playerOnTurn].id ===
+        props.player.id
+      ) {
+        for (const [key] of props.player.scoreBoard.entries()) {
+          if (key === scoreKey) {
+            return " h-14 col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center";
+          }
         }
+
+        return "h-14 col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center h-14 bg-green-400 hover:bg-green-500 cursor-pointer";
       }
-      return "h-14 col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center h-14 bg-green-400 hover:bg-green-500 cursor-pointer";
     }
     return "h-14  col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center ";
   };
@@ -119,7 +149,7 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
     <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-1 text-center text-sm">
       <div
         className={
-          currentLobby!.playerList[currentLobby!.playerOnTurn] === props.player
+          thisLobby!.playerList[thisLobby!.playerOnTurn].id === currentPLayer!.id &&thisLobby!.playerList[thisLobby!.playerOnTurn].id === props.player!.id 
             ? "col-span-2 grid grid-cols-5 bg-green-400"
             : "col-span-2 grid grid-cols-5 bg-slate-400"
         }

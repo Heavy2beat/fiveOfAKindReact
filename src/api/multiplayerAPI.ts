@@ -14,7 +14,7 @@ export function connectToBackend(onMessageReceived: (message: any) => void) {
     console.log('Connected: ' + frame);
     stompClient?.subscribe('/topic/lobbies', (message: IMessage) => {
       const parsedMessage = JSON.parse(message.body);
-      // Transform the message to match the expected format
+      
       const transformedMessage = parsedMessage.map((lobby: any) => ({
         ...lobby,
         playerList: lobby.playerList.map((player: any) => ({
@@ -64,13 +64,7 @@ export function sendPlayerReadyUpdate(lobbyId: string, playerId: string, isReady
   }
 }
 
-export async function fetchLobbyById(lobbyId: string): Promise<LobbyType> {
-  const response = await fetch(`/api/lobbies/${lobbyId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch lobby");
-  }
-  return response.json();
-}
+
 
 export function createLobby(lobby: LobbyType) {
   if (stompClient) {
@@ -110,14 +104,8 @@ export function changePlayer(lobbyId: string) {
   }
 }
 
-export function playRound(player: Player, lobby: LobbyType) {
-  // Spiellogik für die Runde des Spielers
-  const roll = Math.floor(Math.random() * 6) + 1; // Beispiel: Würfeln
-  player.scoreBoard.set('currentRound', roll);
 
-  // Aktualisiere die Lobby und sende sie an das Backend
-  sendLobbyUpdate(lobby);
-}
+
 
 export function leaveLobby(playerId: string, lobby: LobbyType) {
   lobby.playerList = lobby.playerList.filter(player => player.id !== playerId);
