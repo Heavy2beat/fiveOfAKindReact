@@ -4,18 +4,14 @@ import { setDicesToPoints } from "../../game/calculatePoints";
 import { useDiceStore } from "../../store/Dicestore";
 import { sendToast } from "../../utils/utils";
 import Tooltip from "../Tooltip";
-import {
-  changePlayer,
-  Player,
-  sendLobbyUpdate,
-} from "../../api/multiplayerAPI";
+import { Player, sendLobbyUpdate } from "../../api/multiplayerAPI";
 import { useMultiplayerStore } from "../../store/MultiplayerStore";
 
-interface playerScoreBoardProps {
+interface PlayerScoreBoardProps {
   player: Player;
 }
 
-export default function PlayerScoreBoardMP(props: playerScoreBoardProps) {
+export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
   const { lang } = useLanguageStore();
   const { dice1, dice2, dice3, dice4, dice5, unkeepAllDices } = useDiceStore();
   const { numberOfRound, setNumberOfRound, isHelpModeOn, setHelpMode } =
@@ -23,15 +19,15 @@ export default function PlayerScoreBoardMP(props: playerScoreBoardProps) {
 
   const { currentLobby, currentPLayer } = useMultiplayerStore();
 
-  //TODO Check if game is finished and navigate to the result page
-  //const navigate = useNavigate();
-
   const onClickHandler = (choice: number) => {
     if (numberOfRound === 0) {
       sendToast(lang.niceTry, 2000);
       return;
     }
-    if (props.player.id === currentLobby!.playerList[0].id) {
+    if (
+      props.player.id ===
+      currentLobby!.playerList[currentLobby!.playerOnTurn].id
+    ) {
       for (const [key] of props.player.scoreBoard.entries()) {
         if (key === choice.toString()) {
           sendToast(lang.alreadyFilled, 2000);
@@ -54,19 +50,23 @@ export default function PlayerScoreBoardMP(props: playerScoreBoardProps) {
   };
 
   const setScoreBoard = (newBoard: Map<string, number>) => {
-    currentLobby!.playerList[0].scoreBoard = newBoard;
+    currentLobby!.playerList[currentLobby!.playerOnTurn].scoreBoard = newBoard;
     sendLobbyUpdate(currentLobby!);
   };
 
   const nextPlayer = () => {
-    changePlayer(currentLobby!.id, currentPLayer!.id);
+    currentLobby!.playerOnTurn =
+      (currentLobby!.playerOnTurn + 1) % currentLobby!.playerList.length;
     setNumberOfRound(0);
     unkeepAllDices();
     sendLobbyUpdate(currentLobby!);
   };
 
   const checkPossibleChoices = (scoreKey: string) => {
-    if (currentLobby!.playerList[0].id === props.player.id) {
+    if (
+      currentLobby!.playerList[currentLobby!.playerOnTurn].id ===
+      props.player.id
+    ) {
       for (const [key] of props.player.scoreBoard.entries()) {
         if (key === scoreKey) {
           return " h-14 col-start-1 col-span-2 p-1 border border-gray flex justify-center items-center";
@@ -119,7 +119,7 @@ export default function PlayerScoreBoardMP(props: playerScoreBoardProps) {
     <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-1 text-center text-sm">
       <div
         className={
-          currentLobby!.playerList[0] === props.player
+          currentLobby!.playerList[currentLobby!.playerOnTurn] === props.player
             ? "col-span-2 grid grid-cols-5 bg-green-400"
             : "col-span-2 grid grid-cols-5 bg-slate-400"
         }
@@ -128,7 +128,8 @@ export default function PlayerScoreBoardMP(props: playerScoreBoardProps) {
           {props.player.name}
         </h5>
         <div className="m-auto p-1 text-sm">
-          {currentLobby!.playerList[0] === props.player ? (
+          {currentLobby!.playerList[currentLobby!.playerOnTurn] ===
+          props.player ? (
             <img
               onClick={() => toggleHelpMode()}
               className={isHelpModeOn ? "h-7" : "h-7 opacity-20"}

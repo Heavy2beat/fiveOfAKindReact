@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Client } from '@stomp/stompjs';
+import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
 let stompClient: Client | null = null;
@@ -7,15 +7,25 @@ let stompClient: Client | null = null;
 export function connectToBackend(onMessageReceived: (message: any) => void) {
   const socket = new SockJS('http://localhost:8080/game-websocket');
   stompClient = new Client({
-    webSocketFactory: () => socket as any
+    webSocketFactory: () => socket as WebSocket,
   });
 
   stompClient.onConnect = (frame) => {
     console.log('Connected: ' + frame);
-    stompClient?.subscribe('/topic/lobbies', (message) => {
-      onMessageReceived(JSON.parse(message.body));
+    stompClient?.subscribe('/topic/lobbies', (message: IMessage) => {
+      const parsedMessage = JSON.parse(message.body);
+      // Transform the message to match the expected format
+      const transformedMessage = parsedMessage.map((lobby: any) => ({
+        ...lobby,
+        playerList: lobby.playerList.map((player: any) => ({
+          ...player,
+          isReady: player.ready,
+          scoreBoard: new Map(Object.entries(player.scoreBoard)), 
+        })),
+      }));
+      onMessageReceived(transformedMessage);
     });
-    stompClient?.subscribe('/topic/startGame', (message) => {
+    stompClient?.subscribe('/topic/startGame', (message: IMessage) => {
       onMessageReceived({ type: 'startGame', lobbyId: message.body });
     });
   };
@@ -52,9 +62,7 @@ export function sendPlayerReadyUpdate(lobbyId: string, playerId: string, isReady
       body: JSON.stringify(update),
     });
   }
- 
 }
-
 
 export async function fetchLobbyById(lobbyId: string): Promise<LobbyType> {
   const response = await fetch(`/api/lobbies/${lobbyId}`);
@@ -64,12 +72,11 @@ export async function fetchLobbyById(lobbyId: string): Promise<LobbyType> {
   return response.json();
 }
 
-
 export function createLobby(lobby: LobbyType) {
   if (stompClient) {
     stompClient.publish({
       destination: "/app/createLobby",
-      body: JSON.stringify(lobby)
+      body: JSON.stringify(lobby),
     });
   }
 }
@@ -80,7 +87,7 @@ export function joinLobby(player: Player, lobbyToJoin: LobbyType) {
   if (stompClient) {
     stompClient.publish({
       destination: "/app/joinLobby",
-      body: JSON.stringify({ player, lobbyId: lobbyToJoin.id })
+      body: JSON.stringify({ player, lobbyId: lobbyToJoin.id }),
     });
   }
 }
@@ -89,18 +96,19 @@ export function startGame(lobbyId: string) {
   if (stompClient) {
     stompClient.publish({
       destination: "/app/startGame",
-      body: JSON.stringify({ lobbyId })
+      body: JSON.stringify({ lobbyId }),
     });
   }
 }
 
-export function changePlayer(lobbyId :string, playerId:string) {
-    stompClient!.publish({
-        destination: "/app/changePlayer",
-        body: JSON.stringify({ 'lobbyId': lobbyId, 'playerId': playerId })
+export function changePlayer(lobbyId: string) {
+  if (stompClient) {
+    stompClient.publish({
+      destination: "/app/changePlayer",
+      body: JSON.stringify({ lobbyId }),
     });
+  }
 }
-
 
 export function playRound(player: Player, lobby: LobbyType) {
   // Spiellogik für die Runde des Spielers
@@ -115,9 +123,6 @@ export function leaveLobby(playerId: string, lobby: LobbyType) {
   lobby.playerList = lobby.playerList.filter(player => player.id !== playerId);
   sendLobbyUpdate(lobby);
 }
-
-
-
 
 export async function fetchLobbies(): Promise<LobbyType[]> {
   const response = await fetch('http://localhost:8080/api/lobbies');
@@ -137,4 +142,5 @@ export interface Player {
 export interface LobbyType {
   id: string;
   playerList: Player[];
+  playerOnTurn: number;
 }

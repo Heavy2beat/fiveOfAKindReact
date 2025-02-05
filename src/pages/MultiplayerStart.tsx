@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Lobby from "../components/Lobby";
 import { useMultiplayerStore } from "../store/MultiplayerStore";
 import { useNavigate } from "react-router-dom";
-import { useLanguageStore } from "../store/LanguageStore";
+
 import {
   LobbyType,
   connectToBackend,
@@ -17,7 +17,6 @@ import {
   sendPlayerReadyUpdate,
 } from "../api/multiplayerAPI";
 import { createIDString, sendToast } from "../utils/utils";
-import ScoreBoard from "../components/scoreboard/ScoreBoard";
 
 const Multiplayer: React.FC = () => {
   const {
@@ -34,7 +33,6 @@ const Multiplayer: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch lobbies when the component mounts
     const loadLobbies = async () => {
       try {
         const lobbies = await fetchLobbies();
@@ -46,26 +44,33 @@ const Multiplayer: React.FC = () => {
 
     loadLobbies();
 
-    connectToBackend((message) => {
+    connectToBackend((message: any) => {
       console.log("Message received:", message);
       if (Array.isArray(message)) {
-        setNewLobbyList([...message]); // Immutable update
+        console.log("setNewLobbyList because message is Array");
+        setNewLobbyList([...message]);
       } else if (message.type === "startGame") {
         navigate("/multiplayerGame");
       } else {
-        setCurrentLobby({ ...message }); // Immutable update
+        setCurrentLobby({ ...message });
       }
     });
 
     return () => {
       disconnectFromBackend();
     };
-  }, [setNewLobbyList, currentLobby, setCurrentLobby, navigate]);
+  }, [setNewLobbyList, setCurrentLobby, navigate]);
 
   const handleCreateLobby = () => {
+    if (!currentPLayer) {
+      sendToast("Please create a player first", 1000);
+      return;
+    }
+
     const newLobby: LobbyType = {
       id: createIDString(),
-      playerList: [currentPLayer!],
+      playerList: [currentPLayer],
+      playerOnTurn: 0, // Initialisiere playerOnTurn mit 0
     };
     setCurrentLobby(newLobby);
     createLobby(newLobby);
@@ -74,20 +79,25 @@ const Multiplayer: React.FC = () => {
   const handleJoinLobby = (lobbyIdToJoin: string) => {
     if (currentPLayer) {
       const index = lobbyList.findIndex((lobby) => lobby.id === lobbyIdToJoin);
-      joinLobby(currentPLayer, lobbyList[index]);
-      setCurrentLobby({ ...lobbyList[index] }); // Immutable update
+      if (index !== -1) {
+        joinLobby(currentPLayer, lobbyList[index]);
+        setCurrentLobby({ ...lobbyList[index] });
+      } else {
+        console.error(`Lobby with id ${lobbyIdToJoin} not found`);
+      }
     } else {
       sendToast("Please create a player first", 1000);
     }
   };
 
   const handleStartGame = (lobbyToStartId: string) => {
+    setCurrentLobby(lobbyList.find((lobby) => lobby.id === lobbyToStartId));
     startGame(lobbyToStartId);
   };
 
   const handleIsReady = (LobbyIdToUpdate: string, toSet: boolean) => {
     if (currentPLayer) {
-      sendPlayerReadyUpdate(LobbyIdToUpdate, currentPLayer!.id, toSet);
+      sendPlayerReadyUpdate(LobbyIdToUpdate, currentPLayer.id, toSet);
       const tempPlayer: Player = {
         id: currentPLayer.id,
         name: currentPLayer.name,
@@ -114,8 +124,8 @@ const Multiplayer: React.FC = () => {
   };
 
   const handleLeaveLobby = (lobbyToLeave: LobbyType) => {
-    if (currentLobby) {
-      leaveLobby(currentPLayer!.id, lobbyToLeave);
+    if (currentLobby && currentPLayer) {
+      leaveLobby(currentPLayer.id, lobbyToLeave);
       sendLobbyUpdate(lobbyToLeave);
       setCurrentLobby(undefined);
     }
@@ -148,7 +158,7 @@ const Multiplayer: React.FC = () => {
           <div className="m-2 grid grid-cols-3 bg-blue-200 p-2 text-center text-xl lg:m-auto lg:w-2/3">
             <h3 className="col-start-2 m-auto">
               Player: {currentPLayer.name} id: {currentPLayer.id} ready:{" "}
-              {currentPLayer.isReady}
+              {currentPLayer.isReady ? "ready" : "notReady"}
             </h3>
 
             <button
