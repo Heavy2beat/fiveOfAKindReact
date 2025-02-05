@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
@@ -8,19 +7,19 @@ export function connectToBackend(onMessageReceived: (message: any) => void) {
   const socket = new SockJS('http://localhost:8080/game-websocket');
   stompClient = new Client({
     webSocketFactory: () => socket as WebSocket,
+    reconnectDelay: 5000, // Automatischer Wiederverbindungsversuch nach 5 Sekunden
   });
 
   stompClient.onConnect = (frame) => {
     console.log('Connected: ' + frame);
     stompClient?.subscribe('/topic/lobbies', (message: IMessage) => {
       const parsedMessage = JSON.parse(message.body);
-      
       const transformedMessage = parsedMessage.map((lobby: any) => ({
         ...lobby,
         playerList: lobby.playerList.map((player: any) => ({
           ...player,
           isReady: player.ready,
-          scoreBoard: new Map(Object.entries(player.scoreBoard)), 
+          scoreBoard: new Map(Object.entries(player.scoreBoard)),
         })),
       }));
       onMessageReceived(transformedMessage);
@@ -28,6 +27,19 @@ export function connectToBackend(onMessageReceived: (message: any) => void) {
     stompClient?.subscribe('/topic/startGame', (message: IMessage) => {
       onMessageReceived({ type: 'startGame', lobbyId: message.body });
     });
+  };
+
+  stompClient.onStompError = (frame) => {
+    console.error('Broker reported error: ' + frame.headers['message']);
+    console.error('Additional details: ' + frame.body);
+  };
+
+  stompClient.onWebSocketClose = (event) => {
+    console.error('WebSocket closed: ', event);
+  };
+
+  stompClient.onWebSocketError = (event) => {
+    console.error('WebSocket error: ', event);
   };
 
   stompClient.activate();
@@ -63,8 +75,6 @@ export function sendPlayerReadyUpdate(lobbyId: string, playerId: string, isReady
     });
   }
 }
-
-
 
 export function createLobby(lobby: LobbyType) {
   if (stompClient) {
@@ -103,9 +113,6 @@ export function changePlayer(lobbyId: string) {
     });
   }
 }
-
-
-
 
 export function leaveLobby(playerId: string, lobby: LobbyType) {
   lobby.playerList = lobby.playerList.filter(player => player.id !== playerId);

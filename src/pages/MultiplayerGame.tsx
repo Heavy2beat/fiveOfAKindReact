@@ -3,71 +3,60 @@ import DiceMachine from "../components/dicemachine/Dicemachine";
 import MultiPlayerScoreBoard from "../components/scoreboard/MultiPlayerScoreBoard";
 import { useMultiplayerStore } from "../store/MultiplayerStore";
 import {
-  
   LobbyType,
- connectToBackend,
+  connectToBackend,
   disconnectFromBackend,
 } from "../api/multiplayerAPI";
-
 
 export default function MultiplayerGame() {
   const {
     currentLobby,
     currentPLayer,
     lobbyList,
-   setNewLobbyList,
-   setCurrentLobby,
+    setNewLobbyList,
+    setCurrentLobby,
   } = useMultiplayerStore();
 
   const [lobbyForGame, setLobbyForGame] = useState<LobbyType | undefined>(
     currentLobby!,
   );
 
-  
-
   useEffect(() => {
     if (lobbyList !== undefined) {
-      setLobbyForGame(
-        lobbyList.find((lobby: LobbyType) => lobby.id === currentLobby!.id),
+      const foundLobby = lobbyList.find(
+        (lobby: LobbyType) => lobby.id === currentLobby!.id,
       );
+      if (foundLobby) {
+        setLobbyForGame(foundLobby);
+      }
     }
   }, [currentLobby, lobbyList]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   connectToBackend((message: any) => {
-       console.log("Message received:", message);
-       if (Array.isArray(message)) {
-         console.log("setNewLobbyList because message is Array");
-         setNewLobbyList([...message]);
-       } 
-        
-       else {
-         setCurrentLobby({ ...message });
-       }
-       for (const lobby of lobbyList){
-         if (lobby.id===currentLobby!.id){
-           
-           setCurrentLobby(lobby)
-         }
-     }});
+    connectToBackend((message: any) => {
+      console.log("Message received:", message);
+      if (Array.isArray(message)) {
+        console.log("setNewLobbyList because message is Array");
+        setNewLobbyList([...message]);
+      } else {
+        setCurrentLobby({ ...message });
+      }
+    });
 
     return () => {
       disconnectFromBackend();
     };
-  }, [setNewLobbyList, setCurrentLobby, lobbyList, currentLobby]);
-
-
-
-
-
+  }, [setNewLobbyList, setCurrentLobby]);
 
   return (
     <>
       <DiceMachine
-        playerOnTurn={currentPLayer?.id === lobbyForGame!.playerList[lobbyForGame!.playerOnTurn].id}
+        playerOnTurn={
+          currentPLayer?.id ===
+          lobbyForGame!.playerList[lobbyForGame!.playerOnTurn].id
+        }
       ></DiceMachine>
-      <p className="text-center text-s"> Player on Turn {lobbyList.find((lobby)=>lobby.id===currentLobby?.id)?.playerOnTurn}</p>
       <MultiPlayerScoreBoard></MultiPlayerScoreBoard>
     </>
   );

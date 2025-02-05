@@ -4,14 +4,16 @@ import { setDicesToPoints } from "../../game/calculatePoints";
 import { useDiceStore } from "../../store/Dicestore";
 import { sendToast } from "../../utils/utils";
 import Tooltip from "../Tooltip";
-import { changePlayer, Player, sendLobbyUpdate } from "../../api/multiplayerAPI";
+import {
+  changePlayer,
+  Player,
+  sendLobbyUpdate,
+} from "../../api/multiplayerAPI";
 import { useMultiplayerStore } from "../../store/MultiplayerStore";
 import { useEffect, useState } from "react";
 
 interface PlayerScoreBoardProps {
   player: Player;
- 
-
 }
 
 export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
@@ -20,17 +22,17 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
   const { numberOfRound, setNumberOfRound, isHelpModeOn, setHelpMode } =
     useGameStore();
 
-  const { currentLobby, currentPLayer,setCurrentLobby,lobbyList} = useMultiplayerStore();
+  const { currentLobby, currentPLayer, setCurrentLobby, lobbyList } =
+    useMultiplayerStore();
 
+  const [thisLobby, setThisLobby] = useState(currentLobby);
 
-  const [thisLobby, setThisLobby]  = useState(currentLobby);
-
-  useEffect(()=>{
-    const tempLobby = lobbyList.find((lobby)=>lobby.id===currentLobby!.id);
+  useEffect(() => {
+    const tempLobby = lobbyList.find((lobby) => lobby.id === currentLobby!.id);
     setThisLobby(tempLobby);
     setCurrentLobby(tempLobby);
     return;
-  },[currentLobby, lobbyList, setCurrentLobby])
+  }, [currentLobby, lobbyList, setCurrentLobby]);
 
   const onClickHandler = (choice: number) => {
     if (numberOfRound === 0) {
@@ -63,27 +65,27 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
   };
 
   const setScoreBoard = (newBoard: Map<string, number>) => {
-    const tempLobby = currentLobby!;
-    for (const player of tempLobby!.playerList) {
-      if (player.id === tempLobby!.playerList[tempLobby!.playerOnTurn].id) {
-        player.scoreBoard = newBoard;
-        console.log('Updated player scoreBoard:', player.scoreBoard);
-      }
-    }
-
-    tempLobby.playerList.forEach((player) => {console.log(" player "+player.name+" scoreboard values "+player.scoreBoard.size)
-      
-    });
-    sendLobbyUpdate(tempLobby);
+    const updatedLobby = {
+      ...currentLobby!,
+      playerList: currentLobby!.playerList.map((player, index) => {
+        if (index === currentLobby!.playerOnTurn) {
+          return {
+            ...player,
+            scoreBoard: newBoard,
+          };
+        }
+        return player;
+      }),
+    };
+    setCurrentLobby(updatedLobby);
+    sendLobbyUpdate(updatedLobby);
     nextPlayer();
   };
 
   const nextPlayer = () => {
-    changePlayer(currentLobby!.id)
-
+    changePlayer(currentLobby!.id);
     setNumberOfRound(0);
     unkeepAllDices();
- 
   };
 
   const checkPossibleChoices = (scoreKey: string) => {
@@ -149,7 +151,9 @@ export default function PlayerScoreBoardMP(props: PlayerScoreBoardProps) {
     <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-1 text-center text-sm">
       <div
         className={
-          thisLobby!.playerList[thisLobby!.playerOnTurn].id === currentPLayer!.id &&thisLobby!.playerList[thisLobby!.playerOnTurn].id === props.player!.id 
+          thisLobby!.playerList[thisLobby!.playerOnTurn].id ===
+            currentPLayer!.id &&
+          thisLobby!.playerList[thisLobby!.playerOnTurn].id === props.player!.id
             ? "col-span-2 grid grid-cols-5 bg-green-400"
             : "col-span-2 grid grid-cols-5 bg-slate-400"
         }

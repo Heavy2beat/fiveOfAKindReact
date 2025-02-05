@@ -4,15 +4,20 @@ import PlayerScoreBoardMP from "./PlayerScoreBoardMP";
 import { motion } from "framer-motion";
 
 const MultiPlayerScoreBoard: React.FC = () => {
-  const { currentLobby,lobbyList,setCurrentLobby } = useMultiplayerStore();
-
+  const { currentLobby, lobbyList, setCurrentLobby } = useMultiplayerStore();
   const [playerBoards, setPlayerBoards] = useState<JSX.Element[]>([]);
-
 
   useEffect(() => {
     if (currentLobby) {
-      const tempLobby = lobbyList.find((lobby)=>lobby.id===currentLobby.id);
-      setCurrentLobby(tempLobby);
+      const tempLobby = lobbyList.find((lobby) => lobby.id === currentLobby.id);
+      if (tempLobby && tempLobby !== currentLobby) {
+        setCurrentLobby(tempLobby);
+      }
+    }
+  }, [currentLobby, lobbyList, setCurrentLobby]);
+
+  useEffect(() => {
+    if (currentLobby) {
       const orderedPlayerList = [
         ...currentLobby.playerList.slice(currentLobby.playerOnTurn),
         ...currentLobby.playerList.slice(0, currentLobby.playerOnTurn),
@@ -31,7 +36,7 @@ const MultiPlayerScoreBoard: React.FC = () => {
       ));
       setPlayerBoards(boards);
     }
-  }, [currentLobby, lobbyList, setCurrentLobby]);
+  }, [currentLobby]);
 
   return (
     <div id="test" className="flex-row justify-center md:flex md:w-full">

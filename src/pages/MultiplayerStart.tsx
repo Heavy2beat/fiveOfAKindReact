@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Lobby from "../components/Lobby";
 import { useMultiplayerStore } from "../store/MultiplayerStore";
 import { useNavigate } from "react-router-dom";
-
 import {
   LobbyType,
   connectToBackend,
@@ -41,12 +40,9 @@ const Multiplayer: React.FC = () => {
         console.error("Failed to fetch lobbies:", error);
       }
     };
-if(lobbyList !==undefined){
-    loadLobbies();
-}
-  
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    loadLobbies();
+
     connectToBackend((message: any) => {
       console.log("Message received:", message);
       if (Array.isArray(message)) {
@@ -57,27 +53,16 @@ if(lobbyList !==undefined){
       } else {
         setCurrentLobby({ ...message });
       }
-      for (const lobby of lobbyList){
-        if (lobby.id===currentLobby!.id){
-          
-          setCurrentLobby(lobby)
-        }
-    }}
-  
-  );
+    });
 
     return () => {
       disconnectFromBackend();
     };
-  }, [currentLobby, lobbyList, navigate, setCurrentLobby, setNewLobbyList]);
+  }, [setNewLobbyList, setCurrentLobby, navigate]);
 
   const handleCreateLobby = () => {
     if (!currentPLayer) {
       sendToast("Please create a player first", 1000);
-      return;
-    }
-    if (currentLobby){
-      sendToast("Leave lobby before create a new one",1000)
       return;
     }
 
@@ -171,7 +156,8 @@ if(lobbyList !==undefined){
         {currentPLayer ? (
           <div className="m-2 grid grid-cols-3 bg-blue-200 p-2 text-center text-xl lg:m-auto lg:w-2/3">
             <h3 className="col-start-2 m-auto">
-              Player: {currentPLayer.name}
+              Player: {currentPLayer.name} id: {currentPLayer.id} ready:{" "}
+              {currentPLayer.isReady ? "ready" : "notReady"}
             </h3>
 
             <button
