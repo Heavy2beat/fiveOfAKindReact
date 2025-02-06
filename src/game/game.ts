@@ -25,6 +25,9 @@ export const checkIfFinished = (
       if (Number(key) >= 1 && Number(key) <= 13) {
         keyCount++;
         points[player] += value;
+        if(Number(key)===6&&points[player]>63){
+          points[player] += 35
+        }
         if (keyCount === 13) {
           isFinished[player] = true;
         }

@@ -34,6 +34,9 @@ export function setDicesToPoints(
     tempScoreUpper = points.length !== 0 ? points.reduce((a, b) => a + b) : 0;
 
     const temp = scoreBoard;
+    
+
+
     temp.set(String(number), tempScoreUpper);
     setScoreBoard(temp);
   } else if (number > 6) {
