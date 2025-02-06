@@ -96,7 +96,7 @@ export default function Highscores() {
               onClick={() => resetLocalHighscore()}
               className="col-start-3 w-fit place-self-end rounded bg-red-500 px-4 text-start"
             >
-              X
+              <img src="/fiveOfAKindReact/trash.svg" alt="" />
             </button>
           </div>{" "}
           <ol className="list-decimal bg-slate-300 p-2">
