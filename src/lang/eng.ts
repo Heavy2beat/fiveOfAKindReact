@@ -57,7 +57,7 @@ export const eng : Language = {
   highscoreText2: " to send your score to the online highscore list!",
   locale: "Local Highscores",
   oneTime: "(only works once)",
-  weeklyHighscore: "Best of this week -online!",
+  weeklyHighscore: "Top 10 of this week -online!",
   noScores: "No scores yet",
   highscores: "Highscores",
   redirectToHighscores: "Saved! Redirecting to highscores...",
@@ -70,5 +70,6 @@ export const eng : Language = {
   tooletipRuleChance: "All dice count, no matter which",
   tooltipRuleFullHouse: "",
   helpmodeOn: "Helpmode on",
-  helpmodeOff: "Helpmode off"
+  helpmodeOff: "Helpmode off",
+  theOthers: "...and the others"
 }

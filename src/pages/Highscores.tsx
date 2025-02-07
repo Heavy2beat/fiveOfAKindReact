@@ -25,6 +25,7 @@ export default function Highscores() {
   });
 
   const [isSend, setIsSend] = useState(false);
+  const [restIsVisible, setRestIsVisible] = useState(false);
 
   const sendToOnlineHighScore = (
     player: string,
@@ -144,23 +145,60 @@ export default function Highscores() {
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
-            {query.data?.map((score, index) => (
-              <li
-                key={score.name + score.points}
-                className={
-                  index % 2 == 0
-                    ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
-                    : "grid grid-cols-3 justify-between bg-blue-400 p-2"
-                }
-              >
-                <p className="text-start font-bold">{index + 1}.</p>{" "}
-                <p className="text-start"> {score.name} </p>
-                <p className="font-bold">
-                  {" "}
-                  {score.points} {lang.points}
-                </p>
-              </li>
-            ))}
+            {query.data
+              ?.filter((score, index) => index < 10)
+              .map((score, index) => (
+                <li
+                  key={score.name + score.points}
+                  className={
+                    index % 2 == 0
+                      ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
+                      : "grid grid-cols-3 justify-between bg-blue-400 p-2"
+                  }
+                >
+                  <p className="text-start font-bold">{index + 1}. </p>{" "}
+                  <div className="flex justify-between">
+                    <p className="text-start"> {score.name} </p>
+                    {index === 0 ? (
+                      <img src="/fiveOfAKindReact/crown.svg" alt="" />
+                    ) : null}
+                  </div>
+                  <p className="font-bold">
+                    {" "}
+                    {score.points} {lang.points}
+                  </p>{" "}
+                </li>
+              ))}
+            <li
+              className="flex justify-between p-2 hover:bg-slate-400"
+              onClick={() => setRestIsVisible(!restIsVisible)}
+            >
+              {lang.theOthers}{" "}
+              <img src="/fiveOfAKindReact/chevron-compact-down.svg" alt="" />
+            </li>
+            {restIsVisible
+              ? query.data
+                  ?.filter((score, index) => index >= 10)
+                  .map((score, index) => (
+                    <li
+                      key={score.name + score.points}
+                      className={
+                        index % 2 == 0
+                          ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
+                          : "grid grid-cols-3 justify-between bg-blue-400 p-2"
+                      }
+                    >
+                      <p className="text-start font-bold">{index + 11}. </p>{" "}
+                      <div className="flex justify-between">
+                        <p className="text-start"> {score.name} </p>
+                      </div>
+                      <p className="font-bold">
+                        {" "}
+                        {score.points} {lang.points}
+                      </p>{" "}
+                    </li>
+                  ))
+              : null}
           </ol>
         </div>
       </div>

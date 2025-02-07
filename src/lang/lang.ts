@@ -69,5 +69,6 @@ export type Language = {
     tooletipRuleChance:string,
     helpmodeOn:string,
     helpmodeOff:string,
+    theOthers:string
 
 }

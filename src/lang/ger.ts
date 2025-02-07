@@ -57,7 +57,7 @@ export const ger :Language = {
     highscoreText2: " um deine Punkte in die Online Bestenliste zu schicken!",
     locale: "Lokal",
     oneTime: "(wird nur einmal gespeichert)",
-    weeklyHighscore: "Bestenliste dieser Woche - online",
+    weeklyHighscore: "Top 10 der Woche - online",
     noScores: "Noch keine Highscores vorhanden",
     highscores: "Bestenliste",
     redirectToHighscores: "Gespeichert! Leite weiter zu der Bestenliste...",
@@ -70,5 +70,6 @@ export const ger :Language = {
     tooltipRuleFiveOf: "Fünf gleiche Würfel",
     tooletipRuleChance: "Alle Würfel zählen, egal welche",
     helpmodeOn: "Hilfsmodus an",
-    helpmodeOff: "Hilfsmodus aus"
+    helpmodeOff: "Hilfsmodus aus",
+    theOthers: "...und die anderen"
 }
