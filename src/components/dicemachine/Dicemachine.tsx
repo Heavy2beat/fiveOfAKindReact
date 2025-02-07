@@ -32,8 +32,6 @@ export default function DiceMachine() {
 
   const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
 
-
-  
   const rollDices = () => {
     if (numberOfRound === 3) return;
     if (!dice1keep) {
@@ -82,11 +80,11 @@ export default function DiceMachine() {
 
   const manageDiceClass = (iskept: boolean) => {
     const diceIsKeptAndVisible =
-      " cursor-pointer mt-2 rounded  min-w-fit bg-green-400 p-2 shadow-xl text-center";
+      " cursor-pointer mt-2 rounded  min-w-fit bg-green-400 p-2 shadow-xl text-center hover:bg-green-500";
     const diceIsNotVisible =
       " cursor-pointer mt-2 rounded  min-w-fit bg-slate-400 p-2 shadow-xl text-center  opacity-30";
     const diceIsNotKeptAndVisible =
-      " cursor-pointer  mt-2 rounded  min-w-fit bg-blue-400 p-2 shadow-xl text-center";
+      " cursor-pointer  mt-2 rounded  min-w-fit bg-blue-400 p-2 shadow-xl text-center hover:bg-blue-500";
     if (numberOfRound !== 0) {
       if (iskept) {
         return diceIsKeptAndVisible;
@@ -150,7 +148,7 @@ export default function DiceMachine() {
           <div className="col-span-3 col-start-2 flex justify-center">
             <button
               onClick={() => rollDices()}
-              className="m-2 w-5/6 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl"
+              className="m-2 w-5/6 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl hover:bg-blue-500"
             >
               {numberOfRound !== 3 ? lang.roll : lang.setPoints}
             </button>

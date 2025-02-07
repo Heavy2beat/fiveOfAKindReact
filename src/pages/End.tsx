@@ -54,7 +54,7 @@ export default function End() {
       resetRound();
       setTimeout(() => {
         navigate("/highscores");
-      }, 3000);
+      }, 2000);
       setIsSend(true);
     }
   };
@@ -75,7 +75,7 @@ export default function End() {
         {index === 0 ? (
           !isSend ? (
             <button
-              className="bg-green-400 p-2 text-xs"
+              className="bg-green-400 p-2 text-xs hover:bg-green-500"
               onClick={() => saveHighScore(player, score)}
             >
               {lang.save}
@@ -137,13 +137,13 @@ export default function End() {
       <div className="flex flex-col justify-center gap-8">
         <button
           onClick={handleRevenge}
-          className="m-auto w-32 cursor-pointer rounded bg-blue-500 p-2 text-center shadow-xl hover:bg-blue-600"
+          className="m-auto w-32 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl hover:bg-blue-500"
         >
           {lang.revenge}
         </button>
         <button
           onClick={handleBackToMainMenu}
-          className="m-auto w-32 cursor-pointer rounded bg-blue-500 p-2 text-center shadow-xl hover:bg-blue-600"
+          className="m-auto w-32 cursor-pointer rounded bg-blue-400 p-2 text-center shadow-xl hover:bg-blue-500"
         >
           {lang.mainMenu}
         </button>

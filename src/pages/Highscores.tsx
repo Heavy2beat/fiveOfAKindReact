@@ -72,7 +72,7 @@ export default function Highscores() {
 
           <button
             onClick={() => navigate("/")}
-            className="col-start-3 w-fit cursor-pointer place-self-end rounded bg-blue-400 p-2 shadow-2xl md:place-self-center"
+            className="col-start-3 w-fit cursor-pointer place-self-end rounded bg-blue-400 p-2 shadow-2xl hover:bg-blue-500 md:place-self-center"
           >
             <img src="/fiveOfAKindReact/arrow-back.svg" alt="" />
           </button>
@@ -95,7 +95,7 @@ export default function Highscores() {
             <h2 className="col-start-2">{lang.locale}</h2>
             <button
               onClick={() => resetLocalHighscore()}
-              className="col-start-3 w-fit place-self-end rounded bg-red-500 px-4 text-start"
+              className="col-start-3 w-fit place-self-end rounded bg-red-400 px-4 text-start hover:bg-red-500"
             >
               <img src="/fiveOfAKindReact/trash.svg" alt="" />
             </button>
@@ -121,7 +121,7 @@ export default function Highscores() {
                   {index === 0 ? (
                     !isSend && highscoreList[index].isSend !== true ? (
                       <button
-                        className="w-fit bg-green-400 p-2 text-xs"
+                        className="w-fit bg-green-400 p-2 text-xs hover:bg-green-500"
                         onClick={() => {
                           sendToOnlineHighScore(
                             score.name,
@@ -146,7 +146,7 @@ export default function Highscores() {
           <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
             {query.data
-              ?.filter((score, index) => index < 10)
+              ?.filter((score, index) => index < 10 && score)
               .map((score, index) => (
                 <li
                   key={score.name + score.points}
@@ -156,13 +156,18 @@ export default function Highscores() {
                       : "grid grid-cols-3 justify-between bg-blue-400 p-2"
                   }
                 >
-                  <p className="text-start font-bold">{index + 1}. </p>{" "}
+                  {" "}
                   <div className="flex justify-between">
-                    <p className="text-start"> {score.name} </p>
+                    <p className="text-start font-bold">{index + 1}. </p>
                     {index === 0 ? (
-                      <img src="/fiveOfAKindReact/crown.svg" alt="" />
-                    ) : null}
+                      <img
+                        src="/fiveOfAKindReact/crown.svg"
+                        className="pr-2"
+                        alt=""
+                      />
+                    ) : null}{" "}
                   </div>
+                  <p className="text-start"> {score.name} </p>
                   <p className="font-bold">
                     {" "}
                     {score.points} {lang.points}
@@ -178,7 +183,7 @@ export default function Highscores() {
             </li>
             {restIsVisible
               ? query.data
-                  ?.filter((score, index) => index >= 10)
+                  ?.filter((score, index) => index >= 10 && score)
                   .map((score, index) => (
                     <li
                       key={score.name + score.points}

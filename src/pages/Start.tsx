@@ -44,8 +44,8 @@ export default function Start() {
 
   const showNumberOfPlayersOnButton = (buttonNumber: number) => {
     return buttonNumber === numberOfPlayers
-      ? "m-2 cursor-pointer rounded bg-green-400 p-4 shadow-xl"
-      : "m-2 cursor-pointer rounded bg-blue-400 p-4 shadow-xl";
+      ? "m-2 cursor-pointer rounded bg-green-400 p-4 shadow-xl hover:bg-green-500"
+      : "m-2 cursor-pointer rounded bg-blue-400 p-4 shadow-xl hover:bg-blue-500";
   };
 
   const handleInputChange = (index: number, value: string) => {
@@ -91,7 +91,7 @@ export default function Start() {
         <div className="flex justify-center p-4">
           <button
             onClick={handleBeginGameButton}
-            className="m-2 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl"
+            className="m-2 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl hover:bg-blue-500"
           >
             {isNumberOfPlayerChosen ? lang.beginnGame : lang.choose}
           </button>
@@ -99,7 +99,7 @@ export default function Start() {
         <div className="flex h-full justify-center">
           <button
             onClick={() => navigate("/highscores")}
-            className="m-2 w-44 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl"
+            className="m-2 w-44 cursor-pointer rounded bg-blue-400 p-4 shadow-2xl hover:bg-blue-500"
           >
             {lang.highscores}
           </button>
