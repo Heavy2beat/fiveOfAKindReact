@@ -175,11 +175,15 @@ export default function Highscores() {
                 </li>
               ))}
             <li
-              className="flex justify-between p-2 hover:bg-slate-400"
+              className="flex justify-between p-2 duration-300 ease-in-out hover:bg-slate-400"
               onClick={() => setRestIsVisible(!restIsVisible)}
             >
               {lang.theOthers}{" "}
-              <img src="/fiveOfAKindReact/chevron-compact-down.svg" alt="" />
+              {restIsVisible ? (
+                <img src="/fiveOfAKindReact/chevron-compact-up.svg" alt="" />
+              ) : (
+                <img src="/fiveOfAKindReact/chevron-compact-down.svg" alt="" />
+              )}
             </li>
             {restIsVisible
               ? query.data
