@@ -4,11 +4,25 @@ export type Score = {
   isSend: boolean;
 };
 
-const highscoreURL = "https://highscore.fabdev.de/highscores/";
+const highscoreURL = "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/highscores/";
+const weeklyURL = "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/weekly_winners/";
 
 export async function getAllHighscores(): Promise<Score[]> {
     try {
         const response = await fetch(highscoreURL);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data: Score[] = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+}
+export async function getWeeklyWinners(): Promise<Score[]> {
+    try {
+        const response = await fetch(weeklyURL);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
