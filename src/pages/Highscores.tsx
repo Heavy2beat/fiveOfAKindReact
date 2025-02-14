@@ -6,6 +6,8 @@ import { useLanguageStore } from "../store/LanguageStore";
 import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
 import Footer from "../components/Footer";
+import HallOfFame from "../components/HallOfFame";
+
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -17,6 +19,7 @@ export default function Highscores() {
     queryFn: getAllHighscores,
   });
 
+ 
   const mutation = useMutation({
     mutationFn: sendScore,
     onSuccess: () => {
@@ -67,7 +70,7 @@ export default function Highscores() {
   return (
     <>
       <div>
-        <div className="m-2 grid grid-cols-3 bg-blue-200 p-2 text-center text-3xl lg:m-auto lg:w-2/3">
+        <div className="m-2 grid grid-cols-3 bg-blue-200 p-2 text-center text-3xl lg:m-auto lg:w-4/5">
           <h3 className="col-start-2">{lang.highscores}</h3>
 
           <button
@@ -78,7 +81,7 @@ export default function Highscores() {
           </button>
         </div>
 
-        <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-2/3">
+        <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-4/5">
           {highscoreList.length !== 0 ? (
             <p>
               {lang.highscoreText1}
@@ -89,7 +92,7 @@ export default function Highscores() {
           ) : null}
         </div>
       </div>
-      <div className="m-2 grid gap-2 md:m-auto md:w-2/3 md:grid-cols-2">
+      <div className="m-2 grid gap-2 md:m-auto md:w-4/5 md:grid-cols-3">
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <div className="grid grid-cols-3 bg-green-300 text-xl">
             <h2 className="col-start-2">{lang.locale}</h2>
@@ -210,6 +213,12 @@ export default function Highscores() {
               : null}
           </ol>
         </div>
+      <div >
+
+        <HallOfFame ></HallOfFame>
+      </div>
+      </div>
+      <div>
       </div>
       <div className="hidden md:block">
         <Footer></Footer>

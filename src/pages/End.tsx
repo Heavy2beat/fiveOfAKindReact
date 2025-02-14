@@ -65,8 +65,8 @@ export default function End() {
         key={index}
         className={
           index % 2 == 0
-            ? "flex justify-between bg-blue-300 pl-1"
-            : "flex justify-between bg-blue-400 pl-1"
+            ? "flex justify-between bg-blue-300 p-1 lg:p-2"
+            : "flex justify-between bg-blue-400 p-1 lg:p-2"
         }
       >
         <div>
@@ -75,7 +75,7 @@ export default function End() {
         {index === 0 ? (
           !isSend ? (
             <button
-              className="bg-green-400 p-2 text-xs hover:bg-green-500"
+              className="bg-green-400 p-2 text-xs hover:bg-green-500 rounded"
               onClick={() => saveHighScore(player, score)}
             >
               {lang.save}
