@@ -14,5 +14,6 @@ export function sendToast  (message:string, timeInMs:number) {
         draggable: true,
         progress: undefined,
         theme: "light",
+        
         });
   } 

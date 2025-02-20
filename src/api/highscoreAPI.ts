@@ -1,8 +1,12 @@
+import { sendToast } from "../utils/utils";
+
 export type Score = {
   name: string;
   points: number;
   isSend: boolean;
-  imageUrl?: string
+  imageUrl?: string;
+  token?:string;
+  date?:Date;
 };
 
 export type Player = {
@@ -94,6 +98,6 @@ await fetch(
     }
   )
     .then((response) => response.text())
-    .then((result) => console.log(result))
+    .then((result) =>{ sendToast(result,3000)})
     .catch((error) => console.error(error));
 }

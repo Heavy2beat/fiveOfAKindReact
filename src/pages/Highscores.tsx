@@ -42,10 +42,13 @@ export default function Highscores() {
     }
 
     if (!isSend) {
+      const token = crypto.randomUUID();
+      localStorage.setItem("token",token);
       mutation.mutate({
         name: player,
         points: score,
         isSend: true,
+        token: token
       });
 
       const updatedHighScoreList = highscoreList.map((score, idx) =>
