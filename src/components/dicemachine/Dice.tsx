@@ -8,20 +8,18 @@ interface DiceProps {
 }
 export default function Dice(props: DiceProps) {
   const { numberOfRound } = useGameStore();
-  
-  
-  const [rotation, setRotation] = useState(0);
 
+  const [rotation, setRotation] = useState(0);
 
   //todo useeffect ersetzen und auf den onclick bei roll dice legen
   useEffect(() => {
     if (!props.iskept) {
       rotateDice();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.iskept]);
 
   const rotateDice = () => {
-
     if (numberOfRound !== 0) setRotation(rotation === 0 ? 360 : 0);
   };
 

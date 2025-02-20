@@ -7,7 +7,6 @@ import {
 import { useLanguageStore } from "../store/LanguageStore";
 import { ChangeEvent, useEffect, useState } from "react";
 
-
 export default function HallOfFame() {
   const { lang } = useLanguageStore();
   const [imageUrl, setImageUrl] = useState(null);
@@ -21,22 +20,22 @@ export default function HallOfFame() {
     queryFn: getWeeklyWinners,
   });
 
-  const hofSorted = query.data?.sort((a,b)=> b.points - a.points);
-  const hofLeader = hofSorted ?  hofSorted[0] : null;
-
+  const hofSorted = query.data?.sort((a, b) => b.points - a.points);
+  const hofLeader = hofSorted ? hofSorted[0] : null;
 
   useEffect(() => {
     getWinnerLink().then((link) => {
-      setImageUrl(link)
+      setImageUrl(link);
     });
   }, [imageUrl, imageFile]);
 
-  const updateImage =  (event: ChangeEvent<HTMLInputElement>) => {
+  const updateImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      
-      sendPicture(file).then(()=>{setImageFile(file);});
-      
+
+      sendPicture(file).then(() => {
+        setImageFile(file);
+      });
     }
   };
 
@@ -92,7 +91,7 @@ export default function HallOfFame() {
                   id="upload-input"
                   type="file"
                   name="file"
-                  accept=".jpg"
+                  accept=".jpg,.gif,.svg,.png"
                 />
                 <label className="" htmlFor="upload-input">
                   <img
@@ -129,10 +128,7 @@ export default function HallOfFame() {
                     }
                   >
                     {" "}
-                    <div className="flex justify-between">
-                    
-                     
-                    </div>
+                    <div className="flex justify-between"></div>
                     <p className="text-start"> {score.name} </p>
                     <div className="flex justify-end font-bold">
                       <div className="flex justify-items-end">
