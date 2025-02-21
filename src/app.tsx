@@ -11,6 +11,7 @@ export function App() {
     <>
       <Header></Header>
       <ToastContainer></ToastContainer>
+
       <QueryClientProvider client={queryClient}>
         <Outlet></Outlet>
       </QueryClientProvider>

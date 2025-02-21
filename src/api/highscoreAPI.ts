@@ -5,22 +5,22 @@ export type Score = {
   points: number;
   isSend: boolean;
   imageUrl?: string;
-  token?:string;
-  date?:Date;
+  token?: string;
+  date?: Date;
 };
 
 export type Player = {
   id: string;
   name: string;
 };
+const baseUrl =
+  "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net";
+const highscoreURL = baseUrl + "/highscores";
 
-const highscoreURL =
-  "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/highscores/";
-const weeklyURL =
-  "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/weekly_winners/";
+const weeklyURL = baseUrl + "weekly_winners";
 
-  const winnerImageLink = "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/download"
-
+const winnerImageLink = baseUrl + "/download";
+const sendWinnerImageLinkUrl = baseUrl + "/downloadlink";
 
 export async function getAllHighscores(): Promise<Score[]> {
   try {
@@ -68,36 +68,52 @@ export async function sendScore(score: Score): Promise<void> {
   }
 }
 export async function getWinnerLink() {
-    try {
-        const response = await fetch(winnerImageLink);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error:", error);
-        return [];
-      }
+  try {
+    const response = await fetch(winnerImageLink);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
 }
 
-export async function sendPicture(
-  fileInput: File,
-) {
-   const renamedFile = new File([fileInput],'winner.jpg')
+export async function sendWinnerLink(linkToSend: string) {
+  const toSend = {
+    linkToSet: linkToSend,
+  };
+  try {
+    await fetch(sendWinnerImageLinkUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(toSend),
+    });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+export async function sendPicture(fileInput: File) {
+  const renamedFile = new File([fileInput], "winner.jpg");
   const formdata = new FormData();
   formdata.append("file", renamedFile, "winner.jpg");
 
-
-await fetch(
+  await fetch(
     "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/upload",
     {
-     method: 'POST',
-     body: formdata,
-     redirect: 'follow'   
-    }
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    },
   )
     .then((response) => response.text())
-    .then((result) =>{ sendToast(result,3000)})
+    .then((result) => {
+      sendToast(result, 3000);
+    })
     .catch((error) => console.error(error));
 }

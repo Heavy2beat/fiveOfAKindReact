@@ -3,15 +3,18 @@ import {
   getWeeklyWinners,
   getWinnerLink,
   sendPicture,
+  sendWinnerLink,
 } from "../api/highscoreAPI";
 import { useLanguageStore } from "../store/LanguageStore";
 import { ChangeEvent, useEffect, useState } from "react";
+import Tooltip from "./Tooltip";
 
 export default function HallOfFame() {
   const { lang } = useLanguageStore();
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [restIsVisible, setRestIsVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [avatarMenuVisible, setAvatarMenuVisible] = useState(false);
 
   const currentToken = "123f"; // localStorage.getItem("token");
 
@@ -27,7 +30,7 @@ export default function HallOfFame() {
     getWinnerLink().then((link) => {
       setImageUrl(link);
     });
-  }, [imageUrl, imageFile]);
+  }, [imageFile]);
 
   const updateImage = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -39,6 +42,12 @@ export default function HallOfFame() {
     }
   };
 
+  const handleOnAvatarClick = (imageLinkToSet: string) => {
+    setImageUrl(imageLinkToSet);
+    sendWinnerLink(imageLinkToSet);
+    setAvatarMenuVisible(false);
+  };
+
   return (
     <div>
       <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
@@ -48,6 +57,7 @@ export default function HallOfFame() {
           <h2 className="bg-yellow-300 text-xl">Wochen Champion</h2>
           <img src="/fiveOfAKindReact/fame.svg" alt="" />
         </div>
+
         <ol className="bg-slate-300 p-2">
           <li
             key="header"
@@ -64,45 +74,104 @@ export default function HallOfFame() {
               </div>
             ) : null}
           </li>
-          <li
-            key="boardLeader"
-            className="grid h-fit max-h-28 grid-cols-3 justify-between bg-yellow-300 p-2"
-          >
-            <div></div>
-            <div className="col-start-1 flex items-center justify-center">
-              <img
-                src="/fiveOfAKindReact/fame1.svg"
-                className="h-12 pr-8"
-                alt=""
-              ></img>
-            </div>
-            <div className="col-start-2">
-              {imageUrl ? (
-                <img className="m-auto max-h-24 rounded" src={imageUrl}></img>
-              ) : (
-                <p>kein Bild</p>
-              )}
-            </div>
-            {currentToken != undefined && currentToken == hofLeader?.token ? (
-              <div className="col-start-3 flex items-center justify-end">
-                <input
-                  onChange={updateImage}
-                  className="hidden"
-                  id="upload-input"
-                  type="file"
-                  name="file"
-                  accept=".jpg,.gif,.svg,.png"
+          {avatarMenuVisible ? (
+            <li className="h-30 grid grid-cols-3 justify-between bg-yellow-300 p-2">
+              <div className="col-span-3 grid grid-cols-4 gap-4 p-4">
+                <img
+                  onClick={() =>
+                    handleOnAvatarClick("/fiveOfAKindReact/one.gif")
+                  }
+                  className="cursor-pointer rounded-xl"
+                  src="/fiveOfAKindReact/one.gif"
+                  alt=""
                 />
-                <label className="" htmlFor="upload-input">
-                  <img
-                    className="mr-8 self-center rounded px-1 hover:bg-yellow-400"
-                    src="/fiveOfAKindReact/upload.svg"
-                    alt="Upload Icon"
-                  ></img>
-                </label>
+                <img
+                  onClick={() =>
+                    handleOnAvatarClick("/fiveOfAKindReact/two.gif")
+                  }
+                  className="cursor-pointer rounded-xl"
+                  src="/fiveOfAKindReact/two.gif"
+                  alt=""
+                />
+                <img
+                  onClick={() =>
+                    handleOnAvatarClick("/fiveOfAKindReact/three.gif")
+                  }
+                  className="cursor-pointer rounded-xl"
+                  src="/fiveOfAKindReact/three.gif"
+                  alt=""
+                />
+                <img
+                  onClick={() =>
+                    handleOnAvatarClick("/fiveOfAKindReact/four.gif")
+                  }
+                  className="cursor-pointer rounded-xl"
+                  src="/fiveOfAKindReact/four.gif"
+                  alt=""
+                />
               </div>
-            ) : null}
-          </li>
+              <div className="col-span-3 flex justify-center"></div>
+            </li>
+          ) : (
+            <li
+              key="boardLeader"
+              className="h-30 grid grid-cols-3 justify-between bg-yellow-300 p-2"
+            >
+              <div className="col-start-1 flex items-center justify-center">
+                <img
+                  src="/fiveOfAKindReact/fame1.svg"
+                  className="h-12 pr-8"
+                  alt=""
+                ></img>
+              </div>
+              <div className="col-start-2">
+                {imageUrl ? (
+                  <Tooltip
+                    sendTip={true}
+                    message={
+                      currentToken != undefined &&
+                      currentToken == hofLeader?.token
+                        ? "Hey Champion, klicke hier und suche dir deinen Avatar aus!"
+                        : `Diesen Avatar präsentiert dir dein Champion ${hofLeader?.name}`
+                    }
+                    children={
+                      <img
+                        onClick={
+                          currentToken != undefined &&
+                          currentToken == hofLeader?.token
+                            ? () => setAvatarMenuVisible(true)
+                            : () => {}
+                        }
+                        className="m-auto max-h-24 rounded"
+                        src={imageUrl}
+                      ></img>
+                    }
+                  ></Tooltip>
+                ) : (
+                  <p>kein Bild</p>
+                )}
+              </div>
+              {currentToken != undefined && currentToken == hofLeader?.token ? (
+                <div className="col-start-3 flex items-center justify-end">
+                  <input
+                    onChange={updateImage}
+                    className="hidden"
+                    id="upload-input"
+                    type="file"
+                    name="file"
+                    accept=".jpg,.gif,.svg,.png"
+                  />
+                  <label className="" htmlFor="upload-input">
+                    <img
+                      className="mr-8 self-center rounded px-1 hover:bg-yellow-400"
+                      src="/fiveOfAKindReact/upload.svg"
+                      alt="Upload Icon"
+                    ></img>
+                  </label>
+                </div>
+              ) : null}
+            </li>
+          )}
           <li
             key="rest"
             className="flex justify-between p-2 duration-300 ease-in-out hover:bg-slate-400"
