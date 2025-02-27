@@ -15,11 +15,11 @@ export type Player = {
 };
 
 const highscoreURL =
-  "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/highscores/";
+  "https://highscore.fabdev.de/highscores/";
 const weeklyURL =
-  "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/weekly_winners/";
+  "https://highscore.fabdev.de/weeklywinners/";
 
-  const winnerImageLink = "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/download"
+  const winnerImageLink = "https://highscore.fabdev.de/download"
 
 
 export async function getAllHighscores(): Promise<Score[]> {
