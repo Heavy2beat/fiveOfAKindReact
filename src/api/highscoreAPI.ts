@@ -17,9 +17,9 @@ const baseUrl =
   "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net";
 const highscoreURL = baseUrl + "/highscores";
 
-const weeklyURL = baseUrl + "weekly_winners";
+const weeklyURL = baseUrl + "/weekly_winners";
 
-const winnerImageLink = baseUrl + "/download";
+const winnerImageLinkUrl = baseUrl + "/download";
 const sendWinnerImageLinkUrl = baseUrl + "/downloadlink";
 
 export async function getAllHighscores(): Promise<Score[]> {
@@ -69,7 +69,7 @@ export async function sendScore(score: Score): Promise<void> {
 }
 export async function getWinnerLink() {
   try {
-    const response = await fetch(winnerImageLink);
+    const response = await fetch(winnerImageLinkUrl);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

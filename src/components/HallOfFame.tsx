@@ -10,18 +10,18 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
 
 export default function HallOfFame() {
-  const { lang } = useLanguageStore();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [restIsVisible, setRestIsVisible] = useState(false);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [avatarMenuVisible, setAvatarMenuVisible] = useState(false);
-
-  const currentToken = "123f"; // localStorage.getItem("token");
-
   const query = useQuery({
     queryKey: ["hallOfFame"],
     queryFn: getWeeklyWinners,
   });
+
+  const { lang } = useLanguageStore();
+  const [restIsVisible, setRestIsVisible] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [avatarMenuVisible, setAvatarMenuVisible] = useState(false);
+
+  const currentToken = localStorage.getItem("token");
 
   const hofSorted = query.data?.sort((a, b) => b.points - a.points);
   const hofLeader = hofSorted ? hofSorted[0] : null;
@@ -197,11 +197,12 @@ export default function HallOfFame() {
                     }
                   >
                     {" "}
-                    <div className="flex justify-between"></div>
-                    <p className="text-start"> {score.name} </p>
-                    <div className="flex justify-end font-bold">
-                      <div className="flex justify-items-end">
-                        {score.points} {lang.points}
+                    <div className="col-span-3 flex justify-between">
+                      <p className="text-start"> {score.name} </p>
+                      <div className="flex justify-end font-bold">
+                        <div className="flex justify-items-end">
+                          {score.points} {lang.points}
+                        </div>
                       </div>
                     </div>{" "}
                   </li>
