@@ -7,7 +7,7 @@ import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
 import Footer from "../components/Footer";
 import HallOfFame from "../components/HallOfFame";
-
+// import { Popup } from "../components/Popup";
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -19,7 +19,6 @@ export default function Highscores() {
     queryFn: getAllHighscores,
   });
 
- 
   const mutation = useMutation({
     mutationFn: sendScore,
     onSuccess: () => {
@@ -43,12 +42,12 @@ export default function Highscores() {
 
     if (!isSend) {
       const token = crypto.randomUUID();
-      localStorage.setItem("token",token);
+      localStorage.setItem("token", token);
       mutation.mutate({
         name: player,
         points: score,
         isSend: true,
-        token: token
+        token: token,
       });
 
       const updatedHighScoreList = highscoreList.map((score, idx) =>
@@ -95,7 +94,8 @@ export default function Highscores() {
           ) : null}
         </div>
       </div>
-      <div className="m-2 grid gap-2 md:m-auto md:w-4/5 md:grid-cols-3">
+
+      <div className={`m-2 grid gap-2 md:m-auto md:w-4/5 md:grid-cols-3`}>
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <div className="grid grid-cols-3 bg-green-300 text-xl">
             <h2 className="col-start-2">{lang.locale}</h2>
@@ -216,13 +216,11 @@ export default function Highscores() {
               : null}
           </ol>
         </div>
-      <div >
-
-        <HallOfFame ></HallOfFame>
+        <div>
+          <HallOfFame></HallOfFame>
+        </div>
       </div>
-      </div>
-      <div>
-      </div>
+      <div></div>
       <div className="hidden md:block">
         <Footer></Footer>
       </div>

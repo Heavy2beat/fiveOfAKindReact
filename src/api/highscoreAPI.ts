@@ -1,25 +1,26 @@
-import { sendToast } from "../utils/utils";
 
 export type Score = {
   name: string;
   points: number;
   isSend: boolean;
   imageUrl?: string;
-  token?:string;
-  date?:Date;
+  token?: string;
+  date?: Date;
 };
 
 export type Player = {
   id: string;
   name: string;
 };
+const baseUrl =
+  "http://highscore.fabdev.de";
+const highscoreURL = baseUrl + "/highscores";
 
-const highscoreURL =
-  "https://highscore.fabdev.de/highscores/";
-const weeklyURL =
-  "https://highscore.fabdev.de/weeklywinners/";
 
-  const winnerImageLink = "https://highscore.fabdev.de/download"
+const weeklyURL =baseUrl +"/weeklywinners";
+
+  const getWinnerImageUrl = baseUrl + "/winnerLink";
+  const setWinnerImageUrl = baseUrl + "/winnerLink";
 
 
 export async function getAllHighscores(): Promise<Score[]> {
@@ -68,36 +69,34 @@ export async function sendScore(score: Score): Promise<void> {
   }
 }
 export async function getWinnerLink() {
-    try {
-        const response = await fetch(winnerImageLink);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error:", error);
-        return [];
-      }
-}
-
-export async function sendPicture(
-  fileInput: File,
-) {
-   const renamedFile = new File([fileInput],'winner.jpg')
-  const formdata = new FormData();
-  formdata.append("file", renamedFile, "winner.jpg");
-
-
-await fetch(
-    "https://highscore-ff-d7b5cwenbcewctaw.germanywestcentral-01.azurewebsites.net/upload",
-    {
-     method: 'POST',
-     body: formdata,
-     redirect: 'follow'   
+  try {
+    const response = await fetch(getWinnerImageUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
-  )
-    .then((response) => response.text())
-    .then((result) =>{ sendToast(result,3000)})
-    .catch((error) => console.error(error));
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
 }
+
+export async function sendWinnerLink(linkToSend: string) {
+  const toSend = {
+    linkToSet: linkToSend,
+  };
+  try {
+    await fetch(setWinnerImageUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(toSend),
+    });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+

@@ -71,5 +71,8 @@ export const ger :Language = {
     tooletipRuleChance: "Alle Würfel zählen, egal welche",
     helpmodeOn: "Hilfsmodus an",
     helpmodeOff: "Hilfsmodus aus",
-    theOthers: "...und die anderen"
+    theOthers: "...und die anderen",
+    showAllChampions: "alle Wochen Champions anzeigen",
+    heyChampion: "Hey Champion, klicke hier und suche dir deinen Avatar aus!",
+    thisAvatarpresentedBy: "Diesen Avatar präsentiert dir dein Champion"
 }

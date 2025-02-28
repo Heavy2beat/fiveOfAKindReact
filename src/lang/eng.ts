@@ -71,5 +71,8 @@ export const eng : Language = {
   tooltipRuleFullHouse: "",
   helpmodeOn: "Helpmode on",
   helpmodeOff: "Helpmode off",
-  theOthers: "...and the others"
+  theOthers: "...and the others",
+  showAllChampions: "show all champions",
+  heyChampion: "Hey champion, click here and choose your avatar!",
+  thisAvatarpresentedBy: "This avatar is presented by",
 }

@@ -69,6 +69,9 @@ export type Language = {
     tooletipRuleChance:string,
     helpmodeOn:string,
     helpmodeOff:string,
-    theOthers:string
+    theOthers:string,
+    showAllChampions:string,
+    heyChampion:string,
+    thisAvatarpresentedBy:string,
 
 }
