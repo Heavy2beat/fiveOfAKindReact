@@ -1,0 +1,17 @@
+/* Custom Scrollbar Styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgb(132, 176, 248);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: blue;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: blue;
+}

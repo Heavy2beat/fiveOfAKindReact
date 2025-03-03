@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getAllHighscores, sendScore } from "../api/highscoreAPI";
+import "../styles/custom.css";
 
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
@@ -173,7 +174,10 @@ export default function Highscores() {
                       />
                     ) : null}{" "}
                   </div>
-                  <p className="text-start"> {score.name} </p>
+                  <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
+                    {" "}
+                    {score.name}{" "}
+                  </p>
                   <p className="font-bold">
                     {" "}
                     {score.points} {lang.points}
@@ -205,7 +209,10 @@ export default function Highscores() {
                     >
                       <p className="text-start font-bold">{index + 11}. </p>{" "}
                       <div className="flex justify-between">
-                        <p className="text-start"> {score.name} </p>
+                        <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
+                          {" "}
+                          {score.name}{" "}
+                        </p>
                       </div>
                       <p className="font-bold">
                         {" "}

@@ -7,6 +7,7 @@ import {
 import { useLanguageStore } from "../store/LanguageStore";
 import { useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
+import "../styles/custom.css";
 
 export default function HallOfFame() {
   const query = useQuery({
@@ -57,7 +58,9 @@ export default function HallOfFame() {
             {hofLeader ? (
               <div className="flex justify-around text-lg font-bold">
                 {" "}
-                <p>{hofLeader.name}</p>{" "}
+                <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
+                  {hofLeader.name}
+                </p>{" "}
                 <p>
                   {" "}
                   {hofLeader.points} {lang.points}{" "}
@@ -170,7 +173,10 @@ export default function HallOfFame() {
                   >
                     {" "}
                     <div className="col-span-3 flex justify-between">
-                      <p className="text-start"> {score.name} </p>
+                      <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
+                        {" "}
+                        {score.name}{" "}
+                      </p>
                       <div className="flex justify-end font-bold">
                         <div className="flex justify-items-end">
                           {score.points} {lang.points}
