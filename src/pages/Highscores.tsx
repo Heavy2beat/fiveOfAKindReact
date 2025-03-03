@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getAllHighscores, sendScore } from "../api/highscoreAPI";
+import { getAllHighscores, Score, sendScore } from "../api/highscoreAPI";
 import "../styles/custom.css";
 
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
 import Footer from "../components/Footer";
 import HallOfFame from "../components/HallOfFame";
-// import { Popup } from "../components/Popup";
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -43,13 +42,25 @@ export default function Highscores() {
 
     if (!isSend) {
       const token = crypto.randomUUID();
-      localStorage.setItem("token", token);
-      mutation.mutate({
+      const scoreToSend: Score = {
         name: player,
         points: score,
         isSend: true,
         token: token,
-      });
+      };
+      handleTokenList(token);
+      // const scoreFromStorage = localStorage.getItem("sendedScore");
+      // //TODO need some tests here!
+      // if (scoreFromStorage != null) {
+      //   const scoreFromStorageParsed: Score = JSON.parse(scoreFromStorage);
+      //   if (scoreFromStorageParsed.points <= scoreToSend.points) {
+      //     localStorage.setItem("sendedScore", JSON.stringify(scoreToSend));
+      //   }
+      // } else {
+      //   localStorage.setItem("sendedScore", JSON.stringify(scoreToSend));
+      // }
+
+      mutation.mutate(scoreToSend);
 
       const updatedHighScoreList = highscoreList.map((score, idx) =>
         idx === index ? { ...score, isSend: true } : score,
@@ -68,6 +79,24 @@ export default function Highscores() {
   const resetLocalHighscore = () => {
     localStorage.removeItem("highscoreList");
     sethighScoreList([]);
+  };
+
+  const handleTokenList = (token: string) => {
+    const tokenToAdd = {
+      token: token,
+      date: Date.now(),
+    };
+    const tokenListFromStorage = localStorage.getItem("tokenList");
+    let tokenListParsed = [];
+    if (tokenListFromStorage) {
+      tokenListParsed = JSON.parse(tokenListFromStorage);
+    }
+    const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    tokenListParsed = tokenListParsed.filter(
+      (token: { token: string; date: number }) => token.date >= sevenDaysAgo,
+    );
+    tokenListParsed.push(tokenToAdd);
+    localStorage.setItem("tokenList", JSON.stringify(tokenListParsed));
   };
 
   return (
@@ -174,7 +203,7 @@ export default function Highscores() {
                       />
                     ) : null}{" "}
                   </div>
-                  <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
+                  <p className="scrollbar-thin line-clamp-2 overflow-y-auto text-start">
                     {" "}
                     {score.name}{" "}
                   </p>

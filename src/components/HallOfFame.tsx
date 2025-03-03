@@ -23,10 +23,27 @@ export default function HallOfFame() {
 
   const [avatarMenuVisible, setAvatarMenuVisible] = useState(false);
 
-  const currentToken = localStorage.getItem("token");
-
   const hofSorted = query.data?.sort((a, b) => b.points - a.points);
   const hofLeader = hofSorted ? hofSorted[0] : null;
+
+  //TODO neuer Ansatz beim token handling ->Testphase
+  const [currentTokenList, setCurrentTokenList] = useState([]);
+
+  const found = currentTokenList.find(
+    (element: { token: string; date: Date }) =>
+      element.token === hofLeader?.token,
+  );
+  const currentToken = found != undefined ? found : "";
+
+  useEffect(() => {
+    const currentList = localStorage.getItem("tokenList");
+    if (currentList) {
+      const currentListParsed = JSON.parse(currentList);
+      setCurrentTokenList(currentListParsed);
+    }
+  }, []);
+
+  //Ende neues token handling
 
   useEffect(() => {
     getWinnerLink().then((link) => {
