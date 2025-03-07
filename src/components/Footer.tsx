@@ -41,7 +41,7 @@ export default function Footer() {
         />
       </div>
       <div className="flex items-center justify-center text-xs">
-        <p className="p-1">created by Fabian Fischer v0.7</p>
+        <p className="p-1">created by Fabian Fischer v0.7.1</p>
       </div>
     </div>
   );

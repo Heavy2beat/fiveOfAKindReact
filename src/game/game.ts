@@ -1,5 +1,3 @@
-
-
 export const checkIfFinished = (
   scoreBoardPlayer1: Map<string, number>,
   scoreBoardPlayer2: Map<string, number>,
@@ -25,13 +23,23 @@ export const checkIfFinished = (
       if (Number(key) >= 1 && Number(key) <= 13) {
         keyCount++;
         points[player] += value;
-        if(Number(key)===6&&points[player]>=63){
-          points[player] += 35
-        }
+        //check for finish
         if (keyCount === 13) {
           isFinished[player] = true;
         }
       }
+    }
+  }
+  //check for bonus
+  for (let player = 0; player < numberOfPlayers; player++) {
+    let sumFirstSixRounds = 0;
+    for (const [key, value] of scoreBoards[player].entries()) {
+      if (Number(key) >= 1 && Number(key) <= 6) {
+        sumFirstSixRounds += value;
+      }
+    }
+    if (sumFirstSixRounds >= 63) {
+      points[player] += 35;
     }
   }
 
@@ -47,10 +55,7 @@ export const checkIfFinished = (
   }
 };
 
-export const gameIsFinished = (
-  pointMap: Map<string, number>,
-  
-) => {
+export const gameIsFinished = (pointMap: Map<string, number>) => {
   const sortedPoints = Array.from(pointMap.entries()).sort(
     (a, b) => b[1] - a[1],
   );
