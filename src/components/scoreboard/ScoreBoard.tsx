@@ -1,4 +1,5 @@
 import { useResetRound } from "../../hooks/useResetRound";
+import { useDiceStore } from "../../store/Dicestore";
 import { useGameStore } from "../../store/GameStore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import { sendToast } from "../../utils/utils";
@@ -22,6 +23,7 @@ export default function ScoreBoard() {
     setScoreBoardPlayer4,
   } = useGameStore();
   const { lang } = useLanguageStore();
+  const { unkeepAllDices } = useDiceStore();
 
   const handOverCorrectBoard = (
     numberOfPlayer: number,
@@ -63,6 +65,7 @@ export default function ScoreBoard() {
       setReset(Math.random());
     } else {
       resetRound();
+      unkeepAllDices();
       setReset(0);
     }
   };
