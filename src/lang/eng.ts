@@ -1,6 +1,6 @@
 import { Language } from "./lang";
 
-export const eng : Language = {
+export const eng: Language = {
   greeting: "Welcome to Yahtzee",
   roll: "Roll",
   playerPlus: "Player+",
@@ -53,7 +53,8 @@ export const eng : Language = {
   saved: "Saved",
   endgameText: "The winner may save his score to the highscore list! Press ",
   save: "save ",
-  highscoreText1: "You believe your highscore is good enough for the world? Press ",
+  highscoreText1:
+    "You believe your highscore is good enough for the world? Press ",
   highscoreText2: " to send your score to the online highscore list!",
   locale: "Local Highscores",
   oneTime: "(only works once)",
@@ -75,4 +76,5 @@ export const eng : Language = {
   showAllChampions: "show all champions",
   heyChampion: "Hey champion, click here and choose your avatar!",
   thisAvatarpresentedBy: "This avatar is presented by",
-}
+  rageResetWarning: "Push again to blow it away!",
+};

@@ -10,7 +10,7 @@ export function App() {
   return (
     <>
       <Header></Header>
-      <ToastContainer></ToastContainer>
+      <ToastContainer limit={1}></ToastContainer>
 
       <QueryClientProvider client={queryClient}>
         <Outlet></Outlet>

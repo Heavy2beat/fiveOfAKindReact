@@ -9,6 +9,8 @@ import Tooltip from "../Tooltip";
 
 interface playerScoreBoardProps {
   player: number;
+  handleRageReset: () => void;
+  tntSharp: boolean;
   currentBoard: Map<string, number>;
 
   setCurrentBoard: (newBoard: Map<string, number>) => void;
@@ -153,7 +155,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
         <h5 className="mb-2text-center col-span-4 m-auto text-xl">
           {playernames[props.player - 1]}
         </h5>
-        <div className="m-auto p-1 text-sm">
+        <div className="m-auto flex p-1 text-sm">
           {playerOnTurn === props.player ? (
             <img
               onClick={() => toggleHelpMode()}
@@ -161,9 +163,20 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               src="/fiveOfAKindReact/help.svg"
               alt=""
             />
-          ) : (
-            <div></div>
-          )}
+          ) : null}
+          {numberOfPlayers == 1 ? (
+            <Tooltip message="Rage Reset!" sendTip>
+              <img
+                onClick={() => props.handleRageReset()}
+                className={
+                  props.tntSharp
+                    ? "h-7 cursor-pointer rounded bg-red-500"
+                    : "h-7 cursor-pointer"
+                }
+                src="/fiveOfAKindReact/tnt.png"
+              ></img>
+            </Tooltip>
+          ) : null}
         </div>
       </div>
 

@@ -75,7 +75,7 @@ export default function End() {
         {index === 0 ? (
           !isSend ? (
             <button
-              className="bg-green-400 p-2 text-xs hover:bg-green-500 rounded"
+              className="rounded bg-green-400 p-2 text-xs hover:bg-green-500"
               onClick={() => saveHighScore(player, score)}
             >
               {lang.save}

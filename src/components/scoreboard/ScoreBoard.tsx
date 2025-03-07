@@ -1,4 +1,7 @@
+import { useResetRound } from "../../hooks/useResetRound";
 import { useGameStore } from "../../store/GameStore";
+import { useLanguageStore } from "../../store/LanguageStore";
+import { sendToast } from "../../utils/utils";
 import PlayerScoreBoard from "./PlayerScoreBoard";
 
 import { motion } from "framer-motion";
@@ -18,6 +21,7 @@ export default function ScoreBoard() {
     setScoreBoardPlayer3,
     setScoreBoardPlayer4,
   } = useGameStore();
+  const { lang } = useLanguageStore();
 
   const handOverCorrectBoard = (
     numberOfPlayer: number,
@@ -50,6 +54,18 @@ export default function ScoreBoard() {
         return setScoreBoardPlayer1;
     }
   };
+  const [reset, setReset] = useState(0);
+  const resetRound = useResetRound();
+
+  const handleRageReset = () => {
+    if (reset == 0) {
+      sendToast(`${lang.rageResetWarning}`, 2000);
+      setReset(Math.random());
+    } else {
+      resetRound();
+      setReset(0);
+    }
+  };
 
   const PlayerBoards = () => {
     const playerBoards = [];
@@ -65,6 +81,8 @@ export default function ScoreBoard() {
             transition={{ duration: 1 }}
           >
             <PlayerScoreBoard
+              tntSharp={reset != 0}
+              handleRageReset={handleRageReset}
               setCurrentBoard={handOverCorrectBoardSetter(i)}
               currentBoard={handOverCorrectBoard(i)}
               player={i}
@@ -84,6 +102,8 @@ export default function ScoreBoard() {
             transition={{ duration: 0.5 }}
           >
             <PlayerScoreBoard
+              tntSharp={reset != 0}
+              handleRageReset={handleRageReset}
               setCurrentBoard={handOverCorrectBoardSetter(i)}
               currentBoard={handOverCorrectBoard(i)}
               player={i}
@@ -110,7 +130,7 @@ export default function ScoreBoard() {
 
   useEffect(() => {
     setPlayerBoards(() => getPlayerBoards());
-  }, [playerOnTurn, numberOfPlayers]);
+  }, [playerOnTurn, numberOfPlayers, reset]);
 
   return (
     <>
