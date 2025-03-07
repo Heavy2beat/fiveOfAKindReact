@@ -4,6 +4,7 @@ import { useDiceStore } from "../../store/Dicestore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import Dice from "./Dice";
 import { useGameStore } from "../../store/GameStore";
+import { useState } from "react";
 
 export default function DiceMachine() {
   const lang: Language = useLanguageStore().lang;
@@ -31,9 +32,10 @@ export default function DiceMachine() {
   } = useDiceStore();
 
   const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
-
+  const [roll, setRoll] = useState(false);
   const rollDices = () => {
     if (numberOfRound === 3) return;
+    setRoll(true);
     if (!dice1keep) {
       setDice1(getRandomNumber());
     }
@@ -54,6 +56,8 @@ export default function DiceMachine() {
     } else {
       setNumberOfRound(0);
     }
+
+    setTimeout(() => setRoll(false), 300);
   };
 
   const toggleDice = (numberOfDice: number) => {
@@ -102,6 +106,7 @@ export default function DiceMachine() {
         <div className="m-2 grid grid-cols-5 gap-1 rounded bg-slate-300 p-4 text-xs md:w-1/2 md:max-w-fit md:text-base">
           <div onClick={() => toggleDice(1)} className="grid grid-cols-1">
             <Dice
+              roll={roll}
               key={`dice1-${dice1}-${dice1keep}-${numberOfRound}`}
               iskept={dice1keep}
               diceNumber={dice1}
@@ -110,6 +115,7 @@ export default function DiceMachine() {
           </div>
           <div onClick={() => toggleDice(2)} className="grid grid-cols-1">
             <Dice
+              roll={roll}
               key={`dice2-${dice2}-${dice2keep}-${numberOfRound}`}
               iskept={dice2keep}
               diceNumber={dice2}
@@ -118,6 +124,7 @@ export default function DiceMachine() {
           </div>
           <div onClick={() => toggleDice(3)} className="grid grid-cols-1">
             <Dice
+              roll={roll}
               key={`dice3-${dice3}-${dice3keep}-${numberOfRound}`}
               iskept={dice3keep}
               diceNumber={dice3}
@@ -126,6 +133,7 @@ export default function DiceMachine() {
           </div>
           <div onClick={() => toggleDice(4)} className="grid grid-cols-1">
             <Dice
+              roll={roll}
               key={`dice4-${dice4}-${dice4keep}-${numberOfRound}`}
               iskept={dice4keep}
               diceNumber={dice4}
@@ -134,6 +142,7 @@ export default function DiceMachine() {
           </div>
           <div onClick={() => toggleDice(5)} className="grid grid-cols-1">
             <Dice
+              roll={roll}
               key={`dice5-${dice5}-${dice5keep}-${numberOfRound}`}
               iskept={dice5keep}
               diceNumber={dice5}
