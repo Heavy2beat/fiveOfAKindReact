@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useGameStore } from "../../store/GameStore";
+import { useDiceColorStore } from "../../store/DiceColorStore";
 
 interface DiceProps {
   diceNumber: number;
@@ -9,6 +10,7 @@ interface DiceProps {
 }
 export default function Dice(props: DiceProps) {
   const { numberOfRound } = useGameStore();
+  const { diceLink } = useDiceColorStore();
 
   const [rotation, setRotation] = useState(0);
 
@@ -23,8 +25,9 @@ export default function Dice(props: DiceProps) {
     if (numberOfRound !== 0 && !props.iskept)
       setRotation(rotation === 0 ? 360 : 0);
   };
-
-  const dicePath = `/fiveOfAKindReact/dice-${props.diceNumber}.png`;
+  const dicepathTemp = diceLink.dice1;
+  const dicePath = dicepathTemp.replace("1", `${props.diceNumber}`);
+  // const dicePath = `/fiveOfAKindReact/dice-${props.diceNumber}.png`;
 
   const diceClassVisible = "m-auto h-10 md:h-12";
   const diceClassInvisible = "m-auto h-10 md:h-12 opacity-30";

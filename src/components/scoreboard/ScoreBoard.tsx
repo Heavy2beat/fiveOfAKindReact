@@ -133,6 +133,7 @@ export default function ScoreBoard() {
 
   useEffect(() => {
     setPlayerBoards(() => getPlayerBoards());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerOnTurn, numberOfPlayers, reset]);
 
   return (

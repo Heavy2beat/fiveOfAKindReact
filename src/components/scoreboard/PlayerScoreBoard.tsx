@@ -6,6 +6,7 @@ import { sendToast } from "../../utils/utils";
 import { checkIfFinished } from "../../game/game";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "../Tooltip";
+import { useDiceColorStore } from "../../store/DiceColorStore";
 
 interface playerScoreBoardProps {
   player: number;
@@ -34,6 +35,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     isHelpModeOn,
     setHelpMode,
   } = useGameStore();
+  const { diceLink } = useDiceColorStore();
 
   const navigate = useNavigate();
 
@@ -152,18 +154,24 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             : "col-span-2 grid grid-cols-5 bg-slate-400"
         }
       >
-        <h5 className="mb-2text-center col-span-4 m-auto text-xl">
-          {playernames[props.player - 1]}
-        </h5>
-        <div className="m-auto flex p-1 text-sm">
+        <div className="col-start-1 m-auto flex">
           {playerOnTurn === props.player ? (
             <img
               onClick={() => toggleHelpMode()}
-              className={isHelpModeOn ? "h-7" : "h-7 opacity-20"}
+              className={
+                isHelpModeOn
+                  ? "h-7 cursor-pointer"
+                  : "h-7 cursor-pointer opacity-20"
+              }
               src="/fiveOfAKindReact/help.svg"
               alt=""
             />
           ) : null}
+        </div>
+        <h5 className="mb-2text-center col-span-3 m-auto text-xl">
+          {playernames[props.player - 1]}
+        </h5>
+        <div className="m-auto flex p-1 text-sm">
           {numberOfPlayers == 1 ? (
             <Tooltip message="Rage Reset!" sendTip>
               <img
@@ -190,11 +198,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               <td className={checkPossibleChoices("1")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
                   {" "}
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-1.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice1} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -207,11 +211,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("2")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-2.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice2} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -224,11 +224,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("3")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-3.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice3} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -241,11 +237,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("4")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-4.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice4} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -258,11 +250,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("5")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-5.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice5} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -275,11 +263,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("6")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img
-                    className="h-6"
-                    src="/fiveOfAKindReact/dice-6.png"
-                    alt=""
-                  />
+                  <img className="h-6" src={diceLink.dice6} alt="" />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
