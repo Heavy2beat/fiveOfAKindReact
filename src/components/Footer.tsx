@@ -15,7 +15,7 @@ export default function Footer() {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -41,7 +41,7 @@ export default function Footer() {
         />
       </div>
       <div className="flex items-center justify-center text-xs">
-        <p className="p-1">created by Fabian Fischer v0.7.3</p>
+        <p className="p-1">created by Fabian Fischer v0.7.5</p>
       </div>
     </div>
   );

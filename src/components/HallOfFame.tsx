@@ -33,12 +33,6 @@ export default function HallOfFame() {
   //TODO neuer Ansatz beim token handling ->Testphase
   const [currentTokenList, setCurrentTokenList] = useState([]);
 
-  const found = currentTokenList.find(
-    (element: { token: string; date: Date }) =>
-      element.token === hofLeader?.token,
-  );
-  const currentToken = found != undefined ? found : "";
-
   useEffect(() => {
     const currentList = localStorage.getItem("tokenList");
     if (currentList) {
@@ -46,6 +40,12 @@ export default function HallOfFame() {
       setCurrentTokenList(currentListParsed);
     }
   }, []);
+
+  const found = currentTokenList.find(
+    (element: { token: string; date: Date }) =>
+      element.token === hofLeader?.token,
+  );
+  const currentToken = found !== undefined ? found : { token: "", date: "" };
 
   //Ende neues token handling
 
@@ -145,7 +145,7 @@ export default function HallOfFame() {
                     sendTip={true}
                     message={
                       currentToken != undefined &&
-                      currentToken == hofLeader?.token
+                      currentToken.token == hofLeader?.token
                         ? `${lang.heyChampion}`
                         : `${lang.thisAvatarpresentedBy} ${hofLeader?.name}`
                     }
@@ -153,7 +153,7 @@ export default function HallOfFame() {
                       <img
                         onClick={
                           currentToken != undefined &&
-                          currentToken == hofLeader?.token
+                          currentToken.token == hofLeader?.token
                             ? () => setAvatarMenuVisible(true)
                             : () => {}
                         }
