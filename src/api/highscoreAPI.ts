@@ -1,4 +1,3 @@
-
 export type Score = {
   name: string;
   points: number;
@@ -12,16 +11,13 @@ export type Player = {
   id: string;
   name: string;
 };
-const baseUrl =
-  "http://highscore.fabdev.de";
+const baseUrl = "http://highscore.fabdev.de";
 const highscoreURL = baseUrl + "/highscores";
 
+const weeklyURL = baseUrl + "/weeklywinners";
 
-const weeklyURL =baseUrl +"/weeklywinners";
-
-  const getWinnerImageUrl = baseUrl + "/winnerLink";
-  const setWinnerImageUrl = baseUrl + "/winnerLink";
-
+const getWinnerImageUrl = baseUrl + "/winnerLink";
+const setWinnerImageUrl = baseUrl + "/winnerLink";
 
 export async function getAllHighscores(): Promise<Score[]> {
   try {
@@ -98,5 +94,3 @@ export async function sendWinnerLink(linkToSend: string) {
     console.error("Error:", error);
   }
 }
-
-

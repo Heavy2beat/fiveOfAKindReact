@@ -49,16 +49,6 @@ export default function Highscores() {
         token: token,
       };
       handleTokenList(token);
-      // const scoreFromStorage = localStorage.getItem("sendedScore");
-      // //TODO need some tests here!
-      // if (scoreFromStorage != null) {
-      //   const scoreFromStorageParsed: Score = JSON.parse(scoreFromStorage);
-      //   if (scoreFromStorageParsed.points <= scoreToSend.points) {
-      //     localStorage.setItem("sendedScore", JSON.stringify(scoreToSend));
-      //   }
-      // } else {
-      //   localStorage.setItem("sendedScore", JSON.stringify(scoreToSend));
-      // }
 
       mutation.mutate(scoreToSend);
 
