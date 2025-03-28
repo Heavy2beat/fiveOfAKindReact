@@ -1,3 +1,4 @@
+import { create } from "zustand";
 export type DiceLinks = {
   dice1: string;
   dice2: string;
@@ -24,7 +25,15 @@ export const redDice: DiceLinks = {
   dice5: "/fiveOfAKindReact/dicer-5.png",
   dice6: "/fiveOfAKindReact/dicer-6.png",
 };
-import { create } from "zustand";
+
+export const goldenDice: DiceLinks = {
+  dice1: "/fiveOfAKindReact/diceg-1.png",
+  dice2: "/fiveOfAKindReact/diceg-2.png",
+  dice3: "/fiveOfAKindReact/diceg-3.png",
+  dice4: "/fiveOfAKindReact/diceg-4.png",
+  dice5: "/fiveOfAKindReact/diceg-5.png",
+  dice6: "/fiveOfAKindReact/diceg-6.png",
+};
 
 interface DiceColorStore {
   diceLink: DiceLinks;

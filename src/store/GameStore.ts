@@ -3,7 +3,8 @@ import { Score } from "../api/highscoreAPI";
 
 interface GameStore {
   isHelpModeOn: boolean;
-  setHelpMode: (toSet:boolean)=>void;
+
+  setHelpMode: (toSet: boolean) => void;
   highscoreList: Score[];
   sethighScoreList: (toSet: Score[]) => void;
   firstStart: boolean;
@@ -34,8 +35,8 @@ interface GameStore {
 }
 
 export const useGameStore = create<GameStore>()((set) => ({
-isHelpModeOn:false,
-setHelpMode:(toSet:boolean)=> set(()=>({isHelpModeOn : toSet})),
+  isHelpModeOn: false,
+  setHelpMode: (toSet: boolean) => set(() => ({ isHelpModeOn: toSet })),
   highscoreList: new Array<Score>(),
   sethighScoreList: (newScoreList: Score[]) =>
     set(() => ({ highscoreList: newScoreList })),
@@ -73,5 +74,4 @@ setHelpMode:(toSet:boolean)=> set(()=>({isHelpModeOn : toSet})),
   endScores: new Map<string, number>(),
   setEndScores: (newEndScores: Map<string, number>) =>
     set(() => ({ endScores: newEndScores })),
-  
 }));

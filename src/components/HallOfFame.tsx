@@ -30,7 +30,6 @@ export default function HallOfFame() {
   });
   const hofLeader = hofSorted ? hofSorted[0] : null;
 
-  //TODO neuer Ansatz beim token handling ->Testphase
   const [currentTokenList, setCurrentTokenList] = useState([]);
 
   useEffect(() => {
@@ -46,8 +45,6 @@ export default function HallOfFame() {
       element.token === hofLeader?.token,
   );
   const currentToken = found !== undefined ? found : { token: "", date: "" };
-
-  //Ende neues token handling
 
   useEffect(() => {
     getWinnerLink().then((link) => {
