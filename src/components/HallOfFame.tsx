@@ -8,6 +8,7 @@ import { useLanguageStore } from "../store/LanguageStore";
 import { useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
 import "../styles/custom.css";
+import { useGameStore } from "../store/GameStore";
 
 export default function HallOfFame() {
   const query = useQuery({
@@ -16,6 +17,7 @@ export default function HallOfFame() {
   });
 
   const { lang } = useLanguageStore();
+  const { currentTokenList } = useGameStore();
   const [restIsVisible, setRestIsVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(
     "/fiveOfAKindReact/one.gif",
@@ -30,15 +32,16 @@ export default function HallOfFame() {
   });
   const hofLeader = hofSorted ? hofSorted[0] : null;
 
-  const [currentTokenList, setCurrentTokenList] = useState([]);
+  //const [currentTokenList, setCurrentTokenList] = useState([]);
 
-  useEffect(() => {
-    const currentList = localStorage.getItem("tokenList");
-    if (currentList) {
-      const currentListParsed = JSON.parse(currentList);
-      setCurrentTokenList(currentListParsed);
-    }
-  }, []);
+  //TODO remove this from here, it has been already loaded(on start page) here
+  // useEffect(() => {
+  //   const currentList = localStorage.getItem("tokenList");
+  //   if (currentList) {
+  //     const currentListParsed = JSON.parse(currentList);
+  //     setCurrentTokenList(currentListParsed);
+  //   }
+  // }, []);
 
   const found = currentTokenList.find(
     (element: { token: string; date: Date }) =>

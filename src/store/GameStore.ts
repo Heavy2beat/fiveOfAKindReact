@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { Score } from "../api/highscoreAPI";
 
 interface GameStore {
+  currentTokenList: Token[];
+  setCurrentTokenList: (toSet: Token[]) => void;
   isHelpModeOn: boolean;
-
   setHelpMode: (toSet: boolean) => void;
   highscoreList: Score[];
   sethighScoreList: (toSet: Score[]) => void;
@@ -35,6 +36,10 @@ interface GameStore {
 }
 
 export const useGameStore = create<GameStore>()((set) => ({
+  currentTokenList: [],
+  setCurrentTokenList: (toSet: Token[]) =>
+    set(() => ({ currentTokenList: toSet })),
+
   isHelpModeOn: false,
   setHelpMode: (toSet: boolean) => set(() => ({ isHelpModeOn: toSet })),
   highscoreList: new Array<Score>(),
@@ -75,3 +80,8 @@ export const useGameStore = create<GameStore>()((set) => ({
   setEndScores: (newEndScores: Map<string, number>) =>
     set(() => ({ endScores: newEndScores })),
 }));
+
+export type Token = {
+  token: string;
+  date: Date;
+};

@@ -1,13 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { sendToast } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { getWeeklyWinners } from "../api/highscoreAPI";
+import { useQuery } from "react-query";
+import { goldenDice, useDiceColorStore } from "../store/DiceColorStore";
 
 export default function Start() {
   const { lang } = useLanguageStore();
-
+  const { currentTokenList, setCurrentTokenList } = useGameStore();
+  const { setDiceLink } = useDiceColorStore();
   const {
     setNumberOfPlayers,
     numberOfPlayers,
@@ -17,6 +22,41 @@ export default function Start() {
   } = useGameStore();
   const navigate = useNavigate();
   const [isNumberOfPlayerChosen, setIsNumberOfPlayerChosen] = useState(false);
+
+  // TODO write that in a store and use it in hof component
+  const query = useQuery({
+    queryKey: ["hallOfFame"],
+    queryFn: getWeeklyWinners,
+  });
+
+  const hofSorted = query.data?.sort((a, b) => {
+    const dateA = a.date ? new Date(a.date).getTime() : 0;
+    const dateB = b.date ? new Date(b.date).getTime() : 0;
+    return dateB - dateA;
+  });
+  const hofLeader = hofSorted ? hofSorted[0] : null;
+  //TODO END
+
+  useEffect(() => {
+    const currentList = localStorage.getItem("tokenList");
+    if (currentList) {
+      const currentListParsed = JSON.parse(currentList);
+      setCurrentTokenList(currentListParsed);
+    }
+  }, []);
+
+  const found = currentTokenList.find(
+    (element: { token: string; date: Date }) =>
+      element.token === hofLeader?.token,
+  );
+  const currentToken = found !== undefined ? found : { token: "", date: "" };
+  const isChampion = currentToken.token == hofLeader?.token ? true : false;
+
+  useEffect(() => {
+    if (isChampion) {
+      setDiceLink(goldenDice);
+    }
+  }, [isChampion, setDiceLink]);
 
   useEffect(() => {
     const storedHighScores = localStorage.getItem("highscoreList");
@@ -75,6 +115,21 @@ export default function Start() {
   return (
     <div>
       <div className="m-auto mt-8 w-fit rounded bg-slate-300 pb-4 text-xl md:w-5/6">
+        {isChampion ? (
+          <div className="grid grid-cols-3 p-4">
+            <img
+              src="/fiveOfAKindReact/fame1.svg"
+              className="m-auto h-8"
+              alt=""
+            ></img>
+            <h2 className="text-center">Hey Champion!</h2>
+            <img
+              src="/fiveOfAKindReact/fame1.svg"
+              className="m-auto h-8"
+              alt=""
+            ></img>
+          </div>
+        ) : null}
         <h2 className="p-4 text-center text-2xl">{lang.numberOfPlayers}</h2>
         <div className="flex justify-center">
           {[1, 2, 3, 4].map((num) => (
