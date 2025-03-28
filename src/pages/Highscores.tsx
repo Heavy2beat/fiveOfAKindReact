@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
 import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
-import Footer from "../components/Footer";
+
 import HallOfFame from "../components/HallOfFame";
 
 export default function Highscores() {
@@ -247,9 +247,7 @@ export default function Highscores() {
         </div>
       </div>
       <div></div>
-      <div className="hidden md:block">
-        <Footer></Footer>
-      </div>
+      <div className="hidden md:block"></div>
     </>
   );
 }

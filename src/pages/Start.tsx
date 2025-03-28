@@ -4,7 +4,7 @@ import { useGameStore } from "../store/GameStore";
 import { useLanguageStore } from "../store/LanguageStore";
 import { sendToast } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
+
 import { getWeeklyWinners } from "../api/highscoreAPI";
 import { useQuery } from "react-query";
 import { goldenDice, useDiceColorStore } from "../store/DiceColorStore";
@@ -160,7 +160,6 @@ export default function Start() {
           </button>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 }

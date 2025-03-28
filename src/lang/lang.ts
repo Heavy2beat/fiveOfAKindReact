@@ -74,4 +74,6 @@ export type Language = {
   heyChampion: string;
   thisAvatarpresentedBy: string;
   rageResetWarning: string;
+  language: string;
+  color: string;
 };

@@ -77,4 +77,6 @@ export const eng: Language = {
   heyChampion: "Hey champion, click here and choose your avatar!",
   thisAvatarpresentedBy: "This avatar is presented by",
   rageResetWarning: "Push again to blow it away!",
+  language: "Language",
+  color: "Color",
 };

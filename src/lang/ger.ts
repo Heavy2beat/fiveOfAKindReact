@@ -78,4 +78,6 @@ export const ger: Language = {
   heyChampion: "Hey Champion, klicke hier und suche dir deinen Avatar aus!",
   thisAvatarpresentedBy: "Diesen Avatar präsentiert dir dein Champion",
   rageResetWarning: "Drücke noch einmal und alles ist weg!",
+  language: "Sprache",
+  color: "Farbe",
 };
