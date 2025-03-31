@@ -6,7 +6,7 @@ import { blueDice, redDice, useDiceColorStore } from "../store/DiceColorStore";
 
 export default function Footer() {
   const { setLang, lang } = useLanguageStore();
-  const [isVisible, setIsVisible] = useState(true);
+  const [isFixed, setIsFixed] = useState(true);
   const { setDiceLink } = useDiceColorStore();
   const [langMenuVisible, setLangMenuVisible] = useState(false);
   const [diceColorMenuVisible, setDiceColorMenuVisible] = useState(false);
@@ -15,7 +15,7 @@ export default function Footer() {
     const handleResize = () => {
       const contentHeight = document.body.scrollHeight;
       const windowHeight = window.innerHeight;
-      setIsVisible(contentHeight <= windowHeight);
+      setIsFixed(contentHeight - 14 <= windowHeight);
     };
 
     window.addEventListener("resize", handleResize);
@@ -28,7 +28,7 @@ export default function Footer() {
 
   return (
     <div
-      className={`fixed bottom-0 mt-auto h-12 w-full bg-blue-200 p-2 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+      className={`mt-auto h-12 w-full bg-blue-200 p-2 transition-opacity duration-300 ${isFixed ? "fixed bottom-0" : "relative"}`}
     >
       <div className="grid grid-cols-3">
         {langMenuVisible ? (
@@ -61,8 +61,10 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <p className="font-thin">created by Fabian Fischer</p>
-          <p className="font-thin">v 0.7.7</p>
+          <p className="w-[12ch] font-thin lg:w-full">
+            created by Fabian Fischer
+          </p>
+          <p className="hidden font-thin lg:block">v 0.7.8</p>
         </div>
 
         {diceColorMenuVisible ? (
