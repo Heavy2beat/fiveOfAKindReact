@@ -8,6 +8,7 @@ import { useGameStore } from "../store/GameStore";
 import { useState } from "react";
 
 import HallOfFame from "../components/HallOfFame";
+import Footer from "../components/Footer";
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -246,8 +247,8 @@ export default function Highscores() {
           <HallOfFame></HallOfFame>
         </div>
       </div>
-      <div></div>
-      <div className="hidden md:block"></div>
+
+      <Footer></Footer>
     </>
   );
 }

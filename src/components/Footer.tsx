@@ -3,10 +3,12 @@ import { eng } from "../lang/eng";
 import { ger } from "../lang/ger";
 import { useLanguageStore } from "../store/LanguageStore";
 import { blueDice, redDice, useDiceColorStore } from "../store/DiceColorStore";
+import Tooltip from "./Tooltip";
 
 export default function Footer() {
   const { setLang, lang } = useLanguageStore();
   const [isFixed, setIsFixed] = useState(true);
+
   const { setDiceLink } = useDiceColorStore();
   const [langMenuVisible, setLangMenuVisible] = useState(false);
   const [diceColorMenuVisible, setDiceColorMenuVisible] = useState(false);
@@ -15,7 +17,7 @@ export default function Footer() {
     const handleResize = () => {
       const contentHeight = document.body.scrollHeight;
       const windowHeight = window.innerHeight;
-      setIsFixed(contentHeight - 14 <= windowHeight);
+      setIsFixed(contentHeight + 48 < windowHeight);
     };
 
     window.addEventListener("resize", handleResize);
@@ -61,10 +63,11 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <p className="w-[12ch] font-thin lg:w-full">
-            created by Fabian Fischer
-          </p>
-          <p className="hidden font-thin lg:block">v 0.7.8</p>
+          <Tooltip message={"v 0.7.9"} sendTip={true}>
+            <p className="w-[12ch] font-thin lg:w-full">
+              created by Fabian Fischer
+            </p>
+          </Tooltip>
         </div>
 
         {diceColorMenuVisible ? (

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Score } from "../api/highscoreAPI";
 import { sendToast } from "../utils/utils";
 import { useDiceStore } from "../store/Dicestore";
+import Footer from "../components/Footer";
 
 export default function End() {
   const { lang } = useLanguageStore();
@@ -147,6 +148,7 @@ export default function End() {
           {lang.mainMenu}
         </button>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
+import Footer from "../components/Footer";
 
 export default function NotFoundPage() {
   const { lang } = useLanguageStore();
   return (
-    <div className="mt-40 flex h-full w-full flex-col justify-center items-center gap-56">
+    <div className="mt-40 flex h-full w-full flex-col items-center justify-center gap-56">
       <h1 className="text-center text-3xl">{lang.oops}</h1>
       <Link to="/">
         {" "}
@@ -12,6 +13,7 @@ export default function NotFoundPage() {
           {lang.mainMenu}
         </button>
       </Link>
+      <Footer></Footer>
     </div>
   );
 }
