@@ -33,24 +33,34 @@ export default function DiceMachine() {
 
   const { playerOnTurn, numberOfRound, setNumberOfRound } = useGameStore();
   const [roll, setRoll] = useState(false);
-  const rollDices = () => {
+
+  const rollDices = async () => {
     if (numberOfRound === 3) return;
     setRoll(true);
-    if (!dice1keep) {
-      setDice1(getRandomNumber());
-    }
-    if (!dice2keep) {
-      setDice2(getRandomNumber());
-    }
-    if (!dice3keep) {
-      setDice3(getRandomNumber());
-    }
-    if (!dice4keep) {
-      setDice4(getRandomNumber());
-    }
-    if (!dice5keep) {
-      setDice5(getRandomNumber());
-    }
+
+    const updateDice = async (
+      diceKeep: boolean,
+      setDice: (toSet: number) => void,
+    ) => {
+      if (!diceKeep) {
+        try {
+          const newValue: number = await getRandomNumber();
+          if (newValue < 1 || newValue > 6) {
+            throw new Error("Invalid dice value");
+          }
+          setDice(newValue);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    };
+
+    await updateDice(dice1keep, setDice1);
+    await updateDice(dice2keep, setDice2);
+    await updateDice(dice3keep, setDice3);
+    await updateDice(dice4keep, setDice4);
+    await updateDice(dice5keep, setDice5);
+
     if (numberOfRound <= 2) {
       setNumberOfRound(numberOfRound + 1);
     } else {

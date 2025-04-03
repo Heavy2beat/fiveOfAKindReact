@@ -32,17 +32,6 @@ export default function HallOfFame() {
   });
   const hofLeader = hofSorted ? hofSorted[0] : null;
 
-  //const [currentTokenList, setCurrentTokenList] = useState([]);
-
-  //TODO remove this from here, it has been already loaded(on start page) here
-  // useEffect(() => {
-  //   const currentList = localStorage.getItem("tokenList");
-  //   if (currentList) {
-  //     const currentListParsed = JSON.parse(currentList);
-  //     setCurrentTokenList(currentListParsed);
-  //   }
-  // }, []);
-
   const found = currentTokenList.find(
     (element: { token: string; date: Date }) =>
       element.token === hofLeader?.token,
