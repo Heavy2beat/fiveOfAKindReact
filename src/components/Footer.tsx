@@ -6,20 +6,19 @@ import { useLanguageStore } from "../store/LanguageStore";
 import Tooltip from "./Tooltip";
 import { ColorResult, SketchPicker } from "react-color";
 import { useDiceColorStore } from "../store/DiceColorStore";
+import { sendToast } from "../utils/utils";
 
 export default function Footer() {
   const { setLang, lang } = useLanguageStore();
   const [isFixed, setIsFixed] = useState(true);
 
-  const { diceColor, setDiceColor } = useDiceColorStore();
+  const { diceColor, setDiceColor, isChampion } = useDiceColorStore();
 
   const [langMenuVisible, setLangMenuVisible] = useState(false);
   const [diceColorMenuVisible, setDiceColorMenuVisible] = useState(false);
 
   const handleChangeComplete = (color: ColorResult) => {
     setDiceColor(color.hex);
-    console.log(color.hex);
-    console.log(diceColor);
   };
 
   useEffect(() => {
@@ -36,6 +35,14 @@ export default function Footer() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleColorMenu = () => {
+    if (isChampion) {
+      sendToast(lang.championsWearGold, 2000);
+      return;
+    }
+    setDiceColorMenuVisible(true);
+  };
 
   return (
     <div
@@ -72,7 +79,7 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <Tooltip message={"v 0.8.0"} sendTip={true}>
+          <Tooltip message={"v 0.8.2"} sendTip={true}>
             <p className="w-[12ch] font-thin lg:w-full">
               created by Fabian Fischer
             </p>
@@ -90,7 +97,7 @@ export default function Footer() {
               />
               <button
                 className="h-18 w-full cursor-pointer rounded bg-blue-400 p-4 shadow-2xl hover:bg-blue-500"
-                onClick={() => setDiceColorMenuVisible(false)}
+                onClick={() => handleColorMenu()}
               >
                 Farbe wählen
               </button>

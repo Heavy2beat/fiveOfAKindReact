@@ -80,4 +80,5 @@ export const ger: Language = {
   rageResetWarning: "Drücke noch einmal und alles ist weg!",
   language: "Sprache",
   color: "Würfelfarbe",
+  championsWearGold: "Champions bleiben bei GOLD",
 };

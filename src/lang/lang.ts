@@ -76,4 +76,5 @@ export type Language = {
   rageResetWarning: string;
   language: string;
   color: string;
+  championsWearGold: string;
 };

@@ -27,6 +27,8 @@ export const goldenDice: DiceLinks = {
 };
 
 interface DiceColorStore {
+  isChampion: boolean;
+  setIsChampion: (toSet: boolean) => void;
   diceColor: string;
   setDiceColor: (toSet: string) => void;
 
@@ -36,6 +38,8 @@ interface DiceColorStore {
 }
 
 export const useDiceColorStore = create<DiceColorStore>()((set) => ({
+  isChampion: false,
+  setIsChampion: (toSet: boolean) => set(() => ({ isChampion: toSet })),
   diceColor: "#0000ff",
   setDiceColor: (toSet: string) => set(() => ({ diceColor: toSet })),
   diceLink: blueDice,
