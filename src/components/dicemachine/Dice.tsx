@@ -12,7 +12,7 @@ interface DiceProps {
 }
 export default function Dice(props: DiceProps) {
   const { numberOfRound } = useGameStore();
-  const { diceLink, diceColor } = useDiceColorStore();
+  const { diceLink, diceColor, isChampion } = useDiceColorStore();
 
   const [rotation, setRotation] = useState(0);
   const [image, setImage] = useState<string | null>(null); // Typ explizit als string | null
@@ -28,24 +28,26 @@ export default function Dice(props: DiceProps) {
   const dicePath = dicepathTemp.replace("1", `${props.diceNumber}`);
 
   useEffect(() => {
-    const img = new Image();
-    img.src = dicePath;
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillStyle = diceColor; // Hex-Farbwert direkt verwenden
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setImage(canvas.toDataURL());
-      } else {
-        console.error("Canvas context konnte nicht erstellt werden.");
-      }
-    };
-  }, [diceColor, dicePath]);
+    if (!isChampion) {
+      const img = new Image();
+      img.src = dicePath;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          ctx.globalCompositeOperation = "source-in";
+          ctx.fillStyle = diceColor; // Hex-Farbwert direkt verwenden
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          setImage(canvas.toDataURL());
+        } else {
+          console.error("Canvas context konnte nicht erstellt werden.");
+        }
+      };
+    }
+  }, [diceColor, dicePath, isChampion]);
 
   const rotateDice = () => {
     if (numberOfRound !== 0 && !props.iskept)

@@ -79,5 +79,5 @@ export const eng: Language = {
   rageResetWarning: "Push again to blow it away!",
   language: "Language",
   color: "Dice color",
-  championsWearGold: "Champs keep it GOLD",
+  championsWearGold: "Only GOLD for champions!",
 };

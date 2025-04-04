@@ -18,12 +18,12 @@ export const blueDice: DiceLinks = {
 };
 
 export const goldenDice: DiceLinks = {
-  dice1: "/fiveOfAKindReact/diceg-1.png",
-  dice2: "/fiveOfAKindReact/diceg-2.png",
-  dice3: "/fiveOfAKindReact/diceg-3.png",
-  dice4: "/fiveOfAKindReact/diceg-4.png",
-  dice5: "/fiveOfAKindReact/diceg-5.png",
-  dice6: "/fiveOfAKindReact/diceg-6.png",
+  dice1: "/fiveOfAKindReact/dicec-1.png",
+  dice2: "/fiveOfAKindReact/dicec-2.png",
+  dice3: "/fiveOfAKindReact/dicec-3.png",
+  dice4: "/fiveOfAKindReact/dicec-4.png",
+  dice5: "/fiveOfAKindReact/dicec-5.png",
+  dice6: "/fiveOfAKindReact/dicec-6.png",
 };
 
 interface DiceColorStore {

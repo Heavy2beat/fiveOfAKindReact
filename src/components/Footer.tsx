@@ -79,7 +79,7 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <Tooltip message={"v 0.8.2"} sendTip={true}>
+          <Tooltip message={"v 0.8.4"} sendTip={true}>
             <p className="w-[12ch] font-thin lg:w-full">
               created by Fabian Fischer
             </p>
@@ -97,7 +97,7 @@ export default function Footer() {
               />
               <button
                 className="h-18 w-full cursor-pointer rounded bg-blue-400 p-4 shadow-2xl hover:bg-blue-500"
-                onClick={() => handleColorMenu()}
+                onClick={() => setDiceColorMenuVisible(false)}
               >
                 Farbe wählen
               </button>
@@ -106,7 +106,7 @@ export default function Footer() {
         ) : (
           <p
             className="m-auto cursor-pointer rounded p-2 text-xs hover:bg-blue-300"
-            onClick={() => setDiceColorMenuVisible(true)}
+            onClick={() => handleColorMenu()}
           >
             {lang.color}
           </p>

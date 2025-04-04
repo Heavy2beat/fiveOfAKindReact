@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 export default function Start() {
   const { lang } = useLanguageStore();
   const { currentTokenList, setCurrentTokenList } = useGameStore();
-  const { setDiceLink } = useDiceColorStore();
+  const { setDiceLink, setIsChampion } = useDiceColorStore();
   const {
     setNumberOfPlayers,
     numberOfPlayers,
@@ -56,6 +56,7 @@ export default function Start() {
   useEffect(() => {
     if (isChampion) {
       setDiceLink(goldenDice);
+      setIsChampion(true);
     }
   }, [isChampion, setDiceLink]);
 
