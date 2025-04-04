@@ -79,5 +79,5 @@ export const ger: Language = {
   thisAvatarpresentedBy: "Diesen Avatar präsentiert dir dein Champion",
   rageResetWarning: "Drücke noch einmal und alles ist weg!",
   language: "Sprache",
-  color: "Farbe",
+  color: "Würfelfarbe",
 };

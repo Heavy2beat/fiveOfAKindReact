@@ -2,16 +2,25 @@ import { useEffect, useState } from "react";
 import { eng } from "../lang/eng";
 import { ger } from "../lang/ger";
 import { useLanguageStore } from "../store/LanguageStore";
-import { blueDice, redDice, useDiceColorStore } from "../store/DiceColorStore";
+
 import Tooltip from "./Tooltip";
+import { ColorResult, SketchPicker } from "react-color";
+import { useDiceColorStore } from "../store/DiceColorStore";
 
 export default function Footer() {
   const { setLang, lang } = useLanguageStore();
   const [isFixed, setIsFixed] = useState(true);
 
-  const { setDiceLink } = useDiceColorStore();
+  const { diceColor, setDiceColor } = useDiceColorStore();
+
   const [langMenuVisible, setLangMenuVisible] = useState(false);
   const [diceColorMenuVisible, setDiceColorMenuVisible] = useState(false);
+
+  const handleChangeComplete = (color: ColorResult) => {
+    setDiceColor(color.hex);
+    console.log(color.hex);
+    console.log(diceColor);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,7 +72,7 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <Tooltip message={"v 0.7.9"} sendTip={true}>
+          <Tooltip message={"v 0.8.0"} sendTip={true}>
             <p className="w-[12ch] font-thin lg:w-full">
               created by Fabian Fischer
             </p>
@@ -71,25 +80,21 @@ export default function Footer() {
         </div>
 
         {diceColorMenuVisible ? (
-          <div className="m-auto flex h-4 items-center justify-center gap-4">
-            <img
-              onClick={() => {
-                setDiceLink(blueDice);
-                setDiceColorMenuVisible(false);
-              }}
-              className="h-6 cursor-pointer"
-              src="/fiveOfAKindReact/dice-6.png"
-              alt="German"
-            />
-            <img
-              onClick={() => {
-                setDiceLink(redDice);
-                setDiceColorMenuVisible(false);
-              }}
-              className="h-6 cursor-pointer"
-              src="/fiveOfAKindReact/dicer-6.png"
-              alt="English"
-            />
+          <div className="absolute bottom-[22vh] right-1 flex h-4 items-center justify-center gap-4 md:right-[10vw]">
+            <div className="solid rounded border bg-slate-200">
+              <SketchPicker
+                color={diceColor}
+                onChangeComplete={(color) => {
+                  handleChangeComplete(color);
+                }}
+              />
+              <button
+                className="h-18 w-full cursor-pointer rounded bg-blue-400 p-4 shadow-2xl hover:bg-blue-500"
+                onClick={() => setDiceColorMenuVisible(false)}
+              >
+                Farbe wählen
+              </button>
+            </div>
           </div>
         ) : (
           <p

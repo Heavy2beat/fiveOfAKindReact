@@ -17,15 +17,6 @@ export const blueDice: DiceLinks = {
   dice6: "/fiveOfAKindReact/dice-6.png",
 };
 
-export const redDice: DiceLinks = {
-  dice1: "/fiveOfAKindReact/dicer-1.png",
-  dice2: "/fiveOfAKindReact/dicer-2.png",
-  dice3: "/fiveOfAKindReact/dicer-3.png",
-  dice4: "/fiveOfAKindReact/dicer-4.png",
-  dice5: "/fiveOfAKindReact/dicer-5.png",
-  dice6: "/fiveOfAKindReact/dicer-6.png",
-};
-
 export const goldenDice: DiceLinks = {
   dice1: "/fiveOfAKindReact/diceg-1.png",
   dice2: "/fiveOfAKindReact/diceg-2.png",
@@ -36,14 +27,18 @@ export const goldenDice: DiceLinks = {
 };
 
 interface DiceColorStore {
+  diceColor: string;
+  setDiceColor: (toSet: string) => void;
+
   diceLink: DiceLinks;
 
   setDiceLink: (linksToSet: DiceLinks) => void;
 }
 
 export const useDiceColorStore = create<DiceColorStore>()((set) => ({
+  diceColor: "#0000ff",
+  setDiceColor: (toSet: string) => set(() => ({ diceColor: toSet })),
   diceLink: blueDice,
-
   setDiceLink: (diceLinkToSet: DiceLinks) =>
     set(() => ({ diceLink: diceLinkToSet })),
 }));

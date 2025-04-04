@@ -78,5 +78,5 @@ export const eng: Language = {
   thisAvatarpresentedBy: "This avatar is presented by",
   rageResetWarning: "Push again to blow it away!",
   language: "Language",
-  color: "Color",
+  color: "Dice color",
 };

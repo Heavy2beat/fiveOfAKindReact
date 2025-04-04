@@ -6,7 +6,7 @@ import { sendToast } from "../../utils/utils";
 import { checkIfFinished } from "../../game/game";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "../Tooltip";
-import { useDiceColorStore } from "../../store/DiceColorStore";
+import Dice from "../dicemachine/Dice";
 
 interface playerScoreBoardProps {
   player: number;
@@ -35,7 +35,6 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     isHelpModeOn,
     setHelpMode,
   } = useGameStore();
-  const { diceLink } = useDiceColorStore();
 
   const navigate = useNavigate();
 
@@ -198,7 +197,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
               <td className={checkPossibleChoices("1")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
                   {" "}
-                  <img className="h-6" src={diceLink.dice1} alt="" />
+                  <Dice
+                    diceNumber={1}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -211,7 +215,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("2")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img className="h-6" src={diceLink.dice2} alt="" />
+                  <Dice
+                    diceNumber={2}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -224,7 +233,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("3")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img className="h-6" src={diceLink.dice3} alt="" />
+                  <Dice
+                    diceNumber={3}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -237,7 +251,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("4")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img className="h-6" src={diceLink.dice4} alt="" />
+                  <Dice
+                    diceNumber={4}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -250,7 +269,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("5")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img className="h-6" src={diceLink.dice5} alt="" />
+                  <Dice
+                    diceNumber={5}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
@@ -263,7 +287,12 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
             >
               <td className={checkPossibleChoices("6")}>
                 <Tooltip message={lang.tooltipRuleSameDices}>
-                  <img className="h-6" src={diceLink.dice6} alt="" />
+                  <Dice
+                    diceNumber={6}
+                    iskept={false}
+                    roll={false}
+                    height="h-6"
+                  />
                 </Tooltip>
               </td>
               <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
