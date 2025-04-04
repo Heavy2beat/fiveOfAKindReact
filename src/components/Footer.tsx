@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         {diceColorMenuVisible ? (
-          <div className="absolute bottom-[22vh] right-1 flex h-4 items-center justify-center gap-4 md:right-[10vw]">
+          <div className="absolute bottom-[25vh] right-1 flex h-4 items-center justify-center gap-4 md:right-[10vw]">
             <div className="solid rounded border bg-slate-200">
               <SketchPicker
                 color={diceColor}
