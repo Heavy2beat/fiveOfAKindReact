@@ -118,16 +118,16 @@ export default function Start() {
     <div>
       <div className="m-auto mt-8 w-fit rounded bg-slate-300 pb-4 text-xl md:w-5/6">
         {isChampion ? (
-          <div className="grid grid-cols-3 p-4">
+          <div className="flex justify-center gap-4 p-4">
             <img
               src="/fiveOfAKindReact/fame1.svg"
-              className="m-auto h-8"
+              className="m-auto h-12"
               alt=""
             ></img>
             <h2 className="text-center">Hey Champion!</h2>
             <img
               src="/fiveOfAKindReact/fame1.svg"
-              className="m-auto h-8"
+              className="m-auto h-12"
               alt=""
             ></img>
           </div>

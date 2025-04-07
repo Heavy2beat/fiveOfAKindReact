@@ -7,6 +7,7 @@ import { checkIfFinished } from "../../game/game";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "../Tooltip";
 import Dice from "../dicemachine/Dice";
+import { Language } from "../../lang/lang";
 
 interface playerScoreBoardProps {
   player: number;
@@ -144,6 +145,61 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
     sendToast(message, 500);
   };
 
+  function getLangValue(key: number): string {
+    const keyForReturn = key.toString();
+    return lang[keyForReturn as keyof Language] || keyForReturn;
+  }
+
+  const writeDiceScoreRows = (start: number, end: number) => {
+    const diceScoreRows = [];
+    if (start == 1) {
+      for (let i = start; i <= end; i++) {
+        diceScoreRows.push(
+          <tr
+            onClick={() => onClickHandler(1)}
+            className="border-gray col-span-2 grid h-14 grid-cols-3 border"
+          >
+            <td className={checkPossibleChoices(`${i}`)}>
+              <Tooltip message={lang.tooltipRuleSameDices}>
+                {" "}
+                <Dice
+                  diceNumber={i}
+                  iskept={false}
+                  roll={false}
+                  opacity="opacity-1"
+                  height="h-6"
+                />
+              </Tooltip>
+            </td>
+            <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
+              {fillInPoints(`${i}`)}
+            </td>
+          </tr>,
+        );
+      }
+    } else {
+      for (let i = start; i <= end; i++) {
+        diceScoreRows.push(
+          <tr
+            onClick={() => onClickHandler(7)}
+            className="border-gray col-span-2 grid h-14 grid-cols-3 border"
+          >
+            <td className={checkPossibleChoices(`${i}`)}>
+              {" "}
+              <Tooltip message={lang.tooltipRuleThreeOf}>
+                {getLangValue(i)}{" "}
+              </Tooltip>
+            </td>
+            <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
+              {fillInPoints(`${i}`)}
+            </td>
+          </tr>,
+        );
+      }
+    }
+    return diceScoreRows;
+  };
+
   return (
     <div className="m-2 grid grid-cols-2 rounded bg-slate-300 p-1 text-center text-sm">
       <div
@@ -190,115 +246,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
       <div className="col-start-1">
         <table className="border-gray h-full w-full border-collapse rounded">
           <tbody className="grid grid-cols-2">
-            <tr
-              onClick={() => onClickHandler(1)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("1")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  {" "}
-                  <Dice
-                    diceNumber={1}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("1")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(2)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("2")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  <Dice
-                    diceNumber={2}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("2")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(3)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("3")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  <Dice
-                    diceNumber={3}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("3")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(4)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("4")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  <Dice
-                    diceNumber={4}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("4")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(5)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("5")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  <Dice
-                    diceNumber={5}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("5")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(6)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("6")}>
-                <Tooltip message={lang.tooltipRuleSameDices}>
-                  <Dice
-                    diceNumber={6}
-                    iskept={false}
-                    roll={false}
-                    height="h-6"
-                  />
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("6")}
-              </td>
-            </tr>
+            {writeDiceScoreRows(1, 6)}
             <tr className="border-gray col-span-2 grid h-14 grid-cols-3 border">
               <td className="border-gray col-span-2 col-start-1 flex items-center justify-center border p-1">
                 Bonus({">"}63P)
@@ -324,88 +272,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
       <div className="col-start-2">
         <table className="border-gray h-full w-full border-collapse text-nowrap rounded">
           <tbody className="grid grid-cols-2">
-            <tr
-              onClick={() => onClickHandler(7)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("7")}>
-                {" "}
-                <Tooltip message={lang.tooltipRuleThreeOf}>{lang[7]} </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("7")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(8)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("8")}>
-                <Tooltip message={lang.tooltipRuleFourOf}>{lang[8]}</Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("8")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(9)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("9")}>
-                <Tooltip message={lang.tooltipRuleFullHouse}>{lang[9]}</Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("9")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(10)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("10")}>
-                <Tooltip message={lang.tooltipRuleSmallStreet}>
-                  {lang[10]}
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("10")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(11)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("11")}>
-                <Tooltip message={lang.tooltipRuleLargeStreet}>
-                  {lang[11]}
-                </Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("11")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(12)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("12")}>
-                <Tooltip message={lang.tooltipRuleFiveOf}>{lang[12]}</Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("12")}
-              </td>
-            </tr>
-            <tr
-              onClick={() => onClickHandler(13)}
-              className="border-gray col-span-2 grid h-14 grid-cols-3 border"
-            >
-              <td className={checkPossibleChoices("13")}>
-                <Tooltip message={lang.tooletipRuleChance}>{lang[13]}</Tooltip>
-              </td>
-              <td className="border-gray col-start-3 flex items-center justify-center border p-1 text-center">
-                {fillInPoints("13")}
-              </td>
-            </tr>
+            {writeDiceScoreRows(7, 13)}
             <tr className="border-gray col-span-2 grid h-14 grid-cols-3 border">
               <td className="border-gray col-span-2 col-start-1 flex items-center justify-center border p-1">
                 {lang.grandTotal}

@@ -9,6 +9,8 @@ interface DiceProps {
   roll: boolean;
 
   height?: string;
+
+  opacity?: string;
 }
 export default function Dice(props: DiceProps) {
   const { numberOfRound } = useGameStore();
@@ -54,8 +56,8 @@ export default function Dice(props: DiceProps) {
       setRotation(rotation === 0 ? 360 : 0);
   };
 
-  const diceClassVisible = `m-auto ${props.height ? props.height : " h-10 md:h-12"}`;
-  const diceClassInvisible = `m-auto ${props.height ? props.height : " h-10 md:h-12"} opacity-30`;
+  const diceClassVisible = `m-auto ${props.height ? props.height : " h-10 md:h-12"} ${props.opacity ? props.opacity : ""}`;
+  const diceClassInvisible = `m-auto ${props.height ? props.height : " h-10 md:h-12"} ${props.opacity ? props.opacity : "opacity-30"}`;
 
   return (
     <motion.img
