@@ -77,4 +77,6 @@ export type Language = {
   language: string;
   color: string;
   championsWearGold: string;
+  clickHere: string;
+  forReset: string;
 };

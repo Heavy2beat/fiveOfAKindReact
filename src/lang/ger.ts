@@ -81,4 +81,6 @@ export const ger: Language = {
   language: "Sprache",
   color: "Würfelfarbe",
   championsWearGold: "Nur GOLD ist eines Champions würdig!",
+  clickHere: "Drücke hier noch ",
+  forReset: " mal, um die Runde zu beenden und ins Hauptmenü zurückzukehren.",
 };
