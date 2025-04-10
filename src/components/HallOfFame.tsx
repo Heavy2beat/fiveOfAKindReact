@@ -130,7 +130,7 @@ export default function HallOfFame() {
                         }
                         className="m-auto max-h-24 cursor-pointer rounded"
                         src={imageUrl}
-                      ></img>
+                      />
                     }
                   ></Tooltip>
                 ) : (
