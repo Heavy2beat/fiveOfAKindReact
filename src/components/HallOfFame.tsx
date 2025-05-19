@@ -24,6 +24,12 @@ export default function HallOfFame() {
   );
 
   const [avatarMenuVisible, setAvatarMenuVisible] = useState(false);
+  const avatarLinkList = [
+    "/fiveOfAKindReact/one.gif",
+    "/fiveOfAKindReact/two.gif",
+    "/fiveOfAKindReact/three.gif",
+    "/fiveOfAKindReact/four.gif",
+  ];
 
   const hofSorted = query.data?.sort((a, b) => {
     const dateA = a.date ? new Date(a.date).getTime() : 0;
@@ -81,38 +87,14 @@ export default function HallOfFame() {
           {avatarMenuVisible ? (
             <li className="h-30 grid grid-cols-3 justify-between bg-yellow-300 p-2">
               <div className="col-span-3 grid grid-cols-4 gap-4 p-4">
-                <img
-                  onClick={() =>
-                    handleOnAvatarClick("/fiveOfAKindReact/one.gif")
-                  }
-                  className="cursor-pointer rounded-xl"
-                  src="/fiveOfAKindReact/one.gif"
-                  alt=""
-                />
-                <img
-                  onClick={() =>
-                    handleOnAvatarClick("/fiveOfAKindReact/two.gif")
-                  }
-                  className="cursor-pointer rounded-xl"
-                  src="/fiveOfAKindReact/two.gif"
-                  alt=""
-                />
-                <img
-                  onClick={() =>
-                    handleOnAvatarClick("/fiveOfAKindReact/three.gif")
-                  }
-                  className="cursor-pointer rounded-xl"
-                  src="/fiveOfAKindReact/three.gif"
-                  alt=""
-                />
-                <img
-                  onClick={() =>
-                    handleOnAvatarClick("/fiveOfAKindReact/four.gif")
-                  }
-                  className="cursor-pointer rounded-xl"
-                  src="/fiveOfAKindReact/four.gif"
-                  alt=""
-                />
+                {avatarLinkList.map((link) => (
+                  <img
+                    onClick={() => handleOnAvatarClick(link)}
+                    className="cursor-pointer rounded-xl"
+                    src={link}
+                    alt=""
+                  />
+                ))}
               </div>
               <div className="col-span-3 flex justify-center"></div>
             </li>
@@ -146,9 +128,9 @@ export default function HallOfFame() {
                             ? () => setAvatarMenuVisible(true)
                             : () => {}
                         }
-                        className="m-auto max-h-24 rounded"
+                        className="m-auto max-h-24 cursor-pointer rounded"
                         src={imageUrl}
-                      ></img>
+                      />
                     }
                   ></Tooltip>
                 ) : (

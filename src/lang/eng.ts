@@ -80,4 +80,6 @@ export const eng: Language = {
   language: "Language",
   color: "Dice color",
   championsWearGold: "Only GOLD for champions!",
+  clickHere: "Click here for ",
+  forReset: " times to end game and go back to main menu",
 };
