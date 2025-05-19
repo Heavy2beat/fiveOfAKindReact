@@ -52,7 +52,7 @@ export default function HallOfFame() {
 
   return (
     <div>
-      <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
+      <div className="flex h-[calc(100vh-48px)] min-w-fit flex-col justify-start overflow-y-scroll text-center">
         <div className="flex justify-around bg-yellow-300 text-xl">
           <img src="/fiveOfAKindReact/fame.svg" alt="" />
 
@@ -171,7 +171,7 @@ export default function HallOfFame() {
           </li>
           {restIsVisible
             ? query.data
-                ?.filter((score, index) => index < 10 && score)
+                ?.filter((score, _index) => score)
                 .map((score, index) => (
                   <li
                     key={score.name + score.points}

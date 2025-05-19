@@ -79,7 +79,7 @@ export default function Footer() {
           </p>
         )}
         <div className="m-auto flex flex-col items-center justify-center text-center text-xs">
-          <Tooltip message={"v 0.8.6"} sendTip={true}>
+          <Tooltip message={"v 0.8.7"} sendTip={true}>
             <p className="w-[12ch] font-thin lg:w-full">
               created by Fabian Fischer
             </p>
