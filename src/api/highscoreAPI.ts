@@ -11,7 +11,7 @@ export type Player = {
   id: string;
   name: string;
 };
-const baseUrl = "http://highscore.fabdev.de";
+const baseUrl = "https://highscore.fabdev.de";
 const highscoreURL = baseUrl + "/highscores";
 
 const weeklyURL = baseUrl + "/weeklywinners";
