@@ -1,0 +1,1 @@
+(function(){self.onmessage=function(){try{let e=Math.floor(Math.random()*6+1);self.postMessage(e)}catch(e){self.postMessage({error:e.message})}}})();
