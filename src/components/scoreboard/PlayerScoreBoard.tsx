@@ -156,6 +156,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
       for (let i = start; i <= end; i++) {
         diceScoreRows.push(
           <tr
+            key={`row-${i}`}
             onClick={() => onClickHandler(i)}
             className="border-gray col-span-2 grid h-14 grid-cols-3 border"
           >
@@ -181,6 +182,7 @@ export default function PlayerScoreBoard(props: playerScoreBoardProps) {
       for (let i = start; i <= end; i++) {
         diceScoreRows.push(
           <tr
+            key={`row-${i}`}
             onClick={() => onClickHandler(i)}
             className="border-gray col-span-2 grid h-14 grid-cols-3 border"
           >
