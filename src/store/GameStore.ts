@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { Score } from "../api/highscoreAPI";
 
 interface GameStore {
   currentTokenList: Token[];
