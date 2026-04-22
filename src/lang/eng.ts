@@ -53,8 +53,7 @@ export const eng: Language = {
   saved: "Saved",
   endgameText: "The winner may save his score to the highscore list! Press ",
   save: "save ",
-  highscoreText1:
-    "You believe your highscore is good enough for the world? Press ",
+  highscoreText1: "You believe your highscore is good enough for the world? Press ",
   highscoreText2: " to send your score to the online highscore list!",
   locale: "Local Highscores",
   oneTime: "(only works once)",
@@ -82,4 +81,5 @@ export const eng: Language = {
   championsWearGold: "Only GOLD for champions!",
   clickHere: "Click here for ",
   forReset: " times to end game and go back to main menu",
+  pointsToBeat: "Points to beat"
 };

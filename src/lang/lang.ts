@@ -1,4 +1,6 @@
 export type Language = {
+ 
+  pointsToBeat: any;
   greeting: string;
   roll: string;
   playerPlus: string;

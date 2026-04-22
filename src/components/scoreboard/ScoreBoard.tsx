@@ -1,6 +1,8 @@
+import { div } from "motion/react-client";
 import { useResetRound } from "../../hooks/useResetRound";
 import { useDiceStore } from "../../store/Dicestore";
 import { useGameStore } from "../../store/GameStore";
+import { useHighscoreStore } from "../../store/HighscoreStore";
 import { useLanguageStore } from "../../store/LanguageStore";
 import { sendToast } from "../../utils/utils";
 import PlayerScoreBoard from "./PlayerScoreBoard";
@@ -25,6 +27,7 @@ export default function ScoreBoard() {
   const { lang } = useLanguageStore();
   const { unkeepAllDices } = useDiceStore();
 
+  const { currentOnlineLeader } = useHighscoreStore();
   const handOverCorrectBoard = (
     numberOfPlayer: number,
   ): Map<string, number> => {
@@ -133,11 +136,24 @@ export default function ScoreBoard() {
 
   useEffect(() => {
     setPlayerBoards(() => getPlayerBoards());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerOnTurn, numberOfPlayers, reset]);
 
+  const pointsToBecomeLeader = () => {
+    return (
+      <div className="flex-row justify-center text-center text-sm md:flex md:w-full md:text-lg">
+        <p>
+          {currentOnlineLeader
+            ? `${lang.pointsToBeat} ${currentOnlineLeader.points} ${lang.points} (${currentOnlineLeader.name})`
+            : null}
+        </p>{" "}
+      </div>
+    );
+  };
   return (
     <>
+      {numberOfPlayers === 1 ? pointsToBecomeLeader() : null}
       <div id="test" className="flex-row justify-center md:flex md:w-full">
         {playerBoards}
       </div>

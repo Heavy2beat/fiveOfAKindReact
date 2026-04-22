@@ -6,8 +6,8 @@ interface GameStore {
   setCurrentTokenList: (toSet: Token[]) => void;
   isHelpModeOn: boolean;
   setHelpMode: (toSet: boolean) => void;
-  highscoreList: Score[];
-  sethighScoreList: (toSet: Score[]) => void;
+ // highscoreList: Score[];
+  //sethighScoreList: (toSet: Score[]) => void;
   firstStart: boolean;
   setFirstStart: (toSet: boolean) => void;
   numberOfRound: number;
@@ -42,9 +42,9 @@ export const useGameStore = create<GameStore>()((set) => ({
 
   isHelpModeOn: false,
   setHelpMode: (toSet: boolean) => set(() => ({ isHelpModeOn: toSet })),
-  highscoreList: new Array<Score>(),
-  sethighScoreList: (newScoreList: Score[]) =>
-    set(() => ({ highscoreList: newScoreList })),
+ // highscoreList: new Array<Score>(),
+  //sethighScoreList: (newScoreList: Score[]) =>
+   // set(() => ({ highscoreList: newScoreList })),
   firstStart: true,
   setFirstStart: (setTo: boolean) => set(() => ({ firstStart: setTo })),
   numberOfRound: 0,

@@ -7,6 +7,7 @@ import { Score } from "../api/highscoreAPI";
 import { sendToast } from "../utils/utils";
 import { useDiceStore } from "../store/Dicestore";
 import Footer from "../components/Footer";
+import { useHighscoreStore } from "../store/HighscoreStore";
 
 export default function End() {
   const { lang } = useLanguageStore();
@@ -18,8 +19,6 @@ export default function End() {
     setScoreBoardPlayer3,
     setScoreBoardPlayer4,
     endScores,
-    highscoreList,
-    sethighScoreList,
   } = useGameStore();
 
   const {
@@ -35,6 +34,9 @@ export default function End() {
     toggleDice5Keep,
   } = useDiceStore();
 
+  // --- NEU: Lokale Scores aus dem HighscoreStore ---
+  const { localHighscores, setLocalHighscores } = useHighscoreStore();
+
   const navigate = useNavigate();
 
   const [isSend, setIsSend] = useState(false);
@@ -46,18 +48,30 @@ export default function End() {
         points: score,
         isSend: false,
       };
-      const tempScoreList = [...highscoreList, tempScore];
-      const sortedScoreList = tempScoreList.sort((a, b) => b.points - a.points);
-      sethighScoreList(sortedScoreList);
+
+      // Hinzufügen zur lokalen Liste
+      const updatedLocalList = [...localHighscores, tempScore];
+
+      // Manuelle Sortierung für die Anzeige, falls der Store das nicht macht
+      const sortedScoreList = updatedLocalList.sort(
+        (a, b) => b.points - a.points,
+      );
+
+      // An Store und LocalStorage übergeben
+      setLocalHighscores(sortedScoreList);
       localStorage.setItem("highscoreList", JSON.stringify(sortedScoreList));
+
       sendToast(lang.redirectToHighscores, 3000);
       resetRound();
+
       setTimeout(() => {
         navigate("/highscores");
       }, 2000);
+
       setIsSend(true);
     }
   };
+
   const prepareEndscores = () => {
     const endscoresSorted = gameIsFinished(endScores);
     return endscoresSorted.map(([player, score], index) => (

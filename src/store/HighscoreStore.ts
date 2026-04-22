@@ -8,12 +8,20 @@ interface HighscoreState {
   latestWeeklyWinner: Score | null;
   isUserChampion: boolean;
   
-  // Laufende Woche
+  
+  // Laufende Woche online Liste
   currentHighscores: Score[];
+  currentOnlineLeader: Score | null;
 
-  // Actions
+  //Lokale Liste
+  localHighscores: Score[];
+  
+
+  // Actions online Liste
   setWeeklyWinners: (winners: Score[], userTokens: string[]) => void;
   setHighscores: (scores: Score[]) => void;
+  // Lokale Action ---
+  setLocalHighscores: (scores: Score[]) => void;
 }
 
 export const useHighscoreStore = create<HighscoreState>((set) => ({
@@ -22,6 +30,9 @@ export const useHighscoreStore = create<HighscoreState>((set) => ({
   latestWeeklyWinner: null,
   isUserChampion: false,
   currentHighscores: [],
+  localHighscores: [],
+  currentOnlineLeader: null,
+  
 
   // Setzt die Hall of Fame (Wochensieger der Vergangenheit)
   setWeeklyWinners: (winners, userTokens) => {
@@ -49,10 +60,16 @@ export const useHighscoreStore = create<HighscoreState>((set) => ({
   },
 
   // Setzt die Scores der aktuell laufenden Woche
-  setHighscores: (scores) => {
-    // Direkt nach Punkten sortieren, damit die Liste im Menü direkt stimmt
+setHighscores: (scores) => {
+    // Liste nach Punkten sortieren
     const sorted = [...scores].sort((a, b) => (b.points || 0) - (a.points || 0));
     
-    set({ currentHighscores: sorted });
+    set({ 
+      currentHighscores: sorted,
+      // Der Leader ist einfach der Erste in der sortierten Liste
+      currentOnlineLeader: sorted.length > 0 ? sorted[0] : null
+    });
   },
+  // Setzt die lokalen Scores
+  setLocalHighscores: (scores) => set({ localHighscores: scores }),
 }));

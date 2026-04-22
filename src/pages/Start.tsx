@@ -15,13 +15,8 @@ export default function Start() {
   const { lang } = useLanguageStore();
   const { currentTokenList, setCurrentTokenList } = useGameStore();
   const { setDiceLink, setIsChampion } = useDiceColorStore();
-  const {
-    setNumberOfPlayers,
-    numberOfPlayers,
-    playernames,
-    setplayerNames,
-    sethighScoreList,
-  } = useGameStore();
+  const { setNumberOfPlayers, numberOfPlayers, playernames, setplayerNames } =
+    useGameStore();
   const navigate = useNavigate();
   const [isNumberOfPlayerChosen, setIsNumberOfPlayerChosen] = useState(false);
 
@@ -32,7 +27,8 @@ export default function Start() {
   });
 
   // 2. Den Store anzapfen
-  const { setWeeklyWinners, isUserChampion } = useHighscoreStore();
+  const { setWeeklyWinners, isUserChampion, setHighscores } =
+    useHighscoreStore();
 
   // 3. Den Store füttern (ersetzt das manuelle Sortieren und Suchen)
   useEffect(() => {
@@ -60,9 +56,9 @@ export default function Start() {
   useEffect(() => {
     const storedHighScores = localStorage.getItem("highscoreList");
     if (storedHighScores) {
-      sethighScoreList(JSON.parse(storedHighScores));
+      setHighscores(JSON.parse(storedHighScores));
     }
-  }, [sethighScoreList]);
+  }, [setHighscores]);
 
   const handleNumberOfPlayer = (numberToSet: number) => {
     setNumberOfPlayers(numberToSet);

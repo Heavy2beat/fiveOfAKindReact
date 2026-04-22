@@ -4,7 +4,6 @@ import "../styles/custom.css";
 
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
-import { useGameStore } from "../store/GameStore";
 import { useEffect, useState } from "react";
 
 import HallOfFame from "../components/HallOfFame";
@@ -15,20 +14,29 @@ export default function Highscores() {
   const queryClient = useQueryClient();
   const { lang } = useLanguageStore();
   const navigate = useNavigate();
-  const { highscoreList, sethighScoreList } = useGameStore();
-  const query = useQuery({
-    queryKey: ["highscores"],
-    queryFn: getAllHighscores,
-  });
 
+  const {
+    localHighscores,
+    setLocalHighscores, // Das war vorher im GameStore
+    currentHighscores,
+    setHighscores,
+    allTimeChampion,
+  } = useHighscoreStore();
+  // Lade lokale Scores beim Öffnen der Seite
+  useEffect(() => {
+    const storedLocalHighscores = localStorage.getItem("highscoreList");
+    if (storedLocalHighscores) {
+      setLocalHighscores(JSON.parse(storedLocalHighscores));
+    }
+  }, [setLocalHighscores]);
+
+  // --- ONLINE DATEN (React Query & HighscoreStore) ---
   const { data: onlineData } = useQuery({
     queryKey: ["highscores"],
     queryFn: getAllHighscores,
   });
 
-  const { currentHighscores, setHighscores, allTimeChampion } =
-    useHighscoreStore();
-
+  // Synchronisiere Online-Daten in den Store
   useEffect(() => {
     if (onlineData) {
       setHighscores(onlineData);
@@ -42,6 +50,7 @@ export default function Highscores() {
     },
   });
 
+  // --- STATUS & LOGIK ---
   const [isSend, setIsSend] = useState(false);
   const [restIsVisible, setRestIsVisible] = useState(false);
 
@@ -50,9 +59,9 @@ export default function Highscores() {
     score: number,
     index: number,
   ) => {
-    if (highscoreList[index].isSend === true) {
+    // Check auf LOKALE Liste
+    if (localHighscores[index].isSend === true) {
       setIsSend(true);
-
       return;
     }
 
@@ -64,15 +73,16 @@ export default function Highscores() {
         isSend: true,
         token: token,
       };
-      handleTokenList(token);
 
+      handleTokenList(token);
       mutation.mutate(scoreToSend);
 
-      const updatedHighScoreList = highscoreList.map((score, idx) =>
-        idx === index ? { ...score, isSend: true } : score,
+      // Update in der LOKALEN Liste
+      const updatedHighScoreList = localHighscores.map((s, idx) =>
+        idx === index ? { ...s, isSend: true } : s,
       );
 
-      sethighScoreList(updatedHighScoreList);
+      setLocalHighscores(updatedHighScoreList);
       localStorage.setItem(
         "highscoreList",
         JSON.stringify(updatedHighScoreList),
@@ -84,7 +94,7 @@ export default function Highscores() {
 
   const resetLocalHighscore = () => {
     localStorage.removeItem("highscoreList");
-    sethighScoreList([]);
+    setLocalHighscores([]); // Setzt die lokale Liste zurück
   };
 
   const handleTokenList = (token: string) => {
@@ -99,7 +109,7 @@ export default function Highscores() {
     }
     const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
     tokenListParsed = tokenListParsed.filter(
-      (token: { token: string; date: number }) => token.date >= sevenDaysAgo,
+      (t: { token: string; date: number }) => t.date >= sevenDaysAgo,
     );
     tokenListParsed.push(tokenToAdd);
     localStorage.setItem("tokenList", JSON.stringify(tokenListParsed));
@@ -118,16 +128,18 @@ export default function Highscores() {
             <img src="/fiveOfAKindReact/arrow-back.svg" alt="" />
           </button>
         </div>
-        <div className="m-2 grid grid-cols-3 bg-yellow-200 p-2 text-center text-2xl lg:m-auto lg:w-4/5">
+        <div className="m-2 grid grid-cols-5 bg-yellow-200 p-2 text-center text-2xl lg:m-auto lg:w-4/5">
+          <h3>👑 </h3>
           <h3 className="col-span-3 text-center">
             {" "}
-            👑 Alltime Champion: {allTimeChampion?.name}{" "}
-            {allTimeChampion?.points} {lang.points} 👑
+            Alltime Champion: {allTimeChampion?.name} {allTimeChampion?.points}{" "}
+            {lang.points}
           </h3>
+          <h3> 👑</h3>
         </div>
 
         <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-4/5">
-          {highscoreList.length !== 0 ? (
+          {localHighscores.length !== 0 ? (
             <p>
               {lang.highscoreText1}
               <span className="bg-green-400">{lang.save} online</span>{" "}
@@ -139,6 +151,7 @@ export default function Highscores() {
       </div>
 
       <div className={`m-2 grid gap-2 md:m-auto md:w-4/5 md:grid-cols-3`}>
+        {/* --- LOKALE BESTENLISTE --- */}
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <div className="grid grid-cols-3 bg-green-300 text-xl">
             <h2 className="col-start-2">{lang.locale}</h2>
@@ -150,9 +163,9 @@ export default function Highscores() {
             </button>
           </div>{" "}
           <ol className="list-decimal bg-slate-300 p-2">
-            {highscoreList.map((score, index) => (
+            {localHighscores.map((score, index) => (
               <li
-                key={score.name + score.points}
+                key={score.name + score.points + index}
                 className={
                   index % 2 == 0
                     ? "grid grid-cols-4 justify-between bg-blue-300 p-1"
@@ -168,7 +181,7 @@ export default function Highscores() {
                 <p>
                   {" "}
                   {index === 0 ? (
-                    !isSend && highscoreList[index].isSend !== true ? (
+                    !isSend && localHighscores[index].isSend !== true ? (
                       <button
                         className="w-fit bg-green-400 p-2 text-xs hover:bg-green-500"
                         onClick={() => {
@@ -191,6 +204,7 @@ export default function Highscores() {
           </ol>
         </div>
 
+        {/* --- ONLINE WOCHEN-BESTENLISTE --- */}
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
@@ -223,8 +237,10 @@ export default function Highscores() {
                 </p>
               </li>
             ))}
+
+            {/* --- "UND DIE ANDEREN" --- */}
             <li
-              className="flex justify-between p-2 duration-300 ease-in-out hover:bg-slate-400"
+              className="flex cursor-pointer justify-between p-2 duration-300 ease-in-out hover:bg-slate-400"
               onClick={() => setRestIsVisible(!restIsVisible)}
             >
               {lang.theOthers}{" "}
@@ -234,31 +250,32 @@ export default function Highscores() {
                 <img src="/fiveOfAKindReact/chevron-compact-down.svg" alt="" />
               )}
             </li>
+
             {restIsVisible
-              ? query.data
-                  ?.filter((score, index) => index >= 10 && score)
-                  .map((score, index) => (
-                    <li
-                      key={score.name + score.points}
-                      className={
-                        index % 2 == 0
-                          ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
-                          : "grid grid-cols-3 justify-between bg-blue-400 p-2"
-                      }
-                    >
-                      <p className="text-start font-bold">{index + 11}. </p>{" "}
-                      <div className="flex justify-between">
-                        <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
-                          {" "}
-                          {score.name}{" "}
-                        </p>
-                      </div>
-                      <p className="font-bold">
+              ? currentHighscores.slice(10).map((score, index) => (
+                  <li
+                    key={
+                      score.token || `${score.name}-${score.points}-${index}`
+                    }
+                    className={
+                      index % 2 == 0
+                        ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
+                        : "grid grid-cols-3 justify-between bg-blue-400 p-2"
+                    }
+                  >
+                    <p className="text-start font-bold">{index + 11}. </p>{" "}
+                    <div className="flex justify-between">
+                      <p className="scrollbar-thin line-clamp-1 overflow-y-auto text-start">
                         {" "}
-                        {score.points} {lang.points}
-                      </p>{" "}
-                    </li>
-                  ))
+                        {score.name}{" "}
+                      </p>
+                    </div>
+                    <p className="font-bold">
+                      {" "}
+                      {score.points} {lang.points}
+                    </p>{" "}
+                  </li>
+                ))
               : null}
           </ol>
         </div>
