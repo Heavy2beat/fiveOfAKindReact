@@ -152,10 +152,10 @@ export default function ScoreBoard() {
   };
   return (
     <>
-      {numberOfPlayers === 1 ? pointsToBecomeLeader() : null}
       <div id="test" className="flex-row justify-center md:flex md:w-full">
         {playerBoards}
       </div>
+      {numberOfPlayers === 1 ? pointsToBecomeLeader() : null}
     </>
   );
 }
