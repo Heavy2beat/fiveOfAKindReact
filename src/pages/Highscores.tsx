@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getAllHighscores, Score, sendScore } from "../api/highscoreAPI";
+import {
+  getAllHighscores,
+  getWeeklyWinners,
+  Score,
+  sendScore,
+} from "../api/highscoreAPI";
 import "../styles/custom.css";
 
 import { useNavigate } from "react-router-dom";

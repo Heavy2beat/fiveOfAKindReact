@@ -5,7 +5,7 @@ import {
   sendWinnerLink,
 } from "../api/highscoreAPI";
 import { useLanguageStore } from "../store/LanguageStore";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
 import "../styles/custom.css";
 import { useGameStore } from "../store/GameStore";
