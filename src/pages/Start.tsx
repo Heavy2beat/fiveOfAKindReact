@@ -9,6 +9,7 @@ import { getWeeklyWinners } from "../api/highscoreAPI";
 import { useQuery } from "react-query";
 import { goldenDice, useDiceColorStore } from "../store/DiceColorStore";
 import Footer from "../components/Footer";
+import { useHighscoreStore } from "../store/HighscoreStore";
 
 export default function Start() {
   const { lang } = useLanguageStore();
@@ -24,19 +25,22 @@ export default function Start() {
   const navigate = useNavigate();
   const [isNumberOfPlayerChosen, setIsNumberOfPlayerChosen] = useState(false);
 
-  // TODO write that in a store and use it in hof component
-  const query = useQuery({
+  // 1. Die Query bleibt, wie sie ist
+  const { data: winnersData } = useQuery({
     queryKey: ["hallOfFame"],
     queryFn: getWeeklyWinners,
   });
 
-  const hofSorted = query.data?.sort((a, b) => {
-    const dateA = a.date ? new Date(a.date).getTime() : 0;
-    const dateB = b.date ? new Date(b.date).getTime() : 0;
-    return dateB - dateA;
-  });
-  const hofLeader = hofSorted ? hofSorted[0] : null;
-  //TODO END
+  // 2. Den Store anzapfen
+  const { setWeeklyWinners, isUserChampion } = useHighscoreStore();
+
+  // 3. Den Store füttern (ersetzt das manuelle Sortieren und Suchen)
+  useEffect(() => {
+    if (winnersData) {
+      const myTokens = currentTokenList.map((t) => t.token);
+      setWeeklyWinners(winnersData, myTokens);
+    }
+  }, [winnersData, currentTokenList, setWeeklyWinners]);
 
   useEffect(() => {
     const currentList = localStorage.getItem("tokenList");
@@ -46,19 +50,12 @@ export default function Start() {
     }
   }, []);
 
-  const found = currentTokenList.find(
-    (element: { token: string; date: Date }) =>
-      element.token === hofLeader?.token,
-  );
-  const currentToken = found !== undefined ? found : { token: "", date: "" };
-  const isChampion = currentToken.token == hofLeader?.token ? true : false;
-
   useEffect(() => {
-    if (isChampion) {
+    if (isUserChampion) {
       setDiceLink(goldenDice);
       setIsChampion(true);
     }
-  }, [isChampion, setDiceLink]);
+  }, [isUserChampion, setDiceLink]);
 
   useEffect(() => {
     const storedHighScores = localStorage.getItem("highscoreList");
@@ -117,7 +114,7 @@ export default function Start() {
   return (
     <div>
       <div className="m-auto mt-8 w-fit rounded bg-slate-300 pb-4 text-xl md:w-5/6">
-        {isChampion ? (
+        {isUserChampion ? (
           <div className="flex justify-center gap-4 p-4">
             <img
               src="/fiveOfAKindReact/fame1.svg"

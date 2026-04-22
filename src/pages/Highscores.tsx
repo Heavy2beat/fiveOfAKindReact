@@ -1,19 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  getAllHighscores,
-  getWeeklyWinners,
-  Score,
-  sendScore,
-} from "../api/highscoreAPI";
+import { getAllHighscores, Score, sendScore } from "../api/highscoreAPI";
 import "../styles/custom.css";
 
 import { useNavigate } from "react-router-dom";
 import { useLanguageStore } from "../store/LanguageStore";
 import { useGameStore } from "../store/GameStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import HallOfFame from "../components/HallOfFame";
 import Footer from "../components/Footer";
+import { useHighscoreStore } from "../store/HighscoreStore";
 
 export default function Highscores() {
   const queryClient = useQueryClient();
@@ -24,6 +20,20 @@ export default function Highscores() {
     queryKey: ["highscores"],
     queryFn: getAllHighscores,
   });
+
+  const { data: onlineData } = useQuery({
+    queryKey: ["highscores"],
+    queryFn: getAllHighscores,
+  });
+
+  const { currentHighscores, setHighscores, allTimeChampion } =
+    useHighscoreStore();
+
+  useEffect(() => {
+    if (onlineData) {
+      setHighscores(onlineData);
+    }
+  }, [onlineData, setHighscores]);
 
   const mutation = useMutation({
     mutationFn: sendScore,
@@ -108,6 +118,13 @@ export default function Highscores() {
             <img src="/fiveOfAKindReact/arrow-back.svg" alt="" />
           </button>
         </div>
+        <div className="m-2 grid grid-cols-3 bg-yellow-200 p-2 text-center text-2xl lg:m-auto lg:w-4/5">
+          <h3 className="col-span-3 text-center">
+            {" "}
+            👑 Alltime Champion: {allTimeChampion?.name}{" "}
+            {allTimeChampion?.points} {lang.points} 👑
+          </h3>
+        </div>
 
         <div className="m-auto mb-2 w-5/6 bg-slate-300 p-2 text-center text-sm md:w-4/5">
           {highscoreList.length !== 0 ? (
@@ -177,38 +194,35 @@ export default function Highscores() {
         <div className="flex max-h-full min-w-fit flex-col justify-start overflow-y-scroll text-center">
           <h2 className="bg-green-300 text-xl">{lang.weeklyHighscore}</h2>
           <ol className="list-decimal bg-slate-300 p-2">
-            {query.data
-              ?.filter((score, index) => index < 10 && score)
-              .map((score, index) => (
-                <li
-                  key={score.name + score.points}
-                  className={
-                    index % 2 == 0
-                      ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
-                      : "grid grid-cols-3 justify-between bg-blue-400 p-2"
-                  }
-                >
-                  {" "}
-                  <div className="flex justify-between">
-                    <p className="text-start font-bold">{index + 1}. </p>
-                    {index === 0 ? (
-                      <img
-                        src="/fiveOfAKindReact/crown.svg"
-                        className="pr-2"
-                        alt=""
-                      />
-                    ) : null}{" "}
-                  </div>
-                  <p className="scrollbar-thin line-clamp-2 overflow-y-auto text-start">
-                    {" "}
-                    {score.name}{" "}
-                  </p>
-                  <p className="font-bold">
-                    {" "}
-                    {score.points} {lang.points}
-                  </p>{" "}
-                </li>
-              ))}
+            {currentHighscores.slice(0, 10).map((score, index) => (
+              <li
+                key={score.token || `${score.name}-${score.points}-${index}`}
+                className={
+                  index % 2 === 0
+                    ? "grid grid-cols-3 justify-between bg-blue-300 p-2"
+                    : "grid grid-cols-3 justify-between bg-blue-400 p-2"
+                }
+              >
+                <div className="flex justify-between">
+                  <p className="text-start font-bold">{index + 1}. </p>
+                  {index === 0 && (
+                    <img
+                      src="/fiveOfAKindReact/crown.svg"
+                      className="pr-2"
+                      alt="Crown"
+                    />
+                  )}
+                </div>
+
+                <p className="scrollbar-thin line-clamp-2 overflow-y-auto text-start">
+                  {score.name}
+                </p>
+
+                <p className="font-bold">
+                  {score.points} {lang.points}
+                </p>
+              </li>
+            ))}
             <li
               className="flex justify-between p-2 duration-300 ease-in-out hover:bg-slate-400"
               onClick={() => setRestIsVisible(!restIsVisible)}

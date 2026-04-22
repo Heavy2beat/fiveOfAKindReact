@@ -5,7 +5,7 @@ import {
   sendWinnerLink,
 } from "../api/highscoreAPI";
 import { useLanguageStore } from "../store/LanguageStore";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
 import "../styles/custom.css";
 import { useGameStore } from "../store/GameStore";
@@ -156,7 +156,7 @@ export default function HallOfFame() {
                 ?.filter((score, _index) => score)
                 .map((score, index) => (
                   <li
-                    key={score.name + score.points}
+                    key={score.name + score.points + score.date}
                     className={
                       index % 2 == 0
                         ? "grid grid-cols-3 justify-between bg-yellow-200 p-2"
